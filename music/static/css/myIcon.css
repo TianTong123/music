@@ -1,0 +1,70 @@
+.icon-phone{
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: top;
+  background-image: url('../images/icon/phone.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.icon-mallbox{
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: top;
+  background-image: url('../images/icon/mallbox.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.icon-msg{
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: top;
+  background-image: url('../images/icon/msg.png');
+  background-size: 18px 18px;
+  background-repeat: no-repeat;
+}
+.icon-user{
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: top;
+  background-image: url('../images/icon/user.png');
+  background-size: 18px 18px;
+  background-repeat: no-repeat;
+}
+.icon-level{
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: top;
+  background-image: url('../images/icon/level.png');
+  background-size: 18px 18px;
+  background-repeat: no-repeat;
+}
+.icon-vip{
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: top;
+  background-image: url('../images/icon/vip.png');
+  background-size: 18px 18px;
+  background-repeat: no-repeat;
+}
+.icon-search{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 18px;
+  height: 18px;
+  background-image: url('../images/icon/search.png');
+  background-size: 18px 18px;
+  background-repeat: no-repeat;
+}

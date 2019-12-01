@@ -1,0 +1,155 @@
+.index-banner{
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+}
+.index-banner .bg{
+  position: absolute;
+  filter: blur(100px);
+  margin: -200px;
+  width: 6000px;
+  height: 1000px;
+  
+}
+.index-banner .bg img{
+  display: block;
+  margin: 0 auto;
+  width: 6000px;
+  height: 1000px;
+}
+.index-banner .wrap{
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  width: 1100px;
+  height: 100%;
+  overflow: hidden;
+}
+.index-banner .wrap:hover .btn{
+  display: block;
+  cursor: pointer;
+}
+.index-banner .wrap .btn{
+  position: absolute;
+  display: none;
+  top: 50%;
+  margin-top: -25px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  background-image: url('../images/btn_left.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: rgba(204, 204, 204, .5);
+}
+.index-banner .wrap .right{
+  right: 0px;
+  background-image: url('../images/btn_right.png');
+}
+.index-banner .wrap .slides{
+  position: absolute;
+  display: block;
+  left: 0px;
+  width: 5500px;
+  height: 100%;
+  transition-duration: .3s; 
+}
+.index-banner .wrap .slides .slide{
+  display: inline-block;
+  width: 1100px;
+  height: 100%;
+}
+.index-banner .wrap .slides .slide img{
+  display: block;
+  width: 1100px;
+  height: auto;
+}
+
+.progress-bar{
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+}
+
+/* 进度条 */      
+.progress {
+  position: relative;
+  display: inline-block;
+  margin: 0 20px;
+  width : 20px;
+  height : 20px;
+  overflow: hidden;
+}
+.progress .progress_bg{
+  position: absolute;
+  width : 12px;
+  height : 12px;
+  border: 4px solid #aaa;
+  border-radius: 10px;
+}
+.progress .half{
+  position: absolute;
+  width: 10px;
+  height: 20px;
+  overflow: hidden; 
+}
+.progress .left .left-progress{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 4px solid transparent;
+  border-top: 4px solid #C20C0C;
+  border-left: 4px solid #C20C0C;
+  border-radius: 10px;
+  transform: rotate(135deg);
+}
+.progress:first-child .left .left-progress{
+  animation: circle_left 2.5s linear 2.5s 1; 
+}
+.progress .right-half{
+  position: absolute;
+  right: 0px;
+  overflow: hidden;
+}
+.progress .right-half .right-progress{
+  position: absolute;
+  top: 0px;
+  left: -10px;
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 4px solid transparent;
+  border-top: 4px solid #C20C0C;
+  border-right: 4px solid #C20C0C;
+  border-radius: 10px;
+  transform: rotate(-135deg);
+}
+.progress:first-child .right-half .right-progress{
+  transform: rotate(45deg);
+  animation: circle_right 2.5s linear 1;
+}
+
+@keyframes circle_left{
+  0%{
+      transform : rotate(135deg);
+  }
+  100%{
+      transform : rotate(315deg);
+  }
+}
+@keyframes circle_right{
+  0%{
+      transform : rotate(-135deg);
+  }
+  100%{
+      transform : rotate(45deg);
+  }
+}
