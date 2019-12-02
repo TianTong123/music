@@ -67,6 +67,7 @@ ul, li{
   font-size: 14px;
   font-weight: 500;
   color: #ccc;
+  user-select:none;
 }
 .menu ul li:hover{
   background-color: #C20C0C;

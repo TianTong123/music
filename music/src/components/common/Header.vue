@@ -1,8 +1,5 @@
 <template>
   <div class="Header">
-   <!-- <h3>{{msg}}</h3>
-    <button @click="handleAddClick(10)">增加</button>
-    <button @click="handleReduceClick(10)">减少</button> -->
     <div class="content">
       <!-- logo -->
       <div class="logo">
@@ -13,7 +10,10 @@
       <!--  菜单 -->
       <div class="menu">
         <ul>
-          <li v-for="item in menuList" :key="item.id">{{item.name}}</li>
+          <li 
+            v-for="item in menuList" 
+            :key="item.id"
+            @click="goMenu(item)">{{item.name}}</li>
         </ul>
       </div>
 
@@ -75,17 +75,11 @@ export default {
 
   },
   methods: {
-  
-  
-  /**
-   * 和vuex有关的代码
-   */
-   /*  handleAddClick(n){
-      this.$store.commit('mutationsAddCount',n);
-    },
-    handleReduceClick(n){
-      this.$store.commit('mutationsReduceCount',n);
-    } */
+    goMenu(data){
+      this.$router.push({
+        name: data.code
+      });
+    }
   }
 }
 </script>
