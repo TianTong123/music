@@ -24,28 +24,22 @@ ul, li{
 .content .logo{
   position: relative;
   display: inline-block;
-  padding: 15px 0;
-  width: 180px;
-  height: 40px;
+  margin: 15px 30px 15px 0;
+  width: 62px;
+  height: 39px;
   text-align: center;
 }
 .content .logo .logo-img{
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 40px;
-  background-image: url('../images/logo.png');
-  background-size: 60px 40px;
+  width: 62px;
+  height: 39px;
+  background-image: url('../images/logo_white.png');
+  background-size:62px 39px;
+  background-repeat: no-repeat;
 }
-.content .logo .logo-font{
-  float: right;
-  width: 120px;
-  height: 40px;
-  line-height: 40px;
-  font-size: 20px;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
+.content .active_menu{
+  background-color: #C20C0C;
 }
 
 

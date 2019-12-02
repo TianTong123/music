@@ -4,7 +4,6 @@
       <!-- logo -->
       <div class="logo">
         <div class="logo-img"></div>
-        <div class="logo-font">van♂音乐</div>
       </div>
 
       <!--  菜单 -->
@@ -13,7 +12,8 @@
           <li 
             v-for="item in menuList" 
             :key="item.id"
-            @click="goMenu(item)">{{item.name}}</li>
+            @click="goMenu(item)"
+            :class="item.class">{{item.name}}</li>
         </ul>
       </div>
 
@@ -61,11 +61,11 @@ export default {
         userimg: 'https://i0.hdslb.com/bfs/album/5684389236f958866ef0cc513667653c6a40fc8d.jpg@518w_1e_1c.jpg',
       },
       menuList:[
-        {name: '首页', code: 'home', i: 8848},
-        {name: '榜单', code: 'rank', i: 8848},
-        {name: '歌手', code: 'musicAuthor', i: 8848},
-        {name: '歌单', code: 'singForm', i: 8848},
-        {name: '我的', code: 'my', i: 8848},
+        {name: '首页', code: 'home', id: 8848, class: 'active_menu'},
+        {name: '榜单', code: 'rank', id: 8849, class: ''},
+        {name: '歌手', code: 'musicAuthor', id: 8851, class: ''},
+        {name: '歌单', code: 'singForm', id: 8852, class: ''},
+        {name: '我的', code: 'my', id: 8853, class: ''},
       ],
       restaurants: [],
       searchKey: '',
@@ -79,6 +79,17 @@ export default {
       this.$router.push({
         name: data.code
       });
+    }
+  },
+  watch:{
+    $route(to, from) {
+      for(let i = 0; i < 4; i ++){
+        if(this.menuList[i].code == to.name){
+          this.menuList[i].class = 'active_menu'
+        }else{
+          this.menuList[i].class = ''
+        }
+      }
     }
   }
 }

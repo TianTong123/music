@@ -25,7 +25,12 @@
   display: inline-block;
   width: 340px;
   height: 100px;
-  background-color: #eee;
+  background-color: #fafafa;
+  cursor: pointer;
+}
+.content-wrap .card-wrap .card:hover{
+  background-color: #fff;
+  box-shadow: 0 5px 12px 5px rgba(204, 204, 204, .8);
 }
 .content-wrap .card-wrap .card .music-poster{
   float: left;
