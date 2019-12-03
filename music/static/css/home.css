@@ -1,5 +1,6 @@
 .content{
   width: 100%;
+  background-color: #eee;
 }
 .content .content-wrap{
   margin: 0 auto;
@@ -71,4 +72,14 @@
 }
 .content-wrap .card-wrap .card .music-info .info div{
   display: inline-block;
+}
+.content-wrap .card-wrap .card .music-info .info .name{
+  font-weight: 600;
+}
+.content-wrap .card-wrap .card .music-info .info .info-value{
+  float: right;
+  text-align: left;
+  width: 105px;
+  height: 20px;
+  overflow: hidden;
 }

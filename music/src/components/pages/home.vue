@@ -10,7 +10,7 @@
           <div class="card" v-for="id in 9" :key="id">
             <div class="music-poster"><img src="../../../static/images/timg1.jpg" alt=""></div>
             <div class="music-info">
-              <div class="rank-num">{{id}}</div>
+              <!-- <div class="rank-num">{{id}}</div> -->
               <div class="info">
                 <div class="name">歌名:</div>
                 <div class="info-value">一起走过的日子</div>
@@ -20,7 +20,7 @@
                 <div class="info-value">刘德华</div>
               </div>
               <div class="info">
-                <div class="name">播放量:</div>
+                <div class="name">播放:</div>
                 <div class="info-value">1433233</div>
               </div>
             </div>

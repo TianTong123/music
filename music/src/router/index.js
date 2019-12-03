@@ -32,7 +32,7 @@ export default new Router({
         {
           path: '/rank',
           name: 'rank',
-          component: () => import("@/components/pages/userlist.vue"),
+          component: () => import("@/components/pages/rank.vue"),
         },
         {
           path: '/musicAuthor',

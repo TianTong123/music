@@ -79,11 +79,20 @@ export default {
       this.$router.push({
         name: data.code
       });
+    },
+    activeMenu(){
+      for(let i = 0; i < this.menuList.length; i ++){
+        if(this.menuList[i].code == this.$route.name){
+          this.menuList[i].class = 'active_menu'
+        }else{
+          this.menuList[i].class = ''
+        }
+      }
     }
   },
   watch:{
     $route(to, from) {
-      for(let i = 0; i < 4; i ++){
+      for(let i = 0; i < this.menuList.length; i ++){
         if(this.menuList[i].code == to.name){
           this.menuList[i].class = 'active_menu'
         }else{
@@ -91,6 +100,9 @@ export default {
         }
       }
     }
+  },
+  mounted(){
+    this.activeMenu();
   }
 }
 </script>
