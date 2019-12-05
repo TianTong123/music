@@ -9,7 +9,7 @@
       </div>
     </div>
     <!-- 页脚 -->
-    <!-- <Footer/> -->
+    <Footer/>
   </div>
 </template>
 <script>
@@ -37,7 +37,8 @@ export default {
 
 <style scoped>
 .index .content{
-    width: 100%;
+  width: 100%;
+  background-color: #eee;
 }
 </style>
 

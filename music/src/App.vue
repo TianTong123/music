@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style>
-html, body, input{
+html, body, input, ul, li{
   margin: 0px;
   padding: 0px;
 }
