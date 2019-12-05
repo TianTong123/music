@@ -9,7 +9,7 @@
       </div>
     </div>
     <!-- 页脚 -->
-    <Footer/>
+    <!-- <Footer/> -->
   </div>
 </template>
 <script>

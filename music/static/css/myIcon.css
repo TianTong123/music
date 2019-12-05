@@ -1,3 +1,10 @@
+/*
+ * @Author: TianTong 
+ * @Date: 2019-12-05 10:48:52 
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2019-12-05 11:16:00
+ */
+/* 手机 */
 .icon-phone{
   position: relative;
   display: inline-block;
@@ -8,6 +15,7 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+/* 邮箱 */
 .icon-mallbox{
   position: relative;
   display: inline-block;
@@ -18,6 +26,7 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+/* 消息 */
 .icon-msg{
   position: relative;
   display: inline-block;
@@ -28,6 +37,7 @@
   background-size: 18px 18px;
   background-repeat: no-repeat;
 }
+/* 用户 */
 .icon-user{
   position: relative;
   display: inline-block;
@@ -38,6 +48,7 @@
   background-size: 18px 18px;
   background-repeat: no-repeat;
 }
+/* 等级 */
 .icon-level{
   position: relative;
   display: inline-block;
@@ -48,6 +59,7 @@
   background-size: 18px 18px;
   background-repeat: no-repeat;
 }
+/* vip */
 .icon-vip{
   position: relative;
   display: inline-block;
@@ -58,6 +70,7 @@
   background-size: 18px 18px;
   background-repeat: no-repeat;
 }
+/* 搜索 */
 .icon-search{
   position: relative;
   display: inline-block;
@@ -66,5 +79,64 @@
   height: 18px;
   background-image: url('../images/icon/search.png');
   background-size: 18px 18px;
+  background-repeat: no-repeat;
+}
+/* 新歌榜 */
+.icon-new-music-rank{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 200px;
+  height: 100px;
+  background-image: url('../images/icon/rank_bg.png');
+  background-size: 1000px 100px;
+  background-repeat: no-repeat;
+}
+/* 人气榜 */
+.icon-person-music-rank{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 200px;
+  height: 100px;
+  background-image: url('../images/icon/rank_bg.png');
+  background-size: 1000px 100px;
+  background-position-x: -201px;
+  background-repeat: no-repeat;
+}
+/* 飙升榜 */
+.icon-soar-music-rank{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 200px;
+  height: 100px;
+  background-image: url('../images/icon/rank_bg.png');
+  background-size: 1000px 100px;
+  background-position-x: -401px;
+  background-repeat: no-repeat;
+}
+/* 热歌榜 */
+.icon-hot-music-rank{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 200px;
+  height: 100px;
+  background-image: url('../images/icon/rank_bg.png');
+  background-size: 1000px 100px;
+  background-position-x: -601px;
+  background-repeat: no-repeat;
+}
+/* 综合榜 */
+.icon-all-music-rank{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 200px;
+  height: 100px;
+  background-image: url('../images/icon/rank_bg.png');
+  background-size: 1000px 100px;
+  background-position-x: -801px;
   background-repeat: no-repeat;
 }

@@ -31,6 +31,9 @@
   display: block;
   cursor: pointer;
 }
+.index-banner .wrap:active .btn{
+  background-color: #242424;
+}
 .index-banner .wrap .btn{
   position: absolute;
   display: none;

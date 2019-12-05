@@ -47,13 +47,13 @@ export default {
         name1: "",
         name2: ""
       },
-      /* slideWidth: 0,//轮播图宽度 */
+      /* slideWidth: 0,//+播图宽度 */
       slides:[
-        {color: "#E1DFF5", imgSrc:"../../../static/images/timg1.jpg", mid:'123456'},
-        {color: "#631F36", imgSrc:"../../../static/images/timg2.jpg", mid:'123456'},
-        {color: "#CA6649", imgSrc:"../../../static/images/timg3.jpg", mid:'123456'},
-        {color: "#F0ACA3", imgSrc:"../../../static/images/timg4.jpg", mid:'123456'},
-        {color: "#FFFFFF", imgSrc:"../../../static/images/timg5.jpg", mid:'123456'},
+        {imgSrc:"../../../static/images/timg1.jpg", mid:'123456'},
+        {imgSrc:"../../../static/images/timg2.jpg", mid:'123456'},
+        {imgSrc:"../../../static/images/timg3.jpg", mid:'123456'},
+        {imgSrc:"../../../static/images/timg4.jpg", mid:'123456'},
+        {imgSrc:"../../../static/images/timg5.jpg", mid:'123456'},
       ]
     }
   },
