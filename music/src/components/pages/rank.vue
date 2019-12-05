@@ -14,8 +14,8 @@
                     }"></div>
           <div class="card-content">
             <ul>
-              <li class="content-card" v-for="(e, id) in cardList" :key="id">
-                <div class="rank-num">{{id+1}}</div>
+              <li v-for="(e, id) in cardList" :key="id">
+                <div class="">{{id+1}}</div>
                 <div class="content">
                   <div class="name">{{e.musicName}}</div>
                   <div class="singer">{{e.singer}}</div>

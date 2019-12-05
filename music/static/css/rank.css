@@ -3,6 +3,7 @@
 }
 .rank .wrap{
   margin: 0 auto;
+  padding-bottom: 36px;
   width: 1100px;
 }
 .rank .wrap .title{
@@ -20,12 +21,53 @@
   width: 100%;
 }
 .card-list .card{
+  position: relative;
   display: inline-block;
   width: 200px;
+  height: 800px;
   background-color: #fff;
+  box-shadow: 0 0 12px 5px rgba(204, 204, 204, .8);
+}
+.card-list .card:hover .head-img{
+  transform: rotate(90deg);
 }
 .card-list .card .head-img{
   position: absolute;
+  top: 0px;
   width: 200px;
   height: 100px;
+  transform-origin: 0 0;
+  transition-duration: .3s;
+}
+.card-list .card .card-content{
+  position: absolute;
+  top: 100px;
+  width: 200px;
+  height: 100px;
+  transition-duration: .3s;
+}
+.card-list .card .card-content ul{
+  list-style: none;
+}
+.card-list .card .card-content ul li{
+  margin: 10px 0;
+  height: 60px;
+  list-style: none;
+}
+.card-list .card .card-content ul li .rank-num{
+  float: left;
+  height: 60px;
+  width: 40px;
+  line-height: 60px;
+  text-align: center;
+}
+.card-list .card .card-content ul li .content{
+  float: right;
+  margin: 12px 0;
+  font-size: 12px;
+  width: 160px;
+}
+.card-list .card .card-content ul li .content .name{
+  font-size: 14px;
+  font-weight: 600;
 }

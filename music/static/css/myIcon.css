@@ -101,7 +101,7 @@
   height: 100px;
   background-image: url('../images/icon/rank_bg.png');
   background-size: 1000px 100px;
-  background-position-x: -201px;
+  background-position-x: -200px;
   background-repeat: no-repeat;
 }
 /* 飙升榜 */
@@ -113,7 +113,7 @@
   height: 100px;
   background-image: url('../images/icon/rank_bg.png');
   background-size: 1000px 100px;
-  background-position-x: -401px;
+  background-position-x: -400px;
   background-repeat: no-repeat;
 }
 /* 热歌榜 */
@@ -125,7 +125,7 @@
   height: 100px;
   background-image: url('../images/icon/rank_bg.png');
   background-size: 1000px 100px;
-  background-position-x: -601px;
+  background-position-x: -600px;
   background-repeat: no-repeat;
 }
 /* 综合榜 */
@@ -137,6 +137,6 @@
   height: 100px;
   background-image: url('../images/icon/rank_bg.png');
   background-size: 1000px 100px;
-  background-position-x: -801px;
+  background-position-x: -800px;
   background-repeat: no-repeat;
 }
