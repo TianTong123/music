@@ -140,3 +140,39 @@
   background-position-x: -800px;
   background-repeat: no-repeat;
 }
+/* 第一 */
+.icon-top{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 40px;
+  height: 40px;
+  background-image: url('../images/icon/rank_num.png');
+  background-size: 120px 40px;
+  background-position-x: 0;
+  background-repeat: no-repeat;
+}
+/* 第二 */
+.icon-top2{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 40px;
+  height: 40px;
+  background-image: url('../images/icon/rank_num.png');
+  background-size: 120px 40px;
+  background-position-x: -40px;
+  background-repeat: no-repeat;
+}
+/* 第三 */
+.icon-top3{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 40px;
+  height: 40px;
+  background-image: url('../images/icon/rank_num.png');
+  background-size: 120px 40px;
+  background-position-x: -80px;
+  background-repeat: no-repeat;
+}

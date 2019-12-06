@@ -26,18 +26,52 @@
   width: 200px;
   height: 800px;
   background-color: #fff;
+ 
+}
+.card-list .card:hover{
   box-shadow: 0 0 12px 5px rgba(204, 204, 204, .8);
 }
 .card-list .card:hover .head-img{
-  transform: rotate(90deg);
+  opacity: .7;
+  transform: rotate(100deg);
+  box-shadow: 6px 6px 6px 1px rgba(0, 0, 0, .8);
 }
 .card-list .card .head-img{
   position: absolute;
   top: 0px;
+  z-index: 10;
   width: 200px;
   height: 100px;
+  background-color: #fff;
   transform-origin: 0 0;
   transition-duration: .3s;
+}
+.card-list .card .rank-operating{
+  margin: 10px;
+  width: 180px;
+  height: 80px;
+  background-color: rbga(255, 0, 0, 0);
+}
+.card-list .card .rank-operating .rank-msg{
+  line-height: 30px;
+  font-weight: 600;
+  font-size: 17px;
+}
+.card-list .card .rank-operating .rank-msg span{
+  font-size: 5px;
+}
+.card-list .card .rank-operating .operating-wrap .top-img{
+  width: 50px;
+  height: 50px;
+}
+.card-list .card .rank-operating .operating-wrap .operating{
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 10px;
+  height: 50px;
+  width: 90px;
+  font-size: 10px;
+  line-height: 50px;
 }
 .card-list .card .card-content{
   position: absolute;
@@ -53,21 +87,40 @@
   margin: 10px 0;
   height: 60px;
   list-style: none;
+  cursor: pointer;
 }
 .card-list .card .card-content ul li .rank-num{
-  float: left;
-  height: 60px;
+  display: inline-block;
+  margin: 10px 10px 10px 0;
+  height: 40px;
   width: 40px;
-  line-height: 60px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 40px;
   text-align: center;
 }
 .card-list .card .card-content ul li .content{
   float: right;
   margin: 12px 0;
+  width: 150px;
   font-size: 12px;
-  width: 160px;
+  overflow: hidden;
+}
+.card-list .card .card-content ul li:hover .content .name{
+  font-weight: 900;
+  color: #000;
 }
 .card-list .card .card-content ul li .content .name{
+  width: 160px;
+  height: 20px;
+  overflow: hidden;
   font-size: 14px;
+  color: #333;
+}
+.card-list .card .card-content ul li:hover .singer{
   font-weight: 600;
+  color: #333;
+}
+.card-list .card .card-content ul li .content .singer{
+  color: #999;
 }

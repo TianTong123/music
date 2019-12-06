@@ -21,12 +21,12 @@
 }
 .footer .wrap .content{
   height: 20px;
-  color: rgb(162, 209, 235);
+  color: grey;
   line-height: 20px;
   font-size: 12px;
   text-align: center;
 }
 .line{
-  border-bottom: 1px solid rgb(162, 209, 235);
+  border-bottom: 1px solid grey;
 }
 </style>
