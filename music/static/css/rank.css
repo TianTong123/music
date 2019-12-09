@@ -51,6 +51,7 @@
   width: 180px;
   height: 80px;
   background-color: rbga(255, 0, 0, 0);
+  cursor: pointer;
 }
 .card-list .card .rank-operating .rank-msg{
   line-height: 30px;
@@ -72,6 +73,11 @@
   width: 90px;
   font-size: 10px;
   line-height: 50px;
+}
+.card-list .card .rank-operating .operating-wrap .operating span:hover{
+  color: blue;
+  font-weight: 600;
+  text-decoration: underline;
 }
 .card-list .card .card-content{
   position: absolute;
@@ -105,6 +111,9 @@
   width: 150px;
   font-size: 12px;
   overflow: hidden;
+}
+.card-list .card .card-content ul li:hover{
+  box-shadow: 0 0 12px 5px rgba(204, 204, 204, .8);
 }
 .card-list .card .card-content ul li:hover .content .name{
   font-weight: 900;

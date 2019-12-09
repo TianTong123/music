@@ -35,9 +35,9 @@ export default new Router({
           component: () => import("@/components/pages/rank.vue"),
         },
         {
-          path: '/musicAuthor',
-          name: 'musicAuthor',
-          component: () => import("@/components/index.vue"),
+          path: '/singer',
+          name: 'singer',
+          component: () => import("@/components/pages/singer.vue"),
         },
         {
           path: '/singForm',

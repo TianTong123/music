@@ -1,15 +1,18 @@
 <template>
   <div class="index">
     <!-- 导航条 -->
-    <Header/>
+    <div class="head">
+      <Header/>
+    </div>
+    
     <!-- 内容显示 -->
-    <div class="content">
-      <div class="content-wrap">
-        <router-view></router-view>
-      </div>
+    <div class="content" ref="content">
+      <router-view></router-view>
     </div>
     <!-- 页脚 -->
-    <Footer/>
+    <div class="foot">
+      <Footer/>
+    </div>    
   </div>
 </template>
 <script>
@@ -24,9 +27,6 @@ export default {
       
     }
   },
-  methods:{
-
-  },
   watch:{
     // $route(to, from) {
     //  console.log(to.path)
@@ -36,9 +36,32 @@ export default {
 </script>
 
 <style scoped>
-.index .content{
+/* 绝对定位法上中下三栏式布局 */
+.index {
   width: 100%;
+  height: 100%;
+}
+.head{
+  position: absolute;
+  top :0;
+  width: 100%;
+  height: 70px;
+}
+.index .content{
+  position: absolute;
+  top: 70px;
+  bottom: 60px;
+  width: 100%;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   background-color: #eee;
+}
+.index .foot{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+	height: 60px;
 }
 </style>
 

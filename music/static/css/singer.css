@@ -1,0 +1,78 @@
+ul{
+  list-style: none;
+}
+.singer{
+  margin-top: 48px;
+  width: 100%;
+  height: 100%;
+}
+.singer .wrap{
+  display: block;
+  margin: 0 auto;
+  width: 1100px;
+  height: 100%;
+}
+.singer .wrap .type{
+  display: inline-block;
+  vertical-align: top;
+  width: 242px;
+  height: 100%;
+}
+.singer .wrap .type .type-title{
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 12px 5px rgba(204, 204, 204, .8);
+}
+
+.singer .wrap .type .type-title li{
+  display: inline-block;
+  width: 80px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 16px;
+  color: #222;
+  cursor: pointer;
+}
+.singer .wrap .type .type-list{
+  position: relative;
+  margin-left: 50px;
+  width: 190px;
+  height: 100%;
+  overflow: hidden;
+}
+.singer .wrap .type .type-list .type-list-wrap{
+  position: absolute;
+  top: 20px;
+  left: 0px;
+  width: 720px;
+}
+.singer .wrap .type .type-list .type-list-wrap ul{
+  display: inline-block;
+  width: 190px;
+  text-align: right;
+}
+.singer .wrap .type .type-list .type-list-wrap ul li{
+  margin: 5px 0;
+  padding-right: 15px;
+  height: 30px;
+  font-size: 15px;
+  line-height: 30px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  /* box-shadow: -4px 2px 2px 0 rgba(204, 204, 204, .8); */
+}
+.singer .wrap .type .type-title .active{
+  font-weight: 600;
+  color: #000;
+}
+.singer .wrap .type .type-title li:hover{
+  background-color: #242424;
+  font-weight: 600;
+  color: #fff;
+}
+.singer .wrap .list{
+  display: inline-block;
+  vertical-align: top;
+  width: 700px;
+}
