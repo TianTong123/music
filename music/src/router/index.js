@@ -25,24 +25,19 @@ export default new Router({
       redirect: { name: "home" },
       children:[
         {
-          path: '/home',
+          path: 'home',
           name: 'home',
           component: () => import("@/components/pages/home.vue"),
         },
         {
-          path: '/rank',
+          path: 'rank',
           name: 'rank',
           component: () => import("@/components/pages/rank.vue"),
         },
         {
-          path: '/singer',
+          path: 'singer',
           name: 'singer',
           component: () => import("@/components/pages/singer.vue"),
-        },
-        {
-          path: '/singForm',
-          name: 'singForm',
-          component: () => import("@/components/index.vue"),
         },
       ]
     },
