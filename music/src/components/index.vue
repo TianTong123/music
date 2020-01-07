@@ -11,7 +11,7 @@
     </div>
     <!-- 页脚 -->
     <div class="foot">
-      <Footer/>
+      <Footer v-if="footFlag"/>
     </div>    
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
   },
   data(){
     return{
-      
+      footFlag: true
     }
   },
   watch:{

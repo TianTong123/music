@@ -64,7 +64,7 @@ export default {
         {name: '首页', code: 'home', id: 8848, class: 'active_menu'},
         {name: '榜单', code: 'rank', id: 8849, class: ''},
         {name: '歌手', code: 'singer', id: 8851, class: ''},
-        {name: '我的', code: 'my', id: 8853, class: ''},
+        {name: '播放', code: 'player', id: 8853, class: ''},
       ],
       restaurants: [],
       searchKey: '',
@@ -91,6 +91,7 @@ export default {
   },
   watch:{
     $route(to, from) {
+      //激活当前处于活动页面的菜单标签
       for(let i = 0; i < this.menuList.length; i ++){
         if(this.menuList[i].code == to.name){
           this.menuList[i].class = 'active_menu'

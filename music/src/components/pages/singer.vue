@@ -8,7 +8,7 @@
           </ul>
         </div>
         <div class="type-list">
-          <div class="type-list-wrap">
+          <div class="type-list-wrap" :style="{'left': tlwLeft+'px'}">
             <ul v-for="(e, id) in typeList" :key="id">
               <li v-for="(te, eid) in e.list" :key="eid" @click="activeTitle(eid, 2, id)" :class="te.class">
                 {{te.name}}
@@ -35,11 +35,12 @@
 export default {
   data(){
     return{
+      tlwLeft: 53,
       //类型列表
       typeList:[
         {name:'国语', class: 'activeTitle', list:[{name:'国语男歌手', class:'activeTitleContent', param:''},{name:'国语女歌手', class:'', param:''}]},
-        {name:'粤语', class: '', list:[{name:'粤语男歌手', class:'', param:''},{name:'粤语女歌手', class:'', param:''}]},
-        {name:'外语', class: '', list:[{name:'外语男歌手', class:'', param:''},{name:'外语女歌手', class:'', param:''}]},
+        {name:'粤语', class: '', list:[{name:'粤语男歌手', class:'activeTitleContent', param:''},{name:'粤语女歌手', class:'', param:''}]},
+        {name:'外语', class: '', list:[{name:'外语男歌手', class:'activeTitleContent', param:''},{name:'外语女歌手', class:'', param:''}]},
       ],
       //歌手列表
       singer:[
@@ -50,13 +51,16 @@ export default {
   methods:{
     activeTitle(id, flag, eid){
       //标题头
-      if(flag == 1){
-        
+      if(flag == 1){ 
+        //点亮操作
         for(let i = 0; i < this.typeList.length; i ++ ){
           this.typeList[i].class = ''
         }
         this.typeList[id].class = 'activeTitle';
+        //滚动的控制
+        this.tlwLeft = 53 + (-id*240)
       }
+      //子标签点亮
       else{         
         for(let i = 0; i < this.typeList[eid].list.length; i ++ ){
           this.typeList[eid].list[i].class = '';

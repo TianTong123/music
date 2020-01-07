@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2019-12-11 11:04:34 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2019-12-11 16:59:17
+ * @Last Modified time: 2019-12-20 13:34:05
  */
 ul{
   list-style: none;
@@ -72,14 +72,14 @@ ul{
 /* 左侧排行榜内容列表 */
 .type .type-list{
   position: relative;
-  width: 241px;
+  width: 240px;
   height: 690px;
   overflow: hidden;
 }
 .type .type-list .type-list-wrap{
   position: absolute;
   top: 20px;
-  left: 54px;
+  left: 55px;
   width: 720px;
   transition-duration: .3s;
 }

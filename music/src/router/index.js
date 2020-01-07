@@ -39,6 +39,11 @@ export default new Router({
           name: 'singer',
           component: () => import("@/components/pages/singer.vue"),
         },
+        {
+          path: 'player',
+          name: 'player',
+          component: resolve => require(['../components/pages/player.vue'], resolve),
+        },
       ]
     },
   ]

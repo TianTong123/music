@@ -1,0 +1,24 @@
+/*
+ * @Author: TianTong 
+ * @Date: 2020-01-07 17:23:43 
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2020-01-07 17:31:17
+ */
+img{
+  width: 100%;
+  height: 100%;
+}
+.player{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.player .bg{
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  filter: blur(20px);
+}
