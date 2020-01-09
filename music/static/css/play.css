@@ -1,8 +1,8 @@
 /*
  * @Author: TianTong 
  * @Date: 2020-01-07 17:23:43 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-01-09 16:42:31
+ * @Last Modified by: Tiantong
+ * @Last Modified time: 2020-01-09 21:49:21
  */
 .player img{
   width: 100%;
@@ -90,7 +90,7 @@
   height: 20px;
 }
 .player .wrap .content .info .lyric .lyric-wrap .active-line{
-  color: bisque;
+  color: #01e5ff;
 }
 /* 滚动条 */
 .player .wrap .content .info .lyric::-webkit-scrollbar{
@@ -166,7 +166,7 @@
  * 
  */
 /* 整体框架 */
-.msg{
+.progress-bar{
   width: 650px;
   height: 5px;
   border-radius: 2px;
@@ -176,7 +176,7 @@
   position: relative;
 }
 /* 时间 */
-.msg span{
+.progress-bar span{
   position: absolute;
   right: 0px;
   top: 5px;
@@ -184,20 +184,20 @@
   font-family: "Microsoft YaHei 506L W","PingFang SC","Microsoft YaHei","Helvetica Neue","Helvetica","Arial";
 }
 /* 红色进度条 */
-.msg #m_progress{
+.progress-bar .m-progress{
   position: absolute;
-  width: 20px;
+  width: 0;
   height: 5px;
   background: #d81e06;
   border-radius: 2px;
   
 }
 /* 进度条图标 */
-.msg #m_p_icon{
+.progress-bar .m-p-icon{
   width: 16px;
   height: 16px;
   position: absolute;
-  left: 20px;
+  left: 0;
   top: -6px;
   border-radius: 8px;
   background: #fff;
@@ -216,9 +216,6 @@
   height: 26px;
   display: inline-block;
   margin: 29px 5px;
-/*   background-image: url(./../images/btn_right.png);
-  background-repeat: no-repeat;
-  background-size: cover; */
 }
 .voice #v_progress{
   width: 100px;

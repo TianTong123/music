@@ -9,7 +9,7 @@
           <div class="singer"><span>歌手：</span>上原れな</div>
           <div class="lyric">
             <div class="lyric-wrap">
-              <p :class="{'active-line':index==10}" v-for="(e, index) in lyric" :key="index">{{e.LrcLine}}</p>
+              <p :class="{'active-line': activeLine(e, index, nowPlayTime)}" v-for="(e, index) in lyric" :key="index">{{e.LrcLine}}</p>
             </div>
           </div>
         </div>
@@ -22,15 +22,15 @@
         <!-- 控制菜单 -->
 	      <div id="control">
 	      	<div class="previous" id="previous"><i class="icon-previous"></i></div>
-	      	<div class="play" @click="playClick()"><i :class="playBtn"></i></div>
+	      	<div class="play" id="play" @click="playClick" ><i :class="playBtn"></i></div>
 	      	<div class="previous" id="next"><i class="icon-next"></i></div>
 	      </div>
 	      <!-- 进度条 -->
-	      <div class="msg" id="msg">
-	      	<div id="m_progress" ref="mProgress">
-	      		<div id="m_p_icon" ref="mProgressIcon"></div>
+	      <div class="progress-bar" id="progress_bar" ref="mProgressBar" @click="progressClick">
+	      	<div class="m-progress" id="m_progress" ref="mProgress">
+	      		<div class="m-p-icon" id="m_p_icon" ref="mProgressIcon"></div>
 	      	</div>	
-	      	<span id="m_time">{{playTime}}</span>	
+	      	<span id="m_time">{{`${playTime}:${totalDuration}`}}</span>	
 	      </div>
 	      <!-- 音量 -->
 	      <div class="voice">
@@ -45,9 +45,11 @@
 </template>
 
 <script>
+// import play from '@/util/play'
 export default {
   data(){
     return{
+      lyricIndex: 0,
       lyric: [
              {
           "type": 1,
@@ -286,16 +288,19 @@ export default {
       ],
       /* 音乐播放器控制参数 */
       music: '',//音频文件
-      mProgress: '',//进度条
+      nowPlayTime: "",//当前播放毫秒数(按下播放就开始以毫秒的速度自增1，暂停就停止)
+      mProgress: '',//进度条（会动的那条）
       mProgressIcon: '',//进度条头上的那个点
+      mProgressBar: '',//进度条背景
       playBtn: 'icon-play',
-      playTime: 0,//进度条右下角播放时间
-      playTimeLength: -1,//当前播放时长
+      totalDuration: "00/00",//进度条右下角播放时间
+      playTime: "00:00",//当前播放时长
       progressWidth: 0,//当前播放的进度条长度
       /* 音乐播放器控制参数 end */
     }
   },
   methods:{
+    //播放
     playClick(){
       if( this.music.paused ){
         this.music.play();//播放音乐
@@ -303,39 +308,77 @@ export default {
 			}else{
         this.music.pause();
         this.playBtn = "icon-play"
+        return;
       }
+
       //启动时间监听钩子
-      this.music.ontimeupdate = function(){
-        
+      this.music.ontimeupdate = () =>{
+        //时间处理
+        let mLength = this.music.currentTime;
+        this.nowPlayTime =  parseInt( mLength  * 1000);
+        let play_minutes = parseInt( mLength  / 60);
+        let play_seconds = parseInt( mLength  - play_minutes*60 );
+        let m = play_minutes<10? '0'+ play_minutes : play_minutes;
+        let s = play_seconds<10? '0' + play_seconds : play_seconds;
+        this.playTime = `${m}:${s}`;
+
+        //进度条处理
+        /*进度条百分比计算*/
+				var long = mLength * 650 /this.music.duration;//得到进度条长度，650是进度条总长度
+				this.mProgress.style.width = long + "px";
+				this.mProgressIcon.style.left = (long - 12) + "px";
+
+				if( this.music.ended )//归零
+          this.music.currentTime = 0;
+          //this.nowPlayTime = 0;
       }
     },
-    //获取音频长度
-    getDuration() {
-       console.log(this.$refs.music.duration); //此时可以获取到duration
-       //this.duration = this.$refs.audio.duration;
+
+
+    //进度条点击
+    progressClick(event){
+      let e = event ? event : window.event;
+      let value = e.clientX - this.mProgressBar.offsetLeft;
+      document.getElementById("music").currentTime = parseInt(value * this.music.duration / 650);
+      //console.log(parseInt(value * this.music.duration / 650))
+			this.mProgress.style.width = value + "px";
+			this.mProgressIcon.style.left = (value - 12) + "px";
     },
+
+
+    //激活歌词
+    activeLine(e, index, time){
+      // let timeFlag = time >= e.TimeMs;
+      // console.log( timeFlag, time, e.TimeMs, e.type);
+      // if( e.type == 5 && timeFlag ){
+      //   return true;
+      // }
+      return false;
+    }
   },
   mounted(){
     //赋值
     this.music = this.$refs.music;
     this.mProgress = this.$refs.mProgress;
     this.mProgressIcon = this.$refs.mProgressIcon;
-    
-    //计算
-    setTimeout(() => {
+    this.mProgressBar = this.$refs.mProgressBar;
+    //计算总时长
+    setTimeout(() => { //避免出现NaN的问题
       let audio = document.getElementById("music");
       let mLength = audio.duration;//总时长
       let minutes = parseInt( mLength / 60 );
       let seconds = parseInt( mLength - minutes*60 );
       let m = minutes<10? '0'+ minutes : minutes;
       let s = seconds<10? '0' + seconds : seconds;
-      this.playTime = `${m}:${s}/00:00`;
-    }, 100);
-    
-    
+      this.totalDuration = `${m}:${s}`;
+    }, 200);
+
+  },
+  computed:{
+  
   },
   watch:{
-    playTimeLength(){
+    nowPlayTime(){
       
     }
   }
