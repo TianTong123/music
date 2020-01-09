@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2019-12-05 10:48:52 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2019-12-05 11:16:00
+ * @Last Modified time: 2020-01-09 16:55:54
  */
 /* 手机 */
 .icon-phone{
@@ -175,4 +175,64 @@
   background-size: 120px 40px;
   background-position-x: -80px;
   background-repeat: no-repeat;
+}
+/* 播放按钮 */
+.icon-play{
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 58px;
+  background-image: url('../images/icon/btn.png');
+  background-size: 300px;
+  background-repeat: no-repeat;
+}
+/* 暂停按钮 */
+.icon-pause{
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 58px;
+  background-image: url('../images/icon/btn.png');
+  background-position-y: -60px;
+  background-size: 300px;
+  background-repeat: no-repeat;
+}
+/* 上一首 */
+.icon-previous{
+  display: inline-block;
+  vertical-align: top;
+  width: 36px;
+  height: 36px;
+  background-image: url('../images/icon/btn.png');
+  background-position-x: 0px;
+  background-position-y: -143px;
+  background-size: 300px;
+  background-repeat: no-repeat;
+}
+/* 下一首 */
+.icon-next{
+  display: inline-block;
+  vertical-align: top;
+  width: 36px;
+  height: 36px;
+  background-image: url('../images/icon/btn.png');
+  background-position-x: -144px;
+  background-position-y: -143px;
+  background-size: 300px;
+  background-repeat: no-repeat;
+}
+/* 音量 */
+.icon-voice{
+  width: 26px;
+  height: 22px;
+  display: inline-block;
+  background-image: url('../images/icon/btn.png');
+  background-position-x: 5px;
+  background-position-y: -273px;
+  background-size: 420px;
+  background-repeat: no-repeat;
+}
+/* 静音 */
+.icon-noy-voice{
+
 }
