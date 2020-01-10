@@ -50,7 +50,6 @@ export default {
   data(){
     return{
       lyricIndex: 0,
-      lyricTop: 0,
       lyric: [
              {
           "type": 1,
@@ -390,15 +389,7 @@ export default {
       this.mProgressIcon.style.left = (value - 12) + "px";
       
       //歌词位置刷新
-      let mLength = this.music.currentTime;
-      this.nowPlayTime =  parseInt( mLength  * 1000);
-      for(let i = 0; i <this.lyric.length; i ++){
-      if(this.lyric[i].TimeMs >= this.nowPlayTime){
-          this.lyricIndex = i;
-          break;
-        }
-      }
-      this.$refs.lyricWrap.scrollTop = this.lyricIndex * 35 - 280;
+      this.lyricScoll();
     },
 
 
@@ -410,7 +401,22 @@ export default {
         return true;
       }
       return false;
-    }
+    },
+
+    //歌词滚动计算方法
+    lyricScoll(){
+      let mLength = this.music.currentTime;
+      this.nowPlayTime =  parseInt( mLength  * 1000);
+      for(let i = 0; i <this.lyric.length; i ++){
+      if(this.lyric[i].TimeMs >= this.nowPlayTime){
+          this.lyricIndex = i;
+          break;
+        }
+      }
+      this.$refs.lyricWrap.scrollTop = this.lyricIndex * 35 - 210;
+    },
+
+
   },
   mounted(){
     //赋值
@@ -418,7 +424,7 @@ export default {
     this.mProgress = this.$refs.mProgress;
     this.mProgressIcon = this.$refs.mProgressIcon;
     this.mProgressBar = this.$refs.mProgressBar;
-    //计算总时长
+    //计算总时长,等后台返回数据，有数据的话，这段可以弃之不用了
     setTimeout(() => { //避免出现NaN的问题
       let audio = document.getElementById("music");
       let mLength = audio.duration;//总时长
@@ -451,20 +457,9 @@ export default {
     //监听激活的歌词是否变化，如果有变化就移动歌词
     lyricIndex(){
       //滚动歌词
-      this.$refs.lyricWrap.scrollTop  += 35;
-      // let mLength = this.music.currentTime;
-      // this.nowPlayTime =  parseInt( mLength  * 1000);
-      // for(let i = 0; i <this.lyric.length; i ++){
-      // if(this.lyric[i].TimeMs >= this.nowPlayTime){
-      //     this.lyricIndex = i;
-      //     break;
-      //   }
-      // }
-      // this.$refs.lyricWrap.scrollTop = this.lyricIndex * 35 - 280;
+      //this.$refs.lyricWrap.scrollTop  += 35;
+      this.lyricScoll();
     },
-    // lyricTop(){
-    //   this.$refs.lyricWrap.scrollTop = this.lyricTop
-    // }
   }
 }
 </script>
