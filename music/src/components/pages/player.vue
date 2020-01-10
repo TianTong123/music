@@ -7,8 +7,8 @@
         <div class="info">
           <div class="music-title">届かない恋</div>
           <div class="singer"><span>歌手：</span>上原れな</div>
-          <div class="lyric">
-            <div class="lyric-wrap">
+          <div class="lyric" ref="lyricWrap" > 
+            <div class="lyric-wrap" >
               <p :class="{'active-line': activeLine(e, index, nowPlayTime)}" v-for="(e, index) in lyric" :key="index">{{e.LrcLine}}</p>
             </div>
           </div>
@@ -50,6 +50,7 @@ export default {
   data(){
     return{
       lyricIndex: 0,
+      lyricTop: 0,
       lyric: [
              {
           "type": 1,
@@ -62,6 +63,48 @@ export default {
           "Time": null,
           "TimeMs": 0,
           "LrcLine": "上原れな"
+        },
+        {
+          "type": 0,
+          "Time": null,
+          "TimeMs": 0,
+          "LrcLine": "上原れな"
+        },
+        {
+          "type": 0,
+          "Time": null,
+          "TimeMs": 0,
+          "LrcLine": "上原れな"
+        },
+        {
+          "type": 0,
+          "Time": null,
+          "TimeMs": 0,
+          "LrcLine": "上原れな"
+        },
+        {
+          "type": 0,
+          "Time": null,
+          "TimeMs": 0,
+          "LrcLine": "上原れな"
+        },
+        {
+          "type": 0,
+          "Time": null,
+          "TimeMs": 0,
+          "LrcLine": "上原れな"
+        },
+        {
+          "type": 2,
+          "Time": null,
+          "TimeMs": 0,
+          "LrcLine": "届かない恋 ’13"
+        },
+        {
+          "type": 2,
+          "Time": null,
+          "TimeMs": 0,
+          "LrcLine": "届かない恋 ’13"
         },
         {
           "type": 2,
@@ -328,9 +371,12 @@ export default {
 				this.mProgress.style.width = long + "px";
 				this.mProgressIcon.style.left = (long - 12) + "px";
 
-				if( this.music.ended )//归零
+
+        //结束处理
+				if( this.music.ended ){//归零
           this.music.currentTime = 0;
-          //this.nowPlayTime = 0;
+          this.nowPlayTime = 0;
+        }
       }
     },
 
@@ -339,20 +385,30 @@ export default {
     progressClick(event){
       let e = event ? event : window.event;
       let value = e.clientX - this.mProgressBar.offsetLeft;
-      document.getElementById("music").currentTime = parseInt(value * this.music.duration / 650);
-      //console.log(parseInt(value * this.music.duration / 650))
+      this.music.currentTime = parseInt(value * this.music.duration / 650);
 			this.mProgress.style.width = value + "px";
-			this.mProgressIcon.style.left = (value - 12) + "px";
+      this.mProgressIcon.style.left = (value - 12) + "px";
+      
+      //歌词位置刷新
+      let mLength = this.music.currentTime;
+      this.nowPlayTime =  parseInt( mLength  * 1000);
+      for(let i = 0; i <this.lyric.length; i ++){
+      if(this.lyric[i].TimeMs >= this.nowPlayTime){
+          this.lyricIndex = i;
+          break;
+        }
+      }
+      this.$refs.lyricWrap.scrollTop = this.lyricIndex * 35 - 280;
     },
 
 
     //激活歌词
     activeLine(e, index, time){
-      // let timeFlag = time >= e.TimeMs;
-      // console.log( timeFlag, time, e.TimeMs, e.type);
-      // if( e.type == 5 && timeFlag ){
-      //   return true;
-      // }
+      let timeFlag = time >= e.TimeMs && time < this.lyric[index+1].TimeMs;
+      if( e.type == 5 && timeFlag ){
+        this.lyricIndex = index;
+        return true;
+      }
       return false;
     }
   },
@@ -373,14 +429,42 @@ export default {
       this.totalDuration = `${m}:${s}`;
     }, 200);
 
-  },
-  computed:{
-  
+    //初始化歌词位置
+    let firsIndex = "";
+    for(let i = 0; i <this.lyric.length; i ++){
+      if(this.lyric[i].type == 5){
+        firsIndex = i;
+        break;
+      }
+    }
+    //每一行的高度为35，高亮位置放在210，所以把第一条歌词放在245
+    let lHeight = 210-firsIndex*35;
+    this.$refs.lyricWrap.scrollTop  = -lHeight;//下面注释的，是为了适配所有情况要用的(暂时不写，没时间啊)
+    // if( lHeight >= 0 ){//当前面很长很长时，要做什么
+    //   this.lyricTop = lHeight;
+    // }else{
+    //   this.lyricTop = lHeight;
+    // }
+    
   },
   watch:{
-    nowPlayTime(){
-      
-    }
+    //监听激活的歌词是否变化，如果有变化就移动歌词
+    lyricIndex(){
+      //滚动歌词
+      this.$refs.lyricWrap.scrollTop  += 35;
+      // let mLength = this.music.currentTime;
+      // this.nowPlayTime =  parseInt( mLength  * 1000);
+      // for(let i = 0; i <this.lyric.length; i ++){
+      // if(this.lyric[i].TimeMs >= this.nowPlayTime){
+      //     this.lyricIndex = i;
+      //     break;
+      //   }
+      // }
+      // this.$refs.lyricWrap.scrollTop = this.lyricIndex * 35 - 280;
+    },
+    // lyricTop(){
+    //   this.$refs.lyricWrap.scrollTop = this.lyricTop
+    // }
   }
 }
 </script>

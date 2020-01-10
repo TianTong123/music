@@ -80,6 +80,7 @@
   height: 60%;
   min-height: 300px;
   overflow-y: auto;
+  transition-duration: .3s;
 }
 .player .wrap .content .info .lyric .lyric-wrap{
   position: absolute;
@@ -88,9 +89,12 @@
 .player .wrap .content .info .lyric .lyric-wrap p{
   margin: 15px 0;
   height: 20px;
+  font-size: 15px;
+  line-height: 20px;
 }
 .player .wrap .content .info .lyric .lyric-wrap .active-line{
   color: #01e5ff;
+  font-size: 17px;
 }
 /* 滚动条 */
 .player .wrap .content .info .lyric::-webkit-scrollbar{
