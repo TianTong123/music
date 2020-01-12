@@ -1,8 +1,8 @@
 /*
  * @Author: TianTong 
  * @Date: 2019-12-05 10:48:52 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-01-09 16:55:54
+ * @Last Modified by: Tiantong
+ * @Last Modified time: 2020-01-12 17:18:41
  */
 /* 手机 */
 .icon-phone{
@@ -186,6 +186,9 @@
   background-size: 300px;
   background-repeat: no-repeat;
 }
+.icon-play:hover{
+  background-position-x: -60px;
+}
 /* 暂停按钮 */
 .icon-pause{
   position: relative;
@@ -204,10 +207,13 @@
   width: 36px;
   height: 36px;
   background-image: url('../images/icon/btn.png');
-  background-position-x: 0px;
+  background-position-x: -72px;
   background-position-y: -143px;
   background-size: 300px;
   background-repeat: no-repeat;
+}
+.icon-previous:hover{
+  background-position-x: -36px;
 }
 /* 下一首 */
 .icon-next{
@@ -216,23 +222,70 @@
   width: 36px;
   height: 36px;
   background-image: url('../images/icon/btn.png');
-  background-position-x: -144px;
+  background-position-x: -216px;
   background-position-y: -143px;
   background-size: 300px;
   background-repeat: no-repeat;
 }
+.icon-next:hover{
+  background-position-x: -180px;
+}
 /* 音量 */
+/* 一般音量 */
 .icon-voice{
-  width: 26px;
+  margin: 30px;
+  width: 22px;
   height: 22px;
   display: inline-block;
   background-image: url('../images/icon/btn.png');
-  background-position-x: 5px;
   background-position-y: -273px;
   background-size: 420px;
   background-repeat: no-repeat;
 }
+.icon-voice:hover{
+  background-position-x: -22px;
+}
+/* 最大音量 */
+.icon-max-voice{
+  margin: 30px;
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  background-image: url('../images/icon/btn.png');
+  background-position-x: -90px;
+  background-position-y: -273px;
+  background-size: 420px;
+  background-repeat: no-repeat;
+}
+.icon-max-voice:hover{
+  background-position-x: -112px;
+}
 /* 静音 */
-.icon-noy-voice{
-
+.icon-not-voice{
+  margin: 30px;
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  background-image: url('../images/icon/btn.png');
+  background-position-x: -178px;
+  background-position-y: -273px;
+  background-size: 420px;
+  background-repeat: no-repeat;
+}
+.icon-not-voice:hover{
+  background-position-x: -200px;
+}
+/* 歌单 */
+.icon-music-list{
+  width: 23px;
+  height: 30px;
+  display: inline-block;
+  background-image: url('../images/icon/btn.png');
+  background-position-x: 0;
+  background-position-y: -168px;
+  background-size: 420px;
+  background-repeat: no-repeat;
+}
+.icon-music-list:hover{
+  background-position-x: -85px;
 }

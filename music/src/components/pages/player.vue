@@ -1,115 +1,79 @@
 <template>
   <div class="player">
     <div class="bg"><img src="../../../static/images/20150718092902357590.jpg" alt=""></div>
-    <div class="wrap">
+    <div class="wrap" @click="musicListFlag = false">
       <div class="content">
         <div class="poster"><div class="poster-wrap"><img src="../../../static/images/20150718092902357590.jpg" alt=""></div></div>
         <div class="info">
           <div class="music-title">届かない恋</div>
           <div class="singer"><span>歌手：</span>上原れな</div>
+          <!-- 歌词 -->
           <div class="lyric" ref="lyricWrap" > 
-            <div class="lyric-wrap" >
+            <div class="lyric-wrap">
               <p :class="{'active-line': activeLine(e, index, nowPlayTime)}" v-for="(e, index) in lyric" :key="index">{{e.LrcLine}}</p>
             </div>
+          </div>
+          <!-- 播放列表 -->
+          <div class="play-list" v-show="musicListFlag">
+            <div class="p-l-title">播放列表/12</div>
+            <ul class="p-l-wrap">
+              <li v-for="(e, index) in 33" :key="index" :class="{'active-music': index == 1}">
+                <div class="rank-num">{{index+1}}</div>
+                <div class="music-name">届かない恋</div>
+                <div class="time">05:09</div>
+                <div class="singer">上原れな</div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
     <audio id="music" ref="music" src="../../../static/images/届かない恋 .mp3"></audio>
-	  <div class="music-bar" id="music_bar">
+	  <div class="music-bar" ref="musicBar">
       <div class="music-bar-bg"><img src="../../../static/images/20150718092902357590.jpg" alt=""></div>
-	  	<div class="music-bar-wrap">
+	  	<div class="music-bar-wrap" @mouseup="dragFlag = false"  @mousemove="progressDrag">
         <!-- 控制菜单 -->
-	      <div id="control">
-	      	<div class="previous" id="previous"><i class="icon-previous"></i></div>
-	      	<div class="play" id="play" @click="playClick" ><i :class="playBtn"></i></div>
-	      	<div class="previous" id="next"><i class="icon-next"></i></div>
+	      <div class="control">
+	      	<div class="previous"><i class="icon-previous"></i></div>
+	      	<div class="play" @click="playClick" ><i :class="playBtn"></i></div>
+	      	<div class="previous"><i class="icon-next"></i></div>
 	      </div>
 	      <!-- 进度条 -->
-	      <div class="progress-bar" id="progress_bar" ref="mProgressBar" @click="progressClick">
-	      	<div class="m-progress" id="m_progress" ref="mProgress">
-	      		<div class="m-p-icon" id="m_p_icon" ref="mProgressIcon"></div>
+	      <div class="progress-bar noselect" ref="mProgressBar" @click="progressClick">
+	      	<div class="m-progress" ref="mProgress">
+	      		<div class="m-p-icon" ref="mProgressIcon"  @mouseup="dragFlag = false" @mousedown="dragFlag = true" ></div>
 	      	</div>	
-	      	<span id="m_time">{{`${playTime}:${totalDuration}`}}</span>	
+	      	<span class="noselect">{{`${playTime} / ${totalDuration}`}}</span>	
 	      </div>
-	      <!-- 音量 -->
-	      <div class="voice">
-	      	<div class="v_icon"><i class="icon-voice"></i></div>
-	      	<div id="v_progress">
-	      		<div id="v_value"></div>
-	      	</div>		
-	      </div>
+        <!-- 音量 -->
+	      <div :class="voiceIconClass" @click="voiceClick"></div>
+        <!-- 播放列表 -->
+        <div class="icon-music-list music-list-btn" @click="musicListFlag = !musicListFlag">33</div>
       </div>
     </div><!-- music_bar end --> 
   </div>
 </template>
 
 <script>
-// import play from '@/util/play'
 export default {
   data(){
     return{
-      lyricIndex: 0,
+      dragFlag: false,//拖动flag true按着鼠标不放，false就是松开鼠标
+      musicListFlag: false,//播放列表
+      voiceIconClass: 'icon-voice',//音量图标
+      lyricIndex: 0,//当前歌词激活的下标
       lyric: [
              {
           "type": 1,
           "Time": null,
           "TimeMs": 0,
-          "LrcLine": "届かない恋 ’13"
+          "LrcLine": "届かない恋 "
         },
         {
           "type": 0,
           "Time": null,
           "TimeMs": 0,
           "LrcLine": "上原れな"
-        },
-        {
-          "type": 0,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "上原れな"
-        },
-        {
-          "type": 0,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "上原れな"
-        },
-        {
-          "type": 0,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "上原れな"
-        },
-        {
-          "type": 0,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "上原れな"
-        },
-        {
-          "type": 0,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "上原れな"
-        },
-        {
-          "type": 2,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "届かない恋 ’13"
-        },
-        {
-          "type": 2,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "届かない恋 ’13"
-        },
-        {
-          "type": 2,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "届かない恋 ’13"
         },
         {
           "type": 3,
@@ -368,7 +332,7 @@ export default {
         /*进度条百分比计算*/
 				var long = mLength * 650 /this.music.duration;//得到进度条长度，650是进度条总长度
 				this.mProgress.style.width = long + "px";
-				this.mProgressIcon.style.left = (long - 12) + "px";
+				this.mProgressIcon.style.left = long + "px";
 
 
         //结束处理
@@ -386,12 +350,34 @@ export default {
       let value = e.clientX - this.mProgressBar.offsetLeft;
       this.music.currentTime = parseInt(value * this.music.duration / 650);
 			this.mProgress.style.width = value + "px";
-      this.mProgressIcon.style.left = (value - 12) + "px";
-      
+      this.mProgressIcon.style.left = value + "px";
       //歌词位置刷新
       this.lyricScoll();
     },
 
+    //进度条拖动
+    progressDrag(event){
+      let e = event ? event : window.event;
+      if(this.dragFlag){ //是否拖动
+        let value = e.clientX - this.mProgressBar.offsetLeft;
+        let valueY = e.clientY- this.$refs.musicBar.offsetTop;
+        if(valueY <= 10 || valueY >= 70){//判断鼠标是否远离（为什么不用鼠标的移出事件？因为有bug）
+          this.dragFlag = false;
+          return;
+        }else{
+          if( value >=0 && value <= 650){
+          this.music.currentTime = parseInt(value * this.music.duration / 650);
+			      this.mProgress.style.width = value + "px";
+            this.mProgressIcon.style.left = value + "px";
+          }else if(value < 0){
+            this.music.currentTime = 0;
+          }else{
+            this.music.currentTime = this.music.duration -1;
+          }
+        }
+      }
+      
+    },
 
     //激活歌词
     activeLine(e, index, time){
@@ -416,6 +402,23 @@ export default {
       this.$refs.lyricWrap.scrollTop = this.lyricIndex * 35 - 210;
     },
 
+    //音量点击
+    voiceClick(){
+      switch (this.voiceIconClass){
+        case 'icon-voice':
+          this.music.volume = 1;
+          this.voiceIconClass = 'icon-max-voice';
+          break;
+        case 'icon-max-voice':
+          this.music.volume = 0;
+          this.voiceIconClass = 'icon-not-voice';
+          break;
+        case 'icon-not-voice':
+          this.music.volume = 0.5;
+          this.voiceIconClass = 'icon-voice';
+          break;
+      }
+    }
 
   },
   mounted(){
@@ -424,6 +427,7 @@ export default {
     this.mProgress = this.$refs.mProgress;
     this.mProgressIcon = this.$refs.mProgressIcon;
     this.mProgressBar = this.$refs.mProgressBar;
+    this.music.volume = 0.5;
     //计算总时长,等后台返回数据，有数据的话，这段可以弃之不用了
     setTimeout(() => { //避免出现NaN的问题
       let audio = document.getElementById("music");

@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2020-01-07 17:23:43 
  * @Last Modified by: Tiantong
- * @Last Modified time: 2020-01-09 21:49:21
+ * @Last Modified time: 2020-01-12 20:21:10
  */
 .player img{
   width: 100%;
@@ -109,9 +109,72 @@
   background: rgba(255,255,255,.1);
 }
 
+
+/* 播放列表 */
+.player .wrap .content .play-list{
+  position: absolute;
+  float: right;
+  bottom: 120px;
+  width: 480px;
+  height: 410px;
+  background-color: #343434;  
+  cursor: pointer;
+}
+.player .wrap .content .play-list .p-l-title{
+  padding: 0 19px;
+  height: 50px;
+  background-color: #242424;
+  line-height: 50px;
+  font-size: 16px;
+}
+.player .wrap .content .play-list .p-l-wrap{
+  position: absolute;
+  top: 50px;left: 0;bottom: 0;right: 0;
+  padding: 0 10px;
+  list-style: none;
+  overflow-y: auto;
+}
+/* 滚动条 */
+.player .wrap .content .play-list .p-l-wrap::-webkit-scrollbar{
+  width: 10px;  
+}
+.player .wrap .content .play-list .p-l-wrap::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.3)
+}
+.player .wrap .content .play-list .p-l-wrap::-webkit-scrollbar-track{
+  background: rgba(255,255,255,.1);
+}
+.player .wrap .content .play-list .p-l-wrap li{
+  padding: 0 9px;
+  height: 39px;
+  font-size: 15px;
+  border-bottom: 1px solid #42484e;
+}
+.player .wrap .content .play-list .p-l-wrap .active-music{
+  background-color: #42484e;
+}
+.player .wrap .content .play-list .p-l-wrap li:hover{
+  background-color: #4f575e;
+  color: #01e5ff;
+}
+.player .wrap .content .play-list .p-l-wrap li div{
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+  line-height: 39px;
+}
+.player .wrap .content .play-list .p-l-wrap li .rank-num{
+  margin-right: 16px;
+}
+.player .wrap .content .play-list .p-l-wrap li .singer{
+  float: right;
+  margin: 0 16px 0 0;
+}
+.player .wrap .content .play-list .p-l-wrap li .time{
+  float: right;
+}
 /* 音乐条 */
-/* 整体框架 */
-.music-bar{
+.player .music-bar{
   position: fixed;
   bottom: 0px;
   z-index: 99999;
@@ -121,7 +184,7 @@
   overflow: hidden;
   background-color: #fff;
 }
-.music-bar .music-bar-bg{
+.player .music-bar .music-bar-bg{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -130,7 +193,7 @@
   height: auto;
   filter: blur(160px);
 }
-.music-bar .music-bar-wrap{
+.player .music-bar .music-bar-wrap{
   position: absolute;
   display: flex;
   justify-content: center; /* 布局居中 */
@@ -139,25 +202,24 @@
   height: 100%;
 }
 /* 控制菜单 上/下一首，播放 */
-#control{
-  display: -webkit-flex; /* Safari */
+.player .control{
   display: flex;
-  justify-content: center; /* 布局居中 */
-  width: 306px;
+  justify-content: left; /* 布局居中 */
+  width: 230px;
   height: 80px;
 }
-#control .play{
+.player .control .play{
   width: 60px;
   height: 60px;
   margin: 10px 13px;
   transition: all 0.2s;
 }
-#control .previous{
+.player .control .previous{
   width: 36px;
   height: 36px;
   margin: 21px 13px;
 }
-#control div:active{
+.player .control div:active{
   opacity: 0.5;
   transition: 0s;
   transform: translateY(4px);
@@ -170,25 +232,26 @@
  * 
  */
 /* 整体框架 */
-.progress-bar{
+.player .progress-bar{
+  position: relative;
   width: 650px;
   height: 5px;
   border-radius: 2px;
   display: inline-block;
   background: #ccc;
   margin-top: 37px;
-  position: relative;
+  cursor: pointer;
 }
 /* 时间 */
-.progress-bar span{
+.player .progress-bar span{
   position: absolute;
-  right: 0px;
-  top: 5px;
+  right: 10px;
+  top: 10px;
   color: #fff;
-  font-family: "Microsoft YaHei 506L W","PingFang SC","Microsoft YaHei","Helvetica Neue","Helvetica","Arial";
+  font-size: 13px;
 }
 /* 红色进度条 */
-.progress-bar .m-progress{
+.player .progress-bar .m-progress{
   position: absolute;
   width: 0;
   height: 5px;
@@ -197,42 +260,34 @@
   
 }
 /* 进度条图标 */
-.progress-bar .m-p-icon{
+.player .progress-bar .m-p-icon{
   width: 16px;
   height: 16px;
   position: absolute;
-  left: 0;
+  left: 0px;
   top: -6px;
   border-radius: 8px;
   background: #fff;
 }
-
-/* 音量条 */
-.voice{
-  width: 150px;
-  height: 80px;
-  margin-left: 15px;
-  display: flex;
-  justify-content: center; /* 布局居中 */
+/* 歌单按钮 */
+.player .music-list-btn{
+  margin: 25px 0;
+  padding-right: 12px;
+  width: 60px;
+  height: 30px;
+  border-radius: 15px;
+  font-size: 13px;
+  text-align: right;
+  line-height: 32px;
+  color: #fff;
+  overflow: hidden;
+  cursor: pointer;
 }
-.voice .v_icon{
-  width: 26px;
-  height: 26px;
-  display: inline-block;
-  margin: 29px 5px;
-}
-.voice #v_progress{
-  width: 100px;
-  height: 5px;
-  margin: 37px 0px;
-  background: #ccc;
-  display: inline-block;
-  border-radius: 2px;
-}
-.voice #v_value{
-  position: absolute;
-  width: 50px;
-  height: 5px;
-  background: #d81e06;
-  border-radius: 2px;
+.noselect{
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currentlynot supported by any browser */
 }
