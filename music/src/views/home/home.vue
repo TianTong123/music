@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import slide from "../common/slide"
+import slide from "@/components/slide"
 export default {
   components:{
       slide

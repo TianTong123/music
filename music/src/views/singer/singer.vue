@@ -19,7 +19,7 @@
       </div>
       <div class="list">
         <div class="list-title">歌手列表</div>
-        <div class="card" v-for="(e, id) in singer" :key="id">
+        <div class="card" v-for="(e, id) in singer" :key="id" @click="goSingerInfo(id)">
           <div class="img-wrap"><img :src="e.headimg" alt=""></div>
           <span>{{e.name}}</span>
         </div>
@@ -72,6 +72,12 @@ export default {
     setContentWidth(){
       this.$refs['singer'].style.width = 1571 + "px";
       console.log(this.$refs['singer'].width)
+    },
+    //跳转信息页
+    goSingerInfo(id){
+      this.$router.push({
+        path: `singer/info/${id}`
+      })
     }
   },
   mounted(){

@@ -16,8 +16,8 @@
   </div>
 </template>
 <script>
-import Header from "./common/Header";
-import Footer from "./common/Footer"
+import Header from "@/components/Header";
+import Footer from "@/components/Footer"
 export default {
   components:{
     Header, Footer

@@ -16,33 +16,40 @@ export default new Router({
       meta: {
         keepAlive: true // 需要被缓存
       },
-      component: resolve => require(['../components/pages/userlist.vue'], resolve),
+      component: () => import("@/views/test"),
     },
     {
       path: '/vanmusic',
       name: 'vanmusic',
-      component: () => import("@/components/"),
+      component: () => import("@/views"),
       redirect: { name: "home" },
       children:[
         {
           path: 'home',
           name: 'home',
-          component: () => import("@/components/pages/home.vue"),
+          component: () => import("@/views/home/home"),
         },
         {
           path: 'rank',
           name: 'rank',
-          component: () => import("@/components/pages/rank.vue"),
+          component: () => import("@/views/rank/rank"),
         },
         {
           path: 'singer',
           name: 'singer',
-          component: () => import("@/components/pages/singer.vue"),
+          component: () => import("@/views/singer/singer"),
+          children:[
+            {
+              path: 'info/:id',
+              name: 'singerInfo',
+              component: () => import("@/views/singer/singerInfo.vue"),
+            },
+          ]
         },
         {
           path: 'player',
           name: 'player',
-          component: resolve => require(['../components/pages/player.vue'], resolve),
+          component: () => import("@/views/player/player"),
         },
       ]
     },

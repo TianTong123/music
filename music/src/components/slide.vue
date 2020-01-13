@@ -49,11 +49,11 @@ export default {
       },
       /* slideWidth: 0,//+播图宽度 */
       slides:[
-        {imgSrc:"../../../static/images/timg1.jpg", mid:'123456'},
-        {imgSrc:"../../../static/images/timg2.jpg", mid:'123456'},
-        {imgSrc:"../../../static/images/timg3.jpg", mid:'123456'},
-        {imgSrc:"../../../static/images/timg4.jpg", mid:'123456'},
-        {imgSrc:"../../../static/images/timg5.jpg", mid:'123456'},
+        {imgSrc:"../../static/images/timg1.jpg", mid:'123456'},
+        {imgSrc:"../../static/images/timg2.jpg", mid:'123456'},
+        {imgSrc:"../../static/images/timg3.jpg", mid:'123456'},
+        {imgSrc:"../../static/images/timg4.jpg", mid:'123456'},
+        {imgSrc:"../../static/images/timg5.jpg", mid:'123456'},
       ]
     }
   },
@@ -156,5 +156,5 @@ export default {
 }
 </script>
 <style scoped>
-@import '../../../static/css/slide.css';
+@import '../../static/css/slide.css';
 </style>

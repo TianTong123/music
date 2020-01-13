@@ -108,7 +108,7 @@ export default {
 </script>
 
 <style scoped>
-@import '../../../static/css/Header.css';
-@import '../../../static/css/myIcon.css';
+@import '../../static/css/Header.css';
+@import '../../static/css/myIcon.css';
 </style>
 
