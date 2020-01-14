@@ -37,11 +37,17 @@ export default new Router({
         {
           path: 'singer',
           name: 'singer',
-          component: () => import("@/views/singer/singer"),
+          component: () => import("@/views/singer/singerIndex"),
+          redirect: { name: "singer_list" },
           children:[
             {
+              path: 'singerList',
+              name: 'singer_list',
+              component: () => import("@/views/singer/singer"),
+            },
+            {
               path: 'info/:id',
-              name: 'singerInfo',
+              name: 'singer_info',
               component: () => import("@/views/singer/singerInfo.vue"),
             },
           ]

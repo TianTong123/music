@@ -91,6 +91,7 @@ export default {
   },
   watch:{
     $route(to, from) {
+      console.log("-->",this.$router.options.routes,this.$route.matched)
       //激活当前处于活动页面的菜单标签
       for(let i = 0; i < this.menuList.length; i ++){
         if(this.menuList[i].code == to.name){
