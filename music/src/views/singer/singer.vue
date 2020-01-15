@@ -76,7 +76,7 @@ export default {
     //跳转信息页
     goSingerInfo(id){
       this.$router.push({
-        path: `singer/info/${id}`
+        path: `info/${id}`
       })
     }
   },

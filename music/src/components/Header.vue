@@ -81,7 +81,7 @@ export default {
     },
     activeMenu(){
       for(let i = 0; i < this.menuList.length; i ++){
-        if(this.menuList[i].code == this.$route.name){
+        if(this.menuList[i].code == this.$route.matched[1].name){//二级路由名字
           this.menuList[i].class = 'active_menu'
         }else{
           this.menuList[i].class = ''
@@ -91,10 +91,9 @@ export default {
   },
   watch:{
     $route(to, from) {
-      console.log("-->",this.$router.options.routes,this.$route.matched)
       //激活当前处于活动页面的菜单标签
       for(let i = 0; i < this.menuList.length; i ++){
-        if(this.menuList[i].code == to.name){
+        if(this.menuList[i].code == this.$route.matched[1].name){//二级路由名字
           this.menuList[i].class = 'active_menu'
         }else{
           this.menuList[i].class = ''

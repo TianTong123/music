@@ -48,11 +48,12 @@ ul, li{
   width: auto;
   height: 70px;
 }
-.menu:hover .active_menu{
+/* 覆盖用的 */
+/* .menu:hover .active_menu{
   background-color: #242424;
   border-left: 1px solid #242424;
   border-right: 1px solid #242424;
-}
+} */
 .menu ul{
   list-style: none;
 }
@@ -66,10 +67,9 @@ ul, li{
   font-weight: 500;
   color: #ccc;
   user-select:none;
-  transition-duration: .4s;
 }
 .content .menu ul li:hover{
-  background-color: #C20C0C;
+  background-color: rgb(202, 59, 59);
   border-left: 1px solid #fff;
   border-right: 1px solid #fff;
   cursor: pointer;
