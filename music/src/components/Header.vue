@@ -28,7 +28,7 @@
         <div class="user-content">
           <div class="triangle-up"></div>
           <ul class="login-out">
-            <li><i class="icon-phone"/>&nbsp;手机登录</li>
+            <li @click="login"><i class="icon-phone"/>&nbsp;手机登录</li>
             <li><i class="icon-mallbox"/>邮箱登录(未开放)</li>
             <li><i class="icon-phone"/>不登录咯</li>
           </ul>
@@ -68,6 +68,7 @@ export default {
       ],
       restaurants: [],
       searchKey: '',
+      loginShow: false,
     }
   },
   mounted() {
@@ -87,6 +88,11 @@ export default {
           this.menuList[i].class = ''
         }
       }
+    },
+    //登录
+    login(){
+      this.loginShow = !this.loginShow;
+      this.$emit("changeLogin", this.loginShow);
     }
   },
   watch:{

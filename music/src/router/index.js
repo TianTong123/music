@@ -11,7 +11,7 @@ export default new Router({
       redirect: "/vanmusic"
     },
     {
-      path: '/user',
+      path: '/test',
       name: 'test',
       meta: {
         keepAlive: true // 需要被缓存

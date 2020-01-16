@@ -2,13 +2,17 @@
   <div class="index">
     <!-- 导航条 -->
     <div class="head">
-      <Header/>
+      <Header @changeLogin="changeLogin"/>
     </div>
     
+    <!-- 登录 -->
+    <login v-if="loginShow"></login>
+
     <!-- 内容显示 -->
     <div class="content" ref="content">
       <router-view></router-view>
     </div>
+
     <!-- 页脚 -->
     <div class="foot">
       <Footer v-if="footFlag"/>
@@ -17,14 +21,21 @@
 </template>
 <script>
 import Header from "@/components/Header";
-import Footer from "@/components/Footer"
+import Footer from "@/components/Footer";
+import login from '@/views/login/login';
 export default {
   components:{
-    Header, Footer
+    Header, Footer, login
   },
   data(){
     return{
-      footFlag: true
+      footFlag: true,
+      loginShow: false,
+    }
+  },
+  methods:{
+    changeLogin(val){
+      this.loginShow = val;
     }
   },
   watch:{

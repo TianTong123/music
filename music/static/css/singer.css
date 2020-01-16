@@ -80,6 +80,7 @@ ul{
   top: 20px;
   left: 55px;
   width: 720px;
+  transition-duration: .3s;
 }
 .type .type-list .type-list-wrap ul{
   display: inline-block;
