@@ -1,8 +1,8 @@
 /*
  * @Author: TianTong 
  * @Date: 2020-01-07 17:23:43 
- * @Last Modified by: Tiantong
- * @Last Modified time: 2020-01-12 20:21:10
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2020-01-17 15:19:46
  */
 .player img{
   width: 100%;
@@ -177,7 +177,7 @@
 .player .music-bar{
   position: fixed;
   bottom: 0px;
-  z-index: 99999;
+  z-index: 100;
   width: 100%;
   min-width: 1060px;
   height: 80px;

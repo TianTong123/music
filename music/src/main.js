@@ -3,21 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css';
-import axios from 'axios'
-import VueAxios from 'vue-axios'
 import store from './store/store';
-import httpService from './service/service';//封装axios接口强求
+import myInput from '@/components/myInput'
 
 Vue.config.productionTip = false
-Vue.use(ElementUI);
-Vue.use(VueAxios, axios)
-
-//跨域请求
-axios.defaults.baseURL = '/api'//https://api.douban.com/v2/movie 改成/api才能用proxyTable跨域
-Vue.prototype.$axios = httpService; //新增，有影响就删除
-Vue.prototype.$ajax = axios
+Vue.use(myInput);//注册自己封装的输入框
 
 
 /* eslint-disable no-new */
