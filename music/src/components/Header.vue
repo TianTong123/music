@@ -91,7 +91,7 @@ export default {
     },
     //登录
     login(){
-      this.loginShow = !this.loginShow;
+      this.loginShow = true;
       this.$emit("changeLogin", this.loginShow);
     }
   },

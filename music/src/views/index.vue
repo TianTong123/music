@@ -6,7 +6,7 @@
     </div>
     
     <!-- 登录 -->
-    <login v-if="loginShow"></login>
+    <login :loginShow="loginShow" @close='close'></login>
 
     <!-- 内容显示 -->
     <div class="content" ref="content">
@@ -36,8 +36,12 @@ export default {
   methods:{
     changeLogin(val){
       this.loginShow = val;
+    },
+    close(val){
+      this.loginShow = val;
     }
   },
+  
   watch:{
     // $route(to, from) {
     //  console.log(to.path)
