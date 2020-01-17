@@ -18,7 +18,7 @@
           <my-input class="input" v-model="formData.userPwd" type="password" placeholder="请输入密码" icon="pwd"></my-input>
           <my-input v-if="activeName==1" class="input" v-model="formData.userPwd" type="password" placeholder="请再次输入密码" icon="pwd"></my-input>
           <div class="login-btn" @click="btnClick(activeName)">迈进新世界的大门</div>
-          <div class="underline-btn" @click="btnClick(activeName+2)">蛤！没有账号！偷偷注册</div>
+          <div class="underline-btn" @click="btnClick(activeName+2)">{{btnContent}}</div>
         </div>
       </div>
     </div>
@@ -37,6 +37,7 @@ export default {
       show: true,
       activeName: 0,//0是登录，1是注册
       title: '登录',
+      btnContent: '蛤！没有账号！偷偷注册',
       formData:{
         userAccount: '',
         userPwd: ''
@@ -53,9 +54,11 @@ export default {
         case 2://点击右下角的注册
           this.title = '注册';
           this.activeName = 1;
+          this.btnContent = '蛤！已有账号！赶紧登录';
           break;
         case 3://点击右下角的登录
           this.title = '登录';
+          this.btnContent = '蛤！已有账号！偷偷注册';
           this.activeName = 0;
           break;
       }
