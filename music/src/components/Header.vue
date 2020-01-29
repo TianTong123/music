@@ -64,11 +64,11 @@ export default {
         {name: '首页', code: 'home', id: 8848, class: 'active_menu'},
         {name: '榜单', code: 'rank', id: 8849, class: ''},
         {name: '歌手', code: 'singer', id: 8851, class: ''},
-        {name: '播放', code: 'player', id: 8853, class: ''},
+        {name: '用户', code: 'user', id: 8853, class: ''},
+        {name: '播放', code: 'player', id: 8858, class: ''},
       ],
       restaurants: [],
       searchKey: '',
-      loginShow: false,
     }
   },
   mounted() {
@@ -80,9 +80,13 @@ export default {
         name: data.code
       });
     },
+    //激活菜单方法
     activeMenu(){
       for(let i = 0; i < this.menuList.length; i ++){
         if(this.menuList[i].code == this.$route.matched[1].name){//二级路由名字
+          //控制页脚
+          if(this.$route.matched[1].name == 'player') this.$emit("changeFoot", false);
+          else this.$emit("changeFoot", true);
           this.menuList[i].class = 'active_menu'
         }else{
           this.menuList[i].class = ''
@@ -91,20 +95,13 @@ export default {
     },
     //登录
     login(){
-      this.loginShow = true;
-      this.$emit("changeLogin", this.loginShow);
+      this.$emit("changeLogin", true);
     }
   },
   watch:{
     $route(to, from) {
       //激活当前处于活动页面的菜单标签
-      for(let i = 0; i < this.menuList.length; i ++){
-        if(this.menuList[i].code == this.$route.matched[1].name){//二级路由名字
-          this.menuList[i].class = 'active_menu'
-        }else{
-          this.menuList[i].class = ''
-        }
-      }
+      this.activeMenu();
     }
   },
   mounted(){

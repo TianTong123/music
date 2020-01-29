@@ -21,6 +21,7 @@ html, body{
 }
 #app {
   width: 100%;
+  height: 100%;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   /* 字体抗锯齿，提升字体清晰度，不过没什么用 */
   -webkit-font-smoothing: antialiased;

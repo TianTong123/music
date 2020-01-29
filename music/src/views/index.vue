@@ -2,7 +2,7 @@
   <div class="index">
     <!-- 导航条 -->
     <div class="head">
-      <Header @changeLogin="changeLogin"/>
+      <Header @changeLogin="changeLogin" @changeFoot="changeFoot"/>
     </div>
     
     <!-- 登录 -->
@@ -15,7 +15,7 @@
 
     <!-- 页脚 -->
     <div class="foot">
-      <Footer v-if="footFlag"/>
+      <Footer v-show="footFlag"/>
     </div>    
   </div>
 </template>
@@ -34,8 +34,13 @@ export default {
     }
   },
   methods:{
+    //登录控制
     changeLogin(val){
       this.loginShow = val;
+    },
+    //页脚控制
+    changeFoot(val){
+      this.footFlag = val;
     },
     close(val){
       this.loginShow = val;
@@ -51,30 +56,29 @@ export default {
 </script>
 
 <style scoped>
-/* 绝对定位法上中下三栏式布局 */
+/* 绝对定位法上中下三栏式布局(暂时不用) */
 .index {
   width: 100%;
   height: 100%;
 }
 .head{
-  position: absolute;
-  top :0;
+  /* position: absolute;
+  top :0; */
   width: 100%;
   height: 70px;
 }
 .index .content{
-  position: absolute;
+  /* position: absolute;
   top: 70px;
-  bottom: 60px;
+  bottom: 60px; */
   width: 100%;
-  height: auto;
-  overflow-y: auto;
-  overflow-x: hidden;
+  /* overflow-y: auto; */
+  /* overflow-x: hidden; */
   background-color: #eee;
 }
 .index .foot{
-  position: absolute;
-  bottom: 0;
+  /* position: absolute;
+  bottom: 0; */
   width: 100%;
 	height: 60px;
 }

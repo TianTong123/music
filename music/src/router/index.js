@@ -13,9 +13,6 @@ export default new Router({
     {
       path: '/test',
       name: 'test',
-      meta: {
-        keepAlive: true // 需要被缓存
-      },
       component: () => import("@/views/test"),
     },
     {
@@ -30,32 +27,37 @@ export default new Router({
           component: () => import("@/views/home/home"),
         },
         {
-          path: 'rank',
+          path: 'rank',//排行榜
           name: 'rank',
           component: () => import("@/views/rank/rank"),
         },
         {
-          path: 'singer',
+          path: 'singer',//歌手页面
           name: 'singer',
           component: () => import("@/views/singer/singerIndex"),
           redirect: { name: "singer_list" },
           children:[
             {
-              path: 'singerList',
+              path: 'singerList',//排行榜
               name: 'singer_list',
               component: () => import("@/views/singer/singer"),
             },
             {
-              path: 'info/:id',
+              path: 'info/:id',//用户详细页
               name: 'singer_info',
               component: () => import("@/views/singer/singerInfo.vue"),
             },
           ]
         },
         {
-          path: 'player',
+          path: 'player',//播放页面
           name: 'player',
           component: () => import("@/views/player/player"),
+        },
+        {
+          path: 'user',//用户页面
+          name: 'user',
+          component: () => import("@/views/user/user"),
         },
       ]
     },
