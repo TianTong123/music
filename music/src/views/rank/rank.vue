@@ -62,5 +62,4 @@ export default {
 </script>
 <style scoped>
 @import '../../../static/css/rank.css';
-@import '../../../static/css/myIcon.css';
 </style>

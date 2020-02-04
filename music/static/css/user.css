@@ -1,0 +1,73 @@
+.user{
+  width: 100%;
+}
+.user .user-wrap{
+  margin: 0 auto;
+  padding: 40px;
+  width: 1018px;
+  border: 1px solid #242424;
+  border-top: 0;
+  border-bottom: 0;
+  background-color: #FFF;
+}
+.user .user-wrap .info{
+  display: flex;
+}
+.user .user-wrap .info .user-img{
+  position: relative;
+  display: inline-block;
+  margin-right: 40px;
+  padding: 4px;
+  width: 188px;
+  height: 188px;
+  border: 1px solid #242424;
+  overflow: hidden;
+}
+.user .user-wrap .info .user-img::before{
+  position: absolute;
+  content: '';
+  bottom: 0px;
+  height: 4px;
+  width: 100%;
+  background-color: #FFF;
+}
+.user .user-wrap .info .user-img img{
+  display: inline-block;
+  max-width: 100%;
+}
+.user .user-wrap .info .user-info{
+  flex: 1;
+}
+.user .user-wrap .info .user-info .user-name{
+  margin-bottom: 20px;
+  height: 50px;
+  width: 100%;
+  border-bottom: 2px solid #C20C0C;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 40px;
+}
+.user .user-wrap .info .user-info .data-bar{
+  margin: 10px 0;
+  color: #848484;
+  font-size: 15px;
+}
+.user .user-wrap .info .user-info .data-bar span{
+  color: #242424;
+  font-weight: 600;
+}
+.user .user-wrap .info .user-info .info-btn{
+  display: inline-block;
+}
+
+/* 歌单 */
+.user .user-wrap .music-list{
+  margin-top: 40px;
+}
+.user .user-wrap .music-list .list-title{
+  width: 100%;
+  height: 40px;
+  line-height: 30px;
+  font-size: 22px;
+  border-bottom: 2px solid #C20C0C;
+}

@@ -469,6 +469,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../../../static/css/myIcon.css';
 @import '../../../static/css/play.css';
 </style>

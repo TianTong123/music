@@ -87,5 +87,4 @@ export default {
 </script>
 <style scoped>
 @import '../../../static/css/singer.css';
-@import '../../../static/css/myIcon.css';
 </style>
