@@ -189,6 +189,14 @@
 .icon-play:hover{
   background-position-x: -60px;
 }
+/* 小型播放按钮 */
+.icon-mini-play{
+  width: 22px;
+  height: 22px;
+  background-image: url('../images/icon/btn.png');
+  background-size: 110px;
+  background-repeat: no-repeat;
+}
 /* 暂停按钮 */
 .icon-pause{
   position: relative;

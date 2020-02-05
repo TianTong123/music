@@ -87,9 +87,9 @@ export default {
           //控制页脚
           if(this.$route.matched[1].name == 'player') this.$emit("changeFoot", false);
           else this.$emit("changeFoot", true);
-          this.menuList[i].class = 'active_menu'
+          this.menuList[i].class = 'active_menu';
         }else{
-          this.menuList[i].class = ''
+          this.menuList[i].class = '';
         }
       }
     },
