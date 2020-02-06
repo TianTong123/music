@@ -26,6 +26,14 @@
           </div>
         </div>
       </div>
+
+      <!-- 弹框 -->
+      <my-Dialog :slot-scope="false">
+        dewidhiwuh阿凤飞飞威锋网 无法慰问费威锋网
+        <my-input type="text" placeholder="请输入账号" icon="user"></my-input>
+        kjkjhkj
+        
+      </my-Dialog>
     </div>
   </div>
 </template>
