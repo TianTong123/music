@@ -1,9 +1,9 @@
 /* 文字按钮样式 */
 .my-btn{
-  margin-right: 20px;
   padding: 1px 10px;
   height: 20px;
   font-size: 14px;
+  text-align: center;
   border: 1px solid #242424;
   border-radius: 2px;
   cursor: pointer;
@@ -56,6 +56,47 @@
   background-color: #fff;
 }
 .my-add-btn:active::after{
+  background-color: #fff;
+}
+
+/* 关闭按钮 */
+.my-close-btn{
+  border: 1px solid #242424;
+  border-radius: 2px;
+  cursor: pointer;
+  user-select:none;
+}
+.my-close-btn::before{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  height: 65%;
+  width: 2px;
+  background-color: #242424;
+}
+.my-close-btn::after{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  height: 2px;
+  width: 65%;
+  background-color: #242424;
+}
+.my-close-btn:hover{
+  border-color: #3D8A0A;
+}
+.my-close-btn:active{
+  border-color: #242424;
+  background-color: #3D8A0A;
+}
+.my-close-btn:active::before{
+  background-color: #fff;
+}
+.my-close-btn:active::after{
   background-color: #fff;
 }
 /* 公用样式 */
