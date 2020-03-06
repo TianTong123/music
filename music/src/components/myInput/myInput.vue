@@ -42,6 +42,10 @@ export default {
   background: rgba(0, 0, 0, 0);
   text-align: left;
 }
+.my-input input button{
+  height: 100% !important;
+  background: #242424 !important;
+}
 /* 图标 */
 .my-input i{
   display: inline-block;

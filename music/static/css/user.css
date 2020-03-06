@@ -131,6 +131,21 @@
   line-height: 30px;
   font-size: 14px;
 }
+.user .user-wrap .line-style .input-file{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  opacity: 0;
+}
+.user .user-wrap .line-style .file-wrap{
+ position: relative;
+}
+.user .user-wrap .line-style .file-btn{
+  width: 198px;
+  height: 24px;
+  line-height: 26px;
+  border-radius: 4px;
+}
 .user .user-wrap .footer .info-btn {
   margin-left: 20px;
   width: 50px;

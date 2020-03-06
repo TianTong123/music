@@ -17,7 +17,7 @@
   left: -10%;
   width: 120%;
   height: 120%;
-  filter: blur(160px);
+  filter: blur(50px);
 }
 .player .wrap{
   position: absolute;
@@ -36,6 +36,7 @@
 }
 .player .wrap .content .poster{
   position: relative;
+  margin-top: 50px;
   display: inline-block;
   width: 260px;
   height: 260px;
@@ -188,7 +189,7 @@
   transform: translateX(-50%) translateY(-50%);
   width: 120%;
   height: auto;
-  filter: blur(160px);
+  filter: blur(50px);
 }
 .player .music-bar .music-bar-wrap{
   position: absolute;

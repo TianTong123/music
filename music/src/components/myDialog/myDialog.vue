@@ -7,9 +7,6 @@
       </div>
       <slot></slot>
       <slot name="footer"></slot>
-      <!-- <div class="footer" v-if="footer">
-        
-      </div> -->
     </div> 
   </div>
 </template>
@@ -17,12 +14,18 @@
 <script>
 export default {
   props:{
-    visible: false,
+    visible: {
+      type: Boolean,
+      default: false
+    },
     showCloseBtn: {
       type: Boolean,
       default: true
     },
-    title: ''
+    title: {
+      type: String,
+      default: ''
+    }
   },
   methods:{
     close(){

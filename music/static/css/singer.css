@@ -1,14 +1,13 @@
 /*
  * @Author: TianTong 
  * @Date: 2019-12-11 11:04:34 
- * @Last Modified by: mikey.zhaopeng
  * @Last Modified time: 2020-01-15 16:45:14
  */
 ul{
   list-style: none;
 }
 .singer{
-  padding-top: 36px;
+  padding: 36px 0 70px 0;
   width: 100%;
 }
 .singer .wrap{
