@@ -21,18 +21,23 @@ export default new Router({
       component: () => import("@/views"),
       redirect: { name: "home" },
       children:[
-        {
+        {//home
           path: 'home',
           name: 'home',
           component: () => import("@/views/home/home"),
         },
-        {
-          path: 'rank',//排行榜
+        {//搜索
+          path: 'search/:value',
+          name: 'search',
+          component: () => import("@/views/search/search"),
+        },
+        {//排行榜
+          path: 'rank',
           name: 'rank',
           component: () => import("@/views/rank/rank"),
         },
-        {
-          path: 'singer',//歌手页面
+        {//歌手页面
+          path: 'singer',
           name: 'singer',
           component: () => import("@/views/singer/singer"),
           redirect: { name: "singer_list" },
@@ -49,24 +54,24 @@ export default new Router({
             },
           ]
         },
-        {
-          path: 'player',//播放页面
+        {//播放页面
+          path: 'player/:id',
           name: 'player',
           component: () => import("@/views/player/player"),
         },
-        {
-          path: 'user',//用户页面
+        {//用户页面
+          path: 'user',
           name: 'user',
           component: () => import("@/views/user/user"),
           redirect: { path: "user/userInfo/13160502844" },
           children:[
-            {
-              path: 'userInfo/:id',//排行榜
+            {//详情页
+              path: 'userInfo/:id',
               name: 'user_info',
               component: () => import("@/views/user/userInfo"),
             },
-            {
-              path: 'musicList/:id',//用户详细页
+            {//歌单页
+              path: 'musicList/:id',
               name: 'music_list',
               component: () => import("@/views/user/musicList"),
             },

@@ -71,7 +71,6 @@ export default {
     //设置宽度
     setContentWidth(){
       this.$refs['singer'].style.width = 1571 + "px";
-      console.log(this.$refs['singer'].width)
     },
     //跳转信息页
     goSingerInfo(id){

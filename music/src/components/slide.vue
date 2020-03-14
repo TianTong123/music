@@ -35,6 +35,9 @@
 <script>
 export default {
   name: "slide",
+  props:{
+    slides: [],
+  },
   data () {
     return {
       mov: 0,//轮播图移动距离
@@ -47,14 +50,7 @@ export default {
         name1: "",
         name2: ""
       },
-      /* slideWidth: 0,//+播图宽度 */
-      slides:[
-        {imgSrc:"../../static/images/timg1.jpg", mid:'123456'},
-        {imgSrc:"../../static/images/timg2.jpg", mid:'123456'},
-        {imgSrc:"../../static/images/timg3.jpg", mid:'123456'},
-        {imgSrc:"../../static/images/timg4.jpg", mid:'123456'},
-        {imgSrc:"../../static/images/timg5.jpg", mid:'123456'},
-      ]
+      
     }
   },
   computed:{

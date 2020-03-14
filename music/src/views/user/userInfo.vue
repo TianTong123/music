@@ -17,6 +17,7 @@
         <div class="list-title">
           <span>我的歌单</span> 
           <div class="list-btn my-add-btn" @click="diaCreateSF = true"></div>
+          <div class="list-btn my-full-delete-btn" @click="diaCreateSF = true"></div>
         </div>
         <div class="card-wrap">
           <div class="music-list-card" v-for="(e, index) in 12" :key="index" 
@@ -33,46 +34,66 @@
         <div class="line-style"><span>旧密码：</span><my-input type="password" placeholder="请输入密码" icon="pwd"></my-input></div> 
         <div class="line-style"><span>新密码：</span><my-input type="password" placeholder="请输入新密码" icon="pwd"></my-input></div>
         <div class="line-style"><span>新密码：</span><my-input type="password" placeholder="请输入新密码" icon="pwd"></my-input></div>
-        <div slot="footer">
-          <div class="footer">
+        <div slot="footer" class="footer">
             <div class="info-btn my-btn">确认</div>
             <div class="info-btn my-btn" @click="closeDia">取消</div>
-          </div>
         </div>
       </my-Dialog>
 
       <!-- 创建歌单弹框 -->
       <my-Dialog title="创建歌单" :visible="diaCreateSF" @closeDia="closeDia">
         <div class="line-style"><span>名字：</span><my-input type="text" placeholder="请输入歌单名" icon="user"></my-input></div> 
-        <div slot="footer">
-          <div class="footer">
+        <div slot="footer" class="footer">
             <div class="info-btn my-btn">确认</div>
             <div class="info-btn my-btn" @click="closeDia">取消</div>
-          </div>
         </div>
       </my-Dialog>
 
       <!-- 上传音乐弹框 -->
       <my-Dialog title="上传音乐" :visible="diaUploadMusic" @closeDia="closeDia">
-        <div class="line-style"><span>音乐名：</span><my-input type="text" placeholder="请输入音乐名" icon="user"></my-input></div> 
-        <div class="line-style"><span>歌手名：</span><my-input type="text" placeholder="请输入歌手名" icon="user"></my-input></div> 
-        <div class="line-style"><span>音 &nbsp;&nbsp;乐：</span>
+        <div class="line-style">
+          <span>音乐名：</span><my-input type="text" placeholder="请输入音乐名" icon="user"></my-input>
+          <span class="line-label">歌手名：</span><my-input type="text" placeholder="请输入歌手名" icon="user"></my-input>
+        </div> 
+        <div class="line-style">
+          <span>音 &nbsp;&nbsp;乐：</span>
           <div class="file-wrap">
             <div class="file-btn my-btn">选择音乐</div>
             <input class="input-file" type="file">
+            <div class="file-name">deded.mp3</div>
           </div>
-        </div> 
-        <div class="line-style"><span>歌 &nbsp;&nbsp;词：</span>
+          <span class="line-label">歌 &nbsp;&nbsp;词：</span>
           <div class="file-wrap">
             <div class="file-btn my-btn">选择歌词</div>
             <input class="input-file" type="file">
+            <div class="file-name">dedede.lyc</div>
           </div>
         </div> 
-        <div slot="footer">
-          <div class="footer">
-            <div class="info-btn my-btn">确认</div>
-            <div class="info-btn my-btn" @click="closeDia">取消</div>
+        <div class="line-style">
+          <span>封 &nbsp;&nbsp;面：</span>
+          <div class="file-wrap">
+            <div class="file-btn my-btn">选择封面</div>
+            <input class="input-file" type="file">
+            <div class="preview-img-wrap">
+              <img src="" alt="">
+            </div>
           </div>
+          <span class="line-label">海 &nbsp;&nbsp;报：</span>
+          <div class="file-wrap">
+            <div class="file-btn my-btn">选择海报</div>
+            <input class="input-file" type="file">
+            <div class="preview-img-wrap">
+              <img src="" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="line-style">
+          <span>备 &nbsp;&nbsp;注：</span><my-input type="text" placeholder="请输入音乐名" icon="user"></my-input>
+        </div>
+        
+        <div slot="footer" class="footer">
+          <div class="info-btn my-btn">确认</div>
+          <div class="info-btn my-btn" @click="closeDia">取消</div>
         </div>
       </my-Dialog>
 
@@ -83,13 +104,14 @@
           <div class="file-wrap">
             <div class="file-btn my-btn">选择头像</div>
             <input class="input-file" type="file">
+            <div class="preview-img-wrap">
+              <img src="../../../static/images/ldh.jpg" alt="">
+            </div>
           </div>
         </div> 
-        <div slot="footer">
-          <div class="footer">
+        <div slot="footer" class="footer">
             <div class="info-btn my-btn">确认</div>
             <div class="info-btn my-btn" @click="closeDia">取消</div>
-          </div>
         </div>
       </my-Dialog>
     </div>

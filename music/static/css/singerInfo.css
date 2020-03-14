@@ -80,6 +80,13 @@
   background-size: 110px;
   background-repeat: no-repeat;
 }
+.singerinfo .music-list li .btn{
+  position: relative;
+  margin: 14px 14px;
+  float: right;
+  width: 22px;
+  height: 22px;
+}
 .singerinfo .music-list li:hover{
   color: #fff;
   background-color: #242424;

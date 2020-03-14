@@ -70,15 +70,26 @@
   z-index: 9999;
   width: 25px;
   height: 25px;
-  line-height: 25px;
-  text-align: center;
-  font-size: 22px;
-  color: #fff;
-  cursor: pointer;
-  user-select: none;
+  border: 1px solid #FFF;
+}
+.login .wrap .close-btn::before{
+  background-color: #fff;
+}
+.login .wrap .close-btn::after{
+  background-color: #fff;
 }
 .login .wrap .close-btn:hover{
-  color: #3D8A0A;
+  color: #FFF;
+}
+.login .wrap .close-btn:active{
+  border-color: #fff;
+  background-color: #fff;
+}
+.login .wrap .close-btn:active::before{
+  background-color: #242424;
+}
+.login .wrap .close-btn:active::after{
+  background-color: #242424;
 }
 .login .wrap .title{
   display: inline-block;

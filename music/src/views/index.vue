@@ -2,11 +2,8 @@
   <div class="index">
     <!-- 导航条 -->
     <div class="head">
-      <Header @changeLogin="changeLogin" @changeFoot="changeFoot"/>
+      <Header/>
     </div>
-    
-    <!-- 登录 -->
-    <login :loginShow="loginShow" @close='close'></login>
 
     <!-- 内容显示 -->
     <div class="content" ref="content">
@@ -22,36 +19,22 @@
 <script>
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import login from '@/views/login/login';
 export default {
   components:{
-    Header, Footer, login
+    Header, Footer
   },
   data(){
     return{
       footFlag: true,
-      loginShow: false,
     }
   },
   methods:{
-    //登录控制
-    changeLogin(val){
-      this.loginShow = val;
-    },
     //页脚控制
     changeFoot(val){
       this.footFlag = val;
     },
-    close(val){
-      this.loginShow = val;
-    }
   },
-  
-  watch:{
-    // $route(to, from) {
-    //  console.log(to.path)
-    // }
-  }
+
 }
 </script>
 

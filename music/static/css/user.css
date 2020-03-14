@@ -124,12 +124,17 @@
   vertical-align: top;
   margin: 2px 7px;
 }
+
+/* line-style */
 .user .user-wrap .line-style{
   display: flex;
   margin: 10px 0;
-  justify-content: space-around;
+  justify-content: flex-start;
   line-height: 30px;
   font-size: 14px;
+}
+.user .user-wrap .line-style .line-label{
+  margin-left: 20px;
 }
 .user .user-wrap .line-style .input-file{
   position: absolute;
@@ -138,7 +143,46 @@
   opacity: 0;
 }
 .user .user-wrap .line-style .file-wrap{
- position: relative;
+  position: relative;
+}
+.user .user-wrap .line-style .file-wrap .file-name{
+  color: aqua;
+}
+.user .user-wrap .line-style .file-wrap .preview-img-wrap{
+  position: relative;
+  margin-top: 20px;
+  width: 220px;
+  height: 220px;
+  overflow: hidden;
+  border: 1px solid #242424;
+  border-radius: 4px;
+}
+.user .user-wrap .line-style .file-wrap .preview-img-wrap::before{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  height: 25%;
+  width: 2px;
+  background-color: #242424;
+}
+.user .user-wrap .line-style .file-wrap .preview-img-wrap::after{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) rotate(0deg);
+  height: 2px;
+  width: 25%;
+  background-color: #242424;
+}
+.user .user-wrap .line-style .file-wrap .preview-img-wrap img{
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 100%;
 }
 .user .user-wrap .line-style .file-btn{
   width: 198px;
@@ -146,6 +190,8 @@
   line-height: 26px;
   border-radius: 4px;
 }
+/* line-style 结束 */
+
 .user .user-wrap .footer .info-btn {
   margin-left: 20px;
   width: 50px;

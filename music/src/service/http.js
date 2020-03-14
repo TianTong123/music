@@ -5,6 +5,7 @@ import store from "@/store/store";
 import util from "@/util/utils";
 
 let myMsg = msg.myMsg;
+
 /**
  * @url 地址
  * @method 请求方法
@@ -24,39 +25,41 @@ export const http = ({
     responseType,
 }) => {
     // axios 默认设置
-    axios.defaults.retry = 1;//重试次数
+    axios.defaults.retry = 0;//重试次数
     axios.defaults.retryDelay = 1000;//重试延迟
   
     // axios response拦截器
     axios.interceptors.response.use(
       response => {
         //登录失效的时候重定向为登录页面
-        if(response.data.code == 2){
-          myMsg.confirm({
-            type: 'error',
-            content: '用户数据失效！点确定返回登录页',
-            callback: ()=>{
-              router.replace({name: 'login'})
-            }
-          })
-          return response
-        }else if(response.data.code == 3){
+        // if(response.data.code == 2){
+        //   myMsg.confirm({
+        //     type: 'error',
+        //     content: '用户数据失效！点确定返回登录页',
+        //     callback: ()=>{
+        //       router.replace({name: 'login'})
+        //     }
+        //   })
+        //   return response
+        // }
+        if(response.data.code == 3){
           myMsg.confirm({
             type: 'error',
             content: '系统错误！',
           })
           return response
         }else {
-          let config = response.config;
           return response
         }
       },
       //接口错误状态处理
       error => {
-        myMsg.confirm({
-          type: 'error',
-          content: "这个错误，是后台的锅！",//显示返回的错误信息
-        })
+        if(error.response.data.status != null || error.response.data.status != ""){
+         myMsg.confirm({
+           type: 'error',
+           content: "这个错误，是后台的锅！",//显示返回的错误信息
+         })
+        } 
         return error
       }
     )
@@ -75,14 +78,11 @@ export const http = ({
     }
     
     let token = util.getSession("token");
-    console.log("-->",token)
+
     if (token) {
       config.headers.uid = util.getSession("user").accountCode;
       config.headers.token = token;
     }
-    
- 
-
 
     //get方法拼接参数
     method = method.toUpperCase();

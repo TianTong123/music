@@ -131,5 +131,25 @@
   color: #333;
 }
 .card-list .card .card-content ul li .content .singer{
+  position: relative;
   color: #999;
+}
+.card-list .card .card-content ul li .content .singer .islike{
+  position: absolute;
+  top: 0px;
+  left: 72px;
+  padding-left: 18px;
+  width: auto;
+  height: 18px;
+  margin-right: 10px;
+  line-height: 18px;
+}
+.card-list .card .card-content ul li .content .singer .islike i{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: inline-block;
+  margin: 2px;
+  width: 14px;
+  height: 14px;
 }

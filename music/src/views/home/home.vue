@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <!-- 轮播图 -->
-    <slide/>
+    <slide :slides="slides" />
     <!-- 热门推荐 -->
     <div class="content">
       <div class="content-wrap">
@@ -35,8 +35,55 @@
 import slide from "@/components/slide"
 export default {
   components:{
-      slide
+    slide
   },
+  data(){
+    return{
+      slides:[
+        {imgSrc:"../../static/images/timg1.jpg", mid:'123456'},
+        {imgSrc:"../../static/images/timg2.jpg", mid:'123456'},
+        {imgSrc:"../../static/images/timg3.jpg", mid:'123456'},
+        {imgSrc:"../../static/images/timg4.jpg", mid:'123456'},
+        {imgSrc:"../../static/images/timg5.jpg", mid:'123456'},
+      ],
+      hotList: [],
+    }
+  },
+  methods:{
+    //获取轮播图
+    getSlides(){
+      let parames = {
+        
+      }
+      this.$http.getRank( parames )
+      .then(({data}) => {
+        if (data.code == 0){
+          this.slides = data.data;
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+      .catch(err => {
+        this.$myMsg.notify({content: err.message,type: 'error'})
+      })
+    },
+
+    //获取热门推荐
+    getHotList(){
+      let parames = {
+        
+      }
+      this.$http.getRank( parames )
+      .then(({data}) => {
+        if (data.code == 0){
+          this.hotList = data.data;
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+      .catch(err => {
+        this.$myMsg.notify({content: err.message,type: 'error'})
+      })
+    }
+  }
 }
 </script>
 <style scoped>

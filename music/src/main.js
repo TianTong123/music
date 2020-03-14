@@ -6,13 +6,14 @@ import myInput from '@/components/myInput';//引入输入框
 import myDialog from '@/components/myDialog';//引入的弹框
 import api from "@/service/api.js";
 import message from "@/components/myMsg/index";//引入消息组价
+import login from "@/views/login/login"
 
 Vue.config.productionTip = false
 Vue.prototype.$http = api;
 Vue.use(myInput);//注册自己封装的输入框
 Vue.use(myDialog);//同上
 Vue.use(message.register);
-
+Vue.use(login.register);
 
 /* eslint-disable no-new */
 new Vue({

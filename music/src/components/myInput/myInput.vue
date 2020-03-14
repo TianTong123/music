@@ -1,24 +1,32 @@
 <template>
-  <div class="my-input">
+  <div :class="{'my-input':type != 'checkbox', 'my-checkbox':type == 'checkbox'}">
     <i v-if="icon" :class="icon"></i>
-    <input :type="type" @input="$emit('input', $event.target.value)" :placeholder="placeholder">
+    <input :type="type" @input="$emit('input', $event.target.value)" :placeholder="placeholder" v-if="type != 'checkbox'">
+      <div class="my-checkbox-wrap" v-if="type == 'checkbox'">
+        <input :type="type"  @input="$emit('input', $event.target.checked?label:null)" :value="label" >
+      </div>
+     <div class="my-checkbox-label"><slot></slot></div> 
   </div>
 </template>
 <script>
 export default {
   props:{
     icon: {
-      default: '',
+      default: '', //user, pwd,
       type: String,
     },
-    type: {
+    type: {//text, password, checkbox
       default: 'text',
       type: String
     },
     placeholder: {
       default: '请输入',
       type: String
-    }
+    },
+    label: {
+      default: '',
+      type: String
+    },
   },
 }
 </script>
@@ -45,6 +53,33 @@ export default {
 .my-input input button{
   height: 100% !important;
   background: #242424 !important;
+}
+.my-checkbox{
+  display: flex;
+  width: 218px;
+  height: 28px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.my-checkbox .my-checkbox-wrap{
+  position: relative;
+  margin: 8px 0;
+  width: 11px;
+  height: 11px;
+  border: 1px solid #242424;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.my-checkbox input{
+  position: absolute;
+  top: -1px;
+  left: -1px;
+}
+.my-checkbox .my-checkbox-label{
+  flex: 1;
+  margin-left: 10px;
+  text-align: left;
+  line-height: 28px;
 }
 /* 图标 */
 .my-input i{

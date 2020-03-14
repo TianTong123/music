@@ -99,6 +99,60 @@
 .my-close-btn:active::after{
   background-color: #fff;
 }
+
+/* 删除按钮 */
+.my-delete-btn{
+  cursor: pointer;
+  user-select:none;
+}
+.my-delete-btn::before{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) rotate(90deg);
+  height: 65%;
+  width: 2px;
+  background-color: #fff;
+}
+.my-delete-btn:hover{
+  border-color: #3D8A0A;
+}
+.my-delete-btn:active{
+  border-color: #242424;
+}
+.my-delete-btn:active::before{
+  background-color: #fff;
+}
+
+/* 删除按钮完整版 */
+.my-full-delete-btn{
+  border: 1px solid #242424;
+  border-radius: 2px;
+  cursor: pointer;
+  user-select:none;
+}
+.my-full-delete-btn::before{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) rotate(90deg);
+  height: 65%;
+  width: 2px;
+  background-color: #242424;
+}
+.my-full-delete-btn:hover{
+  border-color: #3D8A0A;
+}
+.my-full-delete-btn:active{
+  border-color: #242424;
+  background-color: #3D8A0A;
+}
+.my-full-delete-btn:active::before{
+  background-color: #fff;
+}
+
 /* 公用样式 */
 html, body, input, ul, li{
   margin: 0px;

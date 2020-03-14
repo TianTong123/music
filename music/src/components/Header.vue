@@ -28,15 +28,10 @@
         <div class="user-content">
           <div class="triangle-up"></div>
           <ul class="login-out">
-            <li @click="login"><i class="icon-phone"/>&nbsp;手机登录</li>
-            <li><i class="icon-mallbox"/>邮箱登录(未开放)</li>
-            <li><i class="icon-phone"/>不登录咯</li>
+            <li @click="login"><i class="icon-phone"/>&nbsp;登录</li>
           </ul>
           <ul class="login">
             <li><i class="icon-user"/>我的主页</li>
-            <li><i class="icon-msg"/>我的消息</li>
-            <li><i class="icon-level"/>我的等级</li>
-            <li><i class="icon-vip"/>VIP会员</li>
           </ul>
         </div>
       </div>
@@ -44,7 +39,7 @@
       <!-- 搜索 -->
       <div class="search">
         <i class="icon-search" ></i>
-        <input type="text" v-model="searchKey" placeholder="歌曲/歌单/歌手"/>
+        <input type="text" v-model="searchKey" placeholder="歌曲/歌单/歌手" @keydown="search" />
         <div class="preview-content"></div>
       </div>
      
@@ -95,7 +90,14 @@ export default {
     },
     //登录
     login(){
-      this.$emit("changeLogin", true);
+      this.$myLogin.show()
+    },
+    //搜索
+    search(e){
+      let keyCode = window.event? e.keyCode:e.which;
+      if(keyCode == 13){//回车
+        this.$router.push({name:'search',params:{value: this.searchKey}});
+      }
     }
   },
   watch:{
@@ -112,6 +114,5 @@ export default {
 
 <style scoped>
 @import '../../static/css/Header.css';
-@import '../../static/css/myIcon.css';
 </style>
 

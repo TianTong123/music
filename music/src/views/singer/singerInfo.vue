@@ -10,7 +10,7 @@
         <div class="title">他的歌曲</div>
         <div class="list-wrap">
           <ul>
-            <li v-for="(e, index) in 16" :key="index">
+            <li v-for="(e, index) in 16" :key="index" @click="goMusic(index)">
               <div class="rank-num">{{index+1}}</div>
               <div class="music-name">一起走过的日子</div>
               <div class="time">05:06</div>
@@ -24,7 +24,18 @@
 </template>
 <script>
 export default {
-  
+  data(){
+    return{
+
+    }
+  },
+  methods:{
+    goMusic(index){
+      this.$router.push({
+        path: `../../player/${index}`
+      })
+    }
+  }
 }
 </script>
 <style scoped>

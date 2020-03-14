@@ -34,7 +34,9 @@
                               'icon-top3':cid == 2}">{{cid>=3?cid+1:''}}</div>
                 <div class="content">
                   <div class="name">{{e.musicName}}</div>
-                  <div class="singer">{{e.singer}}</div>
+                  <div class="singer">{{e.singer}} 
+                    <div class="islike"> <i class="icon-islike" @click="isLike(cid)" /> 123456</div> 
+                  </div>
                 </div>
               </li>
             </ul>
@@ -55,6 +57,87 @@ export default {
         [{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'}],
         [{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'}],
       ]
+    }
+  },
+  mounted(){
+
+  },
+  methods:{
+    //获取排行榜
+    getRankList(){
+      let parames = {
+        
+      }
+      this.$http.getRank( parames )
+      .then(({data}) => {
+        if (data.code == 0){
+          //this.list = data.data;
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+      .catch(err => {
+        this.$myMsg.notify({content: err.message,type: 'error'})
+      })
+    },
+
+    //点赞
+    isLike(cid){
+      let parames = {
+        
+      }
+      this.$http.setIsLikeNum( parames )
+      .then(({data}) => {
+        if (data.code == 0){
+          //this.list = data.data;
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+      .catch(err => {
+        this.$myMsg.notify({content: err.message,type: 'error'})
+      })
+    },
+
+    //播放
+    play(id){
+      this.$router.push({
+        path: `../../player/${id}`
+      })
+    },
+
+    //一键喜欢
+    allLike(index){
+      let list = this.rankList[index];
+      let parames = {
+        idList: list.map(v=>v.id),
+      }
+      this.$http.setIsLikeNum( parames )
+      .then(({data}) => {
+        if (data.code == 0){
+          this.$myMsg.notify({content: "操作成功！", type: 'success'})  
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+      .catch(err => {
+        this.$myMsg.notify({content: err.message,type: 'error'})
+      })
+    },
+
+    //一键收藏
+    allCollection(index){
+      let list = this.rankList[index];
+      let parames = {
+        idList: list.map(v=>v.id),
+      }
+      this.$http.setIsLikeNum( parames )
+      .then(({data}) => {
+        if (data.code == 0){
+          this.$myMsg.notify({content: "收藏成功！", type: 'success'})  
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+      .catch(err => {
+        this.$myMsg.notify({content: err.message,type: 'error'})
+      })
     }
   }
   

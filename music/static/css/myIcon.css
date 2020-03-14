@@ -1,8 +1,8 @@
 /*
  * @Author: TianTong 
  * @Date: 2019-12-05 10:48:52 
- * @Last Modified by: Tiantong
- * @Last Modified time: 2020-01-12 17:18:41
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2020-03-14 14:18:16
  */
 /* 手机 */
 .icon-phone{
@@ -296,4 +296,13 @@
 }
 .icon-music-list:hover{
   background-position-x: -85px;
+}
+/* 点赞 */
+.icon-islike{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/isLike.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
