@@ -55,7 +55,7 @@ export default {
       let parames = {
         
       }
-      this.$http.getRank( parames )
+      this.$http.getSwipeList( parames )
       .then(({data}) => {
         if (data.code == 0){
           this.slides = data.data;
@@ -70,9 +70,9 @@ export default {
     //获取热门推荐
     getHotList(){
       let parames = {
-        
+        ...this.hotForm
       }
-      this.$http.getRank( parames )
+      this.$http.getHotRecommend( parames )
       .then(({data}) => {
         if (data.code == 0){
           this.hotList = data.data;

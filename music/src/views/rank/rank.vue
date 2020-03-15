@@ -35,7 +35,7 @@
                 <div class="content">
                   <div class="name">{{e.musicName}}</div>
                   <div class="singer">{{e.singer}} 
-                    <div class="islike"> <i class="icon-islike" @click="isLike(cid)" /> 123456</div> 
+                    <div class="islike"> <i class="icon-islike" @click="isLike(cid)" />{{Math.ceil(Math.random()*10)}}</div> 
                   </div>
                 </div>
               </li>
@@ -51,11 +51,30 @@ export default {
   data(){
     return{
       rankList:[
-        [{musicName: "一起走过子ede哈dwswwsws", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'}],
-        [{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'}],
-        [{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'}],
-        [{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'}],
-        [{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "一起走过的日子", singer: '刘德华'}],
+        [
+          {musicName: "Mi Amor", singer: 'ONER'},{musicName: "ソンナコトナイヨ", singer: '日向坂46'},{musicName: "拒否オロジー", singer: 'amazarash'},
+          {musicName: "ぜんぶ", singer: '井上苑子'},{musicName: "ごまかし", singer: 'TrySail'},{musicName: "未来はみないで", singer: 'YELLOW'},
+          {musicName: "届かない恋", singer: '上原れな'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "クラブ", singer: ' 河合佑亮'}
+        ],
+        [
+          {musicName: "届かない恋", singer: '上原れな'},{musicName: "一起走过的日子", singer: '刘德华'},{musicName: "クラブ", singer: ' 河合佑亮'},
+          {musicName: "Mi Amor", singer: 'ONER'},{musicName: "ソンナコトナイヨ", singer: '日向坂46'},{musicName: "拒否オロジー", singer: 'amazarash'},
+          {musicName: "ぜんぶ", singer: '井上苑子'},{musicName: "ごまかし", singer: 'TrySail'},{musicName: "未来はみないで", singer: 'YELLOW'},
+        ],
+        [
+          {musicName: "一起走过的日子", singer: '刘德华'},{musicName: "ごまかし", singer: 'TrySail'},{musicName: "拒否オロジー", singer: 'amazarash'},
+          {musicName: "届かない恋", singer: '上原れな'},{musicName: "未来はみないで", singer: 'YELLOW'},{musicName: "ぜんぶ", singer: '井上苑子'},
+          {musicName: "Mi Amor", singer: 'ONER'},{musicName: "クラブ", singer: ' 河合佑亮'},{musicName: "ソンナコトナイヨ", singer: '日向坂46'},
+        ],
+        [
+         {musicName: "Mi Amor", singer: 'ONER'},{musicName: "クラブ", singer: ' 河合佑亮'},{musicName: "ソンナコトナイヨ", singer: '日向坂46'},
+          {musicName: "一起走过的日子", singer: '刘德华'},{musicName: "ごまかし", singer: 'TrySail'},{musicName: "拒否オロジー", singer: 'amazarash'},
+          {musicName: "届かない恋", singer: '上原れな'},{musicName: "未来はみないで", singer: 'YELLOW'},{musicName: "ぜんぶ", singer: '井上苑子'},
+        ],
+        [
+          {musicName: "届かない恋", singer: '上原れな'},{musicName: "Mi Amor", singer: 'ONER'},{musicName: "ぜんぶ", singer: '井上苑子'},
+          {musicName: "一起走过的日子", singer: '刘德华'},{musicName: "ソンナコトナイヨ", singer: '日向坂46'},{musicName: "ごまかし", singer: 'TrySail'},
+          {musicName: "クラブ", singer: ' 河合佑亮'},{musicName: "拒否オロジー", singer: 'amazarash'},{musicName: "未来はみないで", singer: 'YELLOW'},],
       ]
     }
   },

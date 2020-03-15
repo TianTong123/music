@@ -7,7 +7,7 @@
           <ul v-if="list.length != 0">
             <li v-for="(e, index) in list" :key="index" @click="goMusic(index)">
               <div class="rank-num">{{index+1}}</div>
-              <div class="music-name">一起走过的日子</div>
+              <div class="music-name">届かない恋</div>
               <div class="time">05:06</div>
               <div class="play-btn"></div>
             </li>
@@ -24,7 +24,7 @@
 export default {
   data(){
     return{
-      list: [],
+      list: [1],
     }
   },
   beforeMount() {

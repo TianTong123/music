@@ -63,7 +63,7 @@ export default {
       voiceIconClass: 'icon-voice',//音量图标
       lyricIndex: 0,//当前歌词激活的下标
       lyric: [
-             {
+        {
           "type": 1,
           "Time": null,
           "TimeMs": 0,
@@ -394,7 +394,7 @@ export default {
       let mLength = this.music.currentTime;
       this.nowPlayTime =  parseInt( mLength  * 1000);
       for(let i = 0; i <this.lyric.length; i ++){
-      if(this.lyric[i].TimeMs >= this.nowPlayTime){
+        if(this.lyric[i].TimeMs >= this.nowPlayTime){
           this.lyricIndex = i;
           break;
         }

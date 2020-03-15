@@ -56,21 +56,21 @@
           <span class="line-label">歌手名：</span><my-input type="text" placeholder="请输入歌手名" icon="user"></my-input>
         </div> 
         <div class="line-style">
-          <span>音 &nbsp;&nbsp;乐：</span>
+          <span>音 &nbsp;&nbsp; 乐：</span>
           <div class="file-wrap">
             <div class="file-btn my-btn">选择音乐</div>
             <input class="input-file" type="file">
-            <div class="file-name">deded.mp3</div>
+            <div class="file-name">届かない恋.mp3</div>
           </div>
           <span class="line-label">歌 &nbsp;&nbsp;词：</span>
           <div class="file-wrap">
             <div class="file-btn my-btn">选择歌词</div>
             <input class="input-file" type="file">
-            <div class="file-name">dedede.lyc</div>
+            <div class="file-name">届かない恋.lyc</div>
           </div>
         </div> 
         <div class="line-style">
-          <span>封 &nbsp;&nbsp;面：</span>
+          <span>封 &nbsp;&nbsp;&nbsp;面：</span>
           <div class="file-wrap">
             <div class="file-btn my-btn">选择封面</div>
             <input class="input-file" type="file">
@@ -88,7 +88,7 @@
           </div>
         </div>
         <div class="line-style">
-          <span>备 &nbsp;&nbsp;注：</span><my-input type="text" placeholder="请输入音乐名" icon="user"></my-input>
+          <span>备 &nbsp;&nbsp;&nbsp;注：</span><my-input type="text" placeholder="请输入音乐名" icon="user"></my-input>
         </div>
         
         <div slot="footer" class="footer">
@@ -100,7 +100,7 @@
       <!-- 修改用户资料弹框 -->
       <my-Dialog title="修改资料" :visible="diaEditData" @closeDia="closeDia">
         <div class="line-style"><span>用户名：</span><my-input type="text" placeholder="请输入用户名" icon="user"></my-input></div>  
-        <div class="line-style"><span>头 &nbsp;&nbsp;像：</span>
+        <div class="line-style"><span>头 &nbsp;&nbsp;&nbsp;像：</span>
           <div class="file-wrap">
             <div class="file-btn my-btn">选择头像</div>
             <input class="input-file" type="file">

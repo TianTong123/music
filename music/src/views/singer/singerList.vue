@@ -44,7 +44,7 @@ export default {
       ],
       //歌手列表
       singer:[
-        {name: '刘德华', headimg:'../../../static/images/ldh.jpg'},{name: '刘德华', headimg:'../../../static/images/ldh.jpg'},{name: '刘德华', headimg:'../../../static/images/ldh.jpg'}, {name: '刘德华', headimg:'../../../static/images/ldh.jpg'}, {name: '刘德华', headimg:'../../../static/images/ldh.jpg'}, {name: '刘德华', headimg:'../../../static/images/ldh.jpg'}, {name: '刘德华', headimg:'../../../static/images/ldh.jpg'}, {name: '刘德华', headimg:'../../../static/images/ldh.jpg'}, {name: '刘德华', headimg:'../../../static/images/ldh.jpg'}, {name: '刘德华', headimg:'../../../static/images/ldh.jpg'}, {name: '刘德华', headimg:'../../../static/images/ldh.jpg'}, {name: '刘德华', headimg:'../../../static/images/ldh.jpg'},
+        {name: '刘德华', headimg:'../../../static/images/ldh.jpg'},
       ]
     }
   },

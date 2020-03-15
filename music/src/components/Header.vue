@@ -90,7 +90,7 @@ export default {
     },
     //登录
     login(){
-      this.$myLogin.show()
+      this.$myLogin.show();
     },
     //搜索
     search(e){
