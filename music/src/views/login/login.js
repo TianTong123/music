@@ -23,7 +23,7 @@ let myLogin = {
           title: '登录',
           btnContent: '蛤！没有账号！偷偷注册',
           formData:{
-            accountId: '',
+            account: '',
             password: '',
           },
           type: 0,
@@ -37,12 +37,13 @@ let myLogin = {
           this.$http.login( parames )
           .then(({data}) => {
             if (data.code == 0){
-              let token = res.data.data.token
+              let token = data.data.token
               //存储
-              this.$store.state.token = token;
+              //this.$store.state.token = token;
               util.saveSession("token", token);
-              util.saveSession('user', res.data.data);
+              util.saveSession('user', data.data);
               this.show = false;
+              this.$myMsg.notify({content: "登录成功",type: 'success'})
             }
             else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
           })
@@ -59,7 +60,7 @@ let myLogin = {
           .then(({data}) => {
             if (data.code == 0){
              this.$myMsg.notify({content: '注册成功！', type: 'success'});
-             this.activeName = 1;//回到注册
+             this.activeName = 0;//回到注册
             }
             else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
           })

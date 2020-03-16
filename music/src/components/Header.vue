@@ -19,16 +19,17 @@
 
        <!-- 用户 -->
       <div class="user">
-        <div class="user-login">登录</div>
+        <div class="user-login" v-show="false">登录</div>
         <div class="user-img">
-          <img :src="user.userimg">
-          <div class="msg-num">56</div>
+          <img :src="user.photoUrl||'../../static/images/icon/user.png'">
+          <div class="msg-num"></div>
         </div>
         <div class="triangle-down"></div>
         <div class="user-content">
           <div class="triangle-up"></div>
           <ul class="login-out">
-            <li @click="login"><i class="icon-phone"/>&nbsp;登录</li>
+            <li @click="login" v-show="user==''"><i class="icon-phone"/>&nbsp;登录</li>
+            <li @click="logout" v-show="!user==''"><i class="icon-phone"/>&nbsp;退出</li>
           </ul>
           <ul class="login">
             <li><i class="icon-user"/>我的主页</li>
@@ -48,13 +49,13 @@
 </template>
 
 <script>
+import util from '@/util/utils';
+
 export default {
   name: "Header",
   data(){
     return{
-      user: {
-        userimg: 'https://i0.hdslb.com/bfs/album/5684389236f958866ef0cc513667653c6a40fc8d.jpg@518w_1e_1c.jpg',
-      },
+      user: util.getSession('user'),
       menuList:[
         {name: '首页', code: 'home', id: 8848, class: 'active_menu'},
         {name: '榜单', code: 'rank', id: 8849, class: ''},
@@ -67,7 +68,7 @@ export default {
     }
   },
   mounted() {
-
+    
   },
   methods: {
     goMenu(data){
@@ -91,6 +92,13 @@ export default {
     //登录
     login(){
       this.$myLogin.show();
+    },
+    //注销
+    logout(){
+      util.removeSession('user');
+      util.removeSession('token');
+      this.user = "";
+      this.$myMsg.notify({content: "退出成功",type: 'success'})
     },
     //搜索
     search(e){

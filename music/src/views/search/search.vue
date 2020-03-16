@@ -1,7 +1,7 @@
 <template>
   <div class="singerinfo">
     <div class="wrap">
-      <div class="music-list" style="width: 100%">
+      <div class="music-list" style="width: 100%; min-height: 1000px">
         <div class="title">搜索结果</div>
         <div class="list-wrap">
           <ul v-if="list.length != 0">

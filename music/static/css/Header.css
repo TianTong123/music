@@ -95,7 +95,6 @@ ul, li{
   display: block;
 }
 .user .user-login{
-  display: none;
   margin-right: 10px;
   font-size: 12px;
   color: #787878;

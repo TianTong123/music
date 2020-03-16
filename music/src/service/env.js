@@ -1,6 +1,6 @@
 const apienv = {
   dev: {
-    baseUrl: "http://192.168.17.126:8088/restaurant/",
+    baseUrl: "http://192.168.17.126:8848/tiantong/",
     //testUrl:  'http://192.168.17.126:8090/',
   },
 };

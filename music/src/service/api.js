@@ -2,30 +2,11 @@ import { req } from "./req";
 import api_login from "@/views/login/api_login";
 import api_home from "@/views/home/api_home";
 import api_search from "@/views/search/api_search";
+import api_play from "@/views/player/api_play";
+import api_userInfo from "@/views/user/api_userInfo";
 // import api_commodity from "@/views/commodity/api_commodity";
 let api = {
-  // Demo Code
-  // // 重置个人信息
-  // personalReset: data => req({
-  //     baseUrl: "osp",
-  //     method: "post",
-  //     url: "ralAccountSupplier/personalReset",
-  //     params: data
-  // }),
-  // editPassword: data =>req({
-  //     baseUrl: "auth",
-  //     method: "put",
-  //     url: `authUser?userkey=${data.userkey}&tokenkey=${data.tokenkey}`,
-  //     params: data
-  // }), //修改用户密码
-  // getCompanyInfo: data =>
-  //   req({
-  //     baseUrl: "osp",
-  //     method: "get",
-  //     url: "tblAccount/companyInfo",
-  //     params: data,
-  //     isOriginalGET: true
-  //   }),
+
   // 下载文件1
   // downLoadFile: data =>
   //   req({
@@ -52,6 +33,8 @@ api = Object.assign(
   api_login,
   api_home,
   api_search,
+  api_play,
+  api_userInfo
 );
 
 export default api;

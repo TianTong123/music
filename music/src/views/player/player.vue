@@ -28,7 +28,8 @@
         </div>
       </div>
     </div>
-    <audio id="music" ref="music" src="../../../static/images/届かない恋 .mp3"></audio>
+    <!-- <audio id="music" ref="music" src="../../../static/images/届かない恋 .mp3"></audio> -->
+    <audio id="music" ref="music" src="http://192.168.17.126:8848/tiantong/music/wav"></audio>
 	  <div class="music-bar" ref="musicBar">
       <div class="music-bar-bg"><img src="../../../static/images/20150718092902357590.jpg" alt=""></div>
 	  	<div class="music-bar-wrap" @mouseup="dragFlag = false"  @mousemove="progressDrag">
@@ -430,8 +431,9 @@ export default {
     this.music.volume = 0.5;
     //计算总时长,等后台返回数据，有数据的话，这段可以弃之不用了
     setTimeout(() => { //避免出现NaN的问题
-      let audio = document.getElementById("music");
-      let mLength = audio.duration;//总时长
+     // let audio = document.getElementById("music");
+     // let mLength = audio.duration;//总时长
+     let mLength = 309;
       let minutes = parseInt( mLength / 60 );
       let seconds = parseInt( mLength - minutes*60 );
       let m = minutes<10? '0'+ minutes : minutes;

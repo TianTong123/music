@@ -7,15 +7,14 @@ const api = {
   login: data => req({
     baseUrl: baseUrl,
     method: "post",
-    url: "main_order/orderList",
-    isOriginalGET: true,
+    url: "account/login",
     params: data
   }),
   //注册
   register: data => req({
     baseUrl: baseUrl,
     method: "post",
-    url: "main_order",
+    url: "account/addAccount",
     params: data
   }),
 }
