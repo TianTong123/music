@@ -20,6 +20,7 @@
   padding: 4px;
   width: 188px;
   height: 188px;
+  background-color: #eee;
   border: 1px solid #242424;
   overflow: hidden;
 }
@@ -29,11 +30,14 @@
   bottom: 0px;
   height: 4px;
   width: 100%;
-  background-color: #FFF;
+  background-color: #eee;
 }
 .user .user-wrap .info .user-img img{
-  display: inline-block;
-  max-width: 100%;
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
 }
 .user .user-wrap .info .user-info{
   flex: 1;
@@ -151,6 +155,9 @@
   position: relative;
 }
 .user .user-wrap .line-style .file-wrap .file-name{
+  width: 220px;
+  overflow: hidden;
+  font-size: 9px;
   color: aqua;
 }
 .user .user-wrap .line-style .file-wrap .preview-img-wrap{
@@ -187,7 +194,7 @@
   z-index: 3;
   top: 50%;
   transform: translateY(-50%);
-  max-width: 100%;
+  width: 100%;
 }
 .user .user-wrap .line-style .file-btn{
   width: 198px;

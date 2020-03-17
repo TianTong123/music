@@ -1,11 +1,11 @@
 <template>
   <div :class="{'my-input':type != 'checkbox', 'my-checkbox':type == 'checkbox'}">
     <i v-if="icon" :class="icon"></i>
-    <input :type="type" @input="$emit('input', $event.target.value)" :placeholder="placeholder" v-if="type != 'checkbox'">
-      <div class="my-checkbox-wrap" v-if="type == 'checkbox'">
-        <input :type="type"  @input="$emit('input', $event.target.checked?label:null)" :value="label" >
-      </div>
-     <div class="my-checkbox-label"><slot></slot></div> 
+    <input :type="type" @input="$emit('input', $event.target.value)" :value="value" @change="valChange" :placeholder="placeholder" v-if="type != 'checkbox'">
+    <div class="my-checkbox-wrap" v-if="type == 'checkbox'">
+      <input :type="type"  @input="$emit('input', $event.target.checked?label:null)" :value="label" >
+    </div>
+    <div class="my-checkbox-label"><slot></slot></div> 
   </div>
 </template>
 <script>
@@ -27,7 +27,16 @@ export default {
       default: '',
       type: String
     },
+    value: {
+      default: '',
+      type: String
+    },
   },
+  methods:{
+    valChange({target}){
+      this.inputValue = target
+    }
+  }
 }
 </script>
 <style scoped>

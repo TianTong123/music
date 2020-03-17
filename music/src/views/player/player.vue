@@ -1,12 +1,12 @@
 <template>
   <div class="player">
-    <div class="bg"><img src="../../../static/images/20150718092902357590.jpg" alt=""></div>
+    <div class="bg"><img :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.posterUrl}`" alt=""></div>
     <div class="wrap" @click="musicListFlag = false">
       <div class="content">
-        <div class="poster"><div class="poster-wrap"><img src="../../../static/images/20150718092902357590.jpg" alt=""></div></div>
+        <div class="poster"><div class="poster-wrap"><img :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.songImg}`" alt=""></div></div>
         <div class="info">
-          <div class="music-title">届かない恋</div>
-          <div class="singer"><span>歌手：</span>上原れな</div>
+          <div class="music-title">{{musicInfo.name}}</div>
+          <div class="singer"><span>歌手：</span>{{musicInfo.singer}}</div>
           <!-- 歌词 -->
           <div class="lyric" ref="lyricWrap" > 
             <div class="lyric-wrap">
@@ -29,9 +29,9 @@
       </div>
     </div>
     <!-- <audio id="music" ref="music" src="../../../static/images/届かない恋 .mp3"></audio> -->
-    <audio id="music" ref="music" src="http://192.168.17.126:8848/tiantong/music/wav"></audio>
+    <audio id="music" ref="music" :src="`http://192.168.17.126:8848/tiantong/music/play/${musicInfo.profileUrl}`"></audio>
 	  <div class="music-bar" ref="musicBar">
-      <div class="music-bar-bg"><img src="../../../static/images/20150718092902357590.jpg" alt=""></div>
+      <div class="music-bar-bg"><img :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.posterUrl}`" alt=""></div>
 	  	<div class="music-bar-wrap" @mouseup="dragFlag = false"  @mousemove="progressDrag">
         <!-- 控制菜单 -->
 	      <div class="control">
@@ -59,240 +59,12 @@
 export default {
   data(){
     return{
+      musicInfo: '',
       dragFlag: false,//拖动flag true按着鼠标不放，false就是松开鼠标
       musicListFlag: false,//播放列表
       voiceIconClass: 'icon-voice',//音量图标
       lyricIndex: 0,//当前歌词激活的下标
-      lyric: [
-        {
-          "type": 1,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "届かない恋 "
-        },
-        {
-          "type": 0,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "上原れな"
-        },
-        {
-          "type": 3,
-          "Time": null,
-          "TimeMs": 0,
-          "LrcLine": "Vine"
-        },
-        {
-          "type": 5,
-          "Time": "00:00.53",
-          "TimeMs": 53,
-          "LrcLine": "「届かない恋 ’13」"
-        },
-        {
-          "type": 5,
-          "Time": "00:03.53",
-          "TimeMs": 3053,
-          "LrcLine": "作詞∶須谷尚子"
-        },
-        {
-          "type": 5,
-          "Time": "00:06.53",
-          "TimeMs": 6053,
-          "LrcLine": "作曲∶石川真也"
-        },
-        {
-          "type": 5,
-          "Time": "00:09.53",
-          "TimeMs": 9053,
-          "LrcLine": "編曲∶小林俊太郎"
-        },
-        {
-          "type": 5,
-          "Time": "00:12.53",
-          "TimeMs": 12053,
-          "LrcLine": "歌∶上原れな"
-        },
-        {
-          "type": 5,
-          "Time": "00:16.53",
-          "TimeMs": 16053,
-          "LrcLine": "TVアニメ「WHITE ALBUM2」OPテーマ"
-        },
-        {
-          "type": 5,
-          "Time": "00:24.53",
-          "TimeMs": 24053,
-          "LrcLine": "孤独なふりをしてるの?"
-        },
-        {
-          "type": 5,
-          "Time": "00:31.52",
-          "TimeMs": 31052,
-          "LrcLine": "なぜだろう 気になっていた"
-        },
-        {
-          "type": 5,
-          "Time": "00:38.64",
-          "TimeMs": 38064,
-          "LrcLine": "気づけば いつのまにか"
-        },
-        {
-          "type": 5,
-          "Time": "00:45.71",
-          "TimeMs": 45071,
-          "LrcLine": "誰より 惹かれていた"
-        },
-        {
-          "type": 5,
-          "Time": "00:54.20",
-          "TimeMs": 54020,
-          "LrcLine": "どうすれば この心は 鏡に映るの?"
-        },
-        {
-          "type": 5,
-          "Time": "01:07.98",
-          "TimeMs": 67098,
-          "LrcLine": "届かない恋をしていても"
-        },
-        {
-          "type": 5,
-          "Time": "01:15.05",
-          "TimeMs": 75005,
-          "LrcLine": "映しだす日がくるかな"
-        },
-        {
-          "type": 5,
-          "Time": "01:21.10",
-          "TimeMs": 81010,
-          "LrcLine": "ぼやけた答えが"
-        },
-        {
-          "type": 5,
-          "Time": "01:24.68",
-          "TimeMs": 84068,
-          "LrcLine": "見え始めるまでは"
-        },
-        {
-          "type": 5,
-          "Time": "01:29.89",
-          "TimeMs": 89089,
-          "LrcLine": "今もこの恋は 動き出せない"
-        },
-        {
-          "type": 5,
-          "Time": "01:56.89",
-          "TimeMs": 116089,
-          "LrcLine": "初めて声をかけたら"
-        },
-        {
-          "type": 5,
-          "Time": "02:03.93",
-          "TimeMs": 123093,
-          "LrcLine": "振り向いてくれたあの日"
-        },
-        {
-          "type": 5,
-          "Time": "02:11.08",
-          "TimeMs": 131008,
-          "LrcLine": "あなたは 眩しすぎて"
-        },
-        {
-          "type": 5,
-          "Time": "02:18.11",
-          "TimeMs": 138011,
-          "LrcLine": "まっすぐ見れなかった"
-        },
-        {
-          "type": 5,
-          "Time": "02:26.63",
-          "TimeMs": 146063,
-          "LrcLine": "どうすれば その心に 私を写すの?"
-        },
-        {
-          "type": 5,
-          "Time": "02:40.41",
-          "TimeMs": 160041,
-          "LrcLine": "叶わない恋をしていても"
-        },
-        {
-          "type": 5,
-          "Time": "02:47.34",
-          "TimeMs": 167034,
-          "LrcLine": "写しだす日がくるかな"
-        },
-        {
-          "type": 5,
-          "Time": "02:53.51",
-          "TimeMs": 173051,
-          "LrcLine": "ぼやけた答えが"
-        },
-        {
-          "type": 5,
-          "Time": "02:57.10",
-          "TimeMs": 177010,
-          "LrcLine": "少しでも見えたら"
-        },
-        {
-          "type": 5,
-          "Time": "03:02.35",
-          "TimeMs": 182035,
-          "LrcLine": "きっとこの恋は 動き始める"
-        },
-        {
-          "type": 5,
-          "Time": "03:34.16",
-          "TimeMs": 214016,
-          "LrcLine": "どうすれば この心は 鏡に映るの?"
-        },
-        {
-          "type": 5,
-          "Time": "03:47.95",
-          "TimeMs": 227095,
-          "LrcLine": "届かない恋をしていても"
-        },
-        {
-          "type": 5,
-          "Time": "03:54.83",
-          "TimeMs": 234083,
-          "LrcLine": "映しだす日がくるかな"
-        },
-        {
-          "type": 5,
-          "Time": "04:01.08",
-          "TimeMs": 241008,
-          "LrcLine": "ぼやけた答えが"
-        },
-        {
-          "type": 5,
-          "Time": "04:04.67",
-          "TimeMs": 244067,
-          "LrcLine": "見え始めるまでは"
-        },
-        {
-          "type": 5,
-          "Time": "04:09.94",
-          "TimeMs": 249094,
-          "LrcLine": "今もこの恋は 動き出せない"
-        },
-        {
-          "type": 5,
-          "Time": "04:40.65",
-          "TimeMs": 280065,
-          "LrcLine": "Lrc By VINE (C) www.22lrc.com"
-        },
-        {
-          "type": 5,
-          "Time": "04:45.65",
-          "TimeMs": 285065,
-          "LrcLine": "終わり"
-        },
-        {
-          "type": 5,
-          "Time": "10:00.00",
-          "TimeMs": 600000,
-          "LrcLine": "LRC歌词下载：www.22lrc.com "
-        }
-      ],
+      lyric: [],
       /* 音乐播放器控制参数 */
       music: '',//音频文件
       nowPlayTime: "",//当前播放毫秒数(按下播放就开始以毫秒的速度自增1，暂停就停止)
@@ -307,6 +79,19 @@ export default {
     }
   },
   methods:{
+    //获取歌
+    getMusic(){
+      let parames = {
+        musicId: 6,
+      }
+      this.$http.getMusic( parames ).then(({data}) => {
+        if (data.code == 0){
+          this.musicInfo = data.data;
+          this.lyric = data.data.lrc;
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+    },
     //播放
     playClick(){
       if( this.music.paused ){
@@ -343,7 +128,6 @@ export default {
         }
       }
     },
-
 
     //进度条点击
     progressClick(event){
@@ -422,7 +206,11 @@ export default {
     }
 
   },
+  beforeMount(){
+    this.getMusic();
+  },
   mounted(){
+    
     //赋值
     this.music = this.$refs.music;
     this.mProgress = this.$refs.mProgress;

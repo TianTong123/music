@@ -51,9 +51,9 @@ export const http = ({
       },
       //接口错误状态处理
       error => {
-        if(error.response.data.status != null || error.response.data.status != ""){
+        if(error.response.status != null || error.response.status != ""){
           let message = "";
-          switch (err.response.status) {
+          switch (error.response.status) {
             case 400:
               message = '请求参数错误！'
               break
@@ -109,7 +109,7 @@ export const http = ({
     let token = util.getSession("token");
 
     if (token) {
-      config.headers.uid = util.getSession("user").accountCode;
+      config.headers.uid = util.getSession("user").account;
       config.headers.token = token;
     }
 

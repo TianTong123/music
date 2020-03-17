@@ -21,7 +21,8 @@
       <div class="user">
         <div class="user-login" v-show="false">登录</div>
         <div class="user-img">
-          <img :src="user.photoUrl||'../../static/images/icon/user.png'">
+          <img v-if="user.photoUrl==null" src="../../static/images/icon/user.png">
+          <img v-if="user.photoUrl !=null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${user.photoUrl}`"> 
           <div class="msg-num"></div>
         </div>
         <div class="triangle-down"></div>
