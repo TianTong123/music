@@ -18,19 +18,50 @@
         </div>
       </div>
       <!-- 歌单 -->
-      <div class="music-list">
+      <div class="music-list" v-if="userType==0">
         <div class="list-title">
-          <span>{{userType==1?'我的作品':'我的歌单'}}</span> 
+          <span>我的歌单</span> 
           <div class="list-btn my-add-btn" v-if="userType == 0" @click="diaCreateSF = true"></div>
-          <div class="list-btn my-full-delete-btn" v-if="userType == 0" @click="diaCreateSF = true"></div>
+          <div class="list-btn my-full-delete-btn" v-if="userType == 0" @click="showDeleteBtn = !showDeleteBtn"></div>
         </div>
         <div class="card-wrap">
-          <div class="music-list-card" v-for="(e, index) in 1" :key="index" 
-            @click="goList(index)">
-            <div class="poster"><img src="../../../static/images/20150718092902357590.jpg" alt=""></div>
-            <div class=""></div>
-            <div class="card-info"><i class="play-btn icon-mini-play"></i>29</div>
-            <div class="card-name">我喜欢</div>
+          <div class="music-list-card" v-for="(e, index) in musicFormList" :key="index" 
+            @click="goList(e.id)">
+            <div class="poster">
+              <div class="delete-btn" v-show="showDeleteBtn && e.state != 0" @click="deleteMusicForm(e.id)"></div>
+              <img v-if="e.posterUrl == null" src="../../../static/images/logo.png">
+              <img v-if="e.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${e.posterUrl}`">
+            </div>
+            <div class="card-info">
+              <i class="play-btn icon-mini-play"></i>{{e.length}}
+              <i class="edit-btn icon-mini-edit" v-show="e.state != 0" @click="openEditMusicForm(e)"></i>
+            </div>
+            <div class="card-name">{{e.songFormName}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 作品 -->
+      <div class="music-list" v-if="userType==1">
+        <div class="list-title">
+          <span>我的作品</span> 
+          <div class="list-btn my-add-btn" v-if="userType == 0" @click="diaCreateSF = true"></div>
+          <div class="list-btn my-full-delete-btn" v-if="userType == 0" @click="showDeleteBtn = !showDeleteBtn"></div>
+        </div>
+        <div class="my-min-null-box" v-show="workList.length == 0">你还没有作品，赶紧上传吧！</div>
+        <div class="card-wrap" v-show="workList.length != 0">
+          <div class="music-list-card" v-for="(e, index) in workList" :key="index" 
+            @click="goPlayer(e.id)">
+            <div class="poster">
+              <div class="delete-btn" v-show="showDeleteBtn && e.state != 0" @click="deleteMusicForm(e.id)"></div>
+              <img v-if="e.posterUrl == null" src="../../../static/images/logo.png">
+              <img v-if="e.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${e.songImg}`">
+            </div>
+            <div class="card-info">
+              <i class="play-btn icon-mini-play"></i>
+              <i class="edit-btn icon-mini-edit" @click="openEditWorkDia(e)"></i>
+            </div>
+            <div class="card-name">{{e.name}}</div>
           </div>
         </div>
       </div>
@@ -47,16 +78,17 @@
       </my-Dialog>
 
       <!-- 创建&编辑歌单弹框 -->
-      <my-Dialog title="创建歌单" :visible="diaCreateSF" @closeDia="closeDia">
-        <div class="line-style"><span>名字：</span><my-input type="text" v-model="formSF.name" placeholder="请输入歌单名" icon="user"></my-input></div> 
+      <my-Dialog :title="diaSFTIsEdit?'编辑歌单':'创建歌单'" :visible="diaCreateSF" @closeDia="closeDia">
+        <div class="line-style"><span>名字：</span><my-input type="text" v-model="formSF.songFormName" placeholder="请输入歌单名" icon="user"></my-input></div> 
         <div slot="footer" class="footer">
-            <div class="info-btn my-btn">确认</div>
+            <div class="info-btn my-btn" v-show="!diaSFTIsEdit" @click="addMusicForm">确认</div>
+            <div class="info-btn my-btn" v-show="diaSFTIsEdit" @click="editMusicForm">确认</div>
             <div class="info-btn my-btn" @click="closeDia">取消</div>
         </div>
       </my-Dialog>
 
-      <!-- 上传音乐弹框 -->
-      <my-Dialog title="上传音乐" :visible="diaUploadMusic" @closeDia="closeDia">
+      <!-- 上传音乐&编辑音乐弹框 -->
+      <my-Dialog :title="diaUploadMusicIsEdit?'修改作品':'上传音乐'" :visible="diaUploadMusic" @closeDia="closeDia">
         <div class="line-style">
           <span class="line-label">音乐名：</span><my-input type="text" v-model="formUploadMusic.name" placeholder="请输入音乐名" icon="user"></my-input>
         </div> 
@@ -110,7 +142,8 @@
         </div>
         
         <div slot="footer" class="footer">
-          <div class="info-btn my-btn" @click="uploadMusic">确认</div>
+          <div class="info-btn my-btn" v-show="!diaUploadMusicIsEdit" @click="uploadMusic">确认</div>
+          <div class="info-btn my-btn" v-show="diaUploadMusicIsEdit" @click="editWork">确认</div>
           <div class="info-btn my-btn" @click="closeDia">取消</div>
         </div>
       </my-Dialog>
@@ -166,7 +199,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import util from '@/util/utils';
 
 export default {
@@ -177,23 +209,27 @@ export default {
       diaCreateSF: false,//创建歌单按钮
       diaUploadMusic:false, //上传音乐
       diaEditData: false, //修改资料
+      showDeleteBtn: false,
+      diaSFTIsEdit: false, //true，编辑态，false，创建态
+      diaUploadMusicIsEdit: false,//同上
       //表单
       formEditPw:{ //修改密码
-        id: util.getSession("user").id,
+        id: this.$store.state.user.id,
         oldPassword: '',
         newPassword: '',
       },
       rePwd: '',
       formSF:{ //创建&编辑歌单
-        name:'',
+        songFormName:'',
+        accountId: this.$store.state.user.id
       },
       formUploadMusic:{//上传音乐
         name: null,
         profileUrl: null,
         lyricUrl: null,
-        songerId: util.getSession("user").singerId,
-        creator: util.getSession("user").accountName,
-        singer: util.getSession("user").accountName,
+        songerId: this.$store.state.user.singerId,
+        creator: this.$store.state.user.accountName,
+        singer: this.$store.state.user.accountName,
         posterUrl: '',
         songImg: '',
       },
@@ -201,22 +237,37 @@ export default {
         photoUrl: null,
         accountName: null,
         sex: "0",
-        id: util.getSession("user").id,
-        type: util.getSession("user").type,
+        id:this.$store.state.user.id,
+        type: this.$store.state.user.type,
       },
       formEditSinger:{//修改歌手信息
-        singerId: util.getSession("user").singerId,
-        singerType: util.getSession("user").singerType,
+        singerId: this.$store.state.user.singerId,
+        singerType: this.$store.state.user.singerType,
         info: '',
       },
       //页面状态
       userType: 0,//0是用户，1歌手
       userState: 0,//歌手审核状态，0未审核，1审核通过, 2审核未通过
-      user: '',//用户信息
+      //user: this.$store.state.user,//用户信息
+      musicFormList: [],//歌单列表
+      cancelBubbleFlag: true,
+      workList: [],//作品列表
     }
   },
   mounted(){
     this.getUserInfo();
+  },
+  computed:{
+    user:{
+      get() {
+        this.userType = this.$store.state.user.type;
+        this.userState = this.$store.state.user.checkState;
+        return this.$store.state.user//用户信息
+      },
+      set(val) {
+        this.$store.state.user = val;
+      }
+    }
   },
   methods:{
     //编辑用户资料
@@ -276,14 +327,40 @@ export default {
       })
     },
 
-    //获取用户信息
+    //获取歌单
+    getMusicFormList(){
+      //console.log(util.getStorage('user'))
+      let parames = {
+        accountId: this.user.id,
+      }
+      this.$http.getMusicFormList( parames ).then(({data}) => {
+        if (data.code == 0){
+          this.musicFormList = data.data;
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+    },
+
+    //获取作品
+    getMyWorks(){
+      let parames = {
+        songerId: this.user.singerId,
+      }
+      this.$http.getMyWorks( parames ).then(({data}) => {
+        if (data.code == 0){
+          this.workList = data.data;
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+    },
+
+    //获取用户列表
     getUserInfo(){
-      let id = util.getSession("user").id
-      if(id == ''){
+      if(util.getStorage('user') == ''){
         return
       }
       let parames = {
-        id: id,
+        id: util.getStorage('user').id,
       }
       this.$http.getUserInfo( parames ).then(({data}) => {
         if (data.code == 0){
@@ -292,6 +369,90 @@ export default {
           this.userState = data.data.checkState;
           util.removeSession('user');
           util.saveSession('user', data.data);
+          if(data.data.type == 0){
+            this.getMusicFormList();
+          }
+          else{
+            this.getMyWorks();
+          }
+          
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      });
+    },
+
+    //删除歌单
+    deleteMusicForm(id){
+      this.cancelBubbleFlag = false;
+      let list = [];
+      list.push(id);
+      let parames = {
+        idList: list,
+      }
+      this.$myMsg.confirm({
+        type: 'prompt',
+        content: '是否删除该歌单！',
+        cancelFlag: true,
+        callback: ()=> {
+          this.$http.deleteMusicForm( parames.idList )
+          .then(({data}) => {
+            this.cancelBubbleFlag = true;
+            if (data.code == 0){
+              this.$myMsg.notify({ content: '删除成功', type: 'success'});
+              this.getMusicFormList();
+            }
+            else{
+              this.$myMsg.notify({ content: data.msg, type: 'error'});
+            }  
+          })
+        }
+      })
+    },
+
+    //新建歌单
+    addMusicForm(){
+      let parames = {
+        ...this.formSF,
+      }
+      this.$http.addMusicForm( parames ).then(({data}) => {
+        if (data.code == 0){
+          this.$myMsg.notify({content: '新建成功！', type: 'success'});
+          this.getMusicFormList();
+          this.diaCreateSF = false;
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+    },
+
+    //修改作品
+    editWork(){
+      let parames = {
+        ...this.formUploadMusic,
+      }
+      this.$http.editMyWorks( parames ).then(({data}) => {
+        this.cancelBubbleFlag = true;
+        if (data.code == 0){
+          this.$myMsg.notify({content: '修改成功！', type: 'success'});
+          this.getMyWorks();
+          this.diaUploadMusic = false;
+
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+    },
+
+    //修改歌单
+    editMusicForm(){
+      let parames = {
+        ...this.formSF,
+      }
+      this.$http.editMusicForm( parames ).then(({data}) => {
+        this.cancelBubbleFlag = true;
+        if (data.code == 0){
+          this.$myMsg.notify({content: '修改成功！', type: 'success'});
+          this.getMusicFormList();
+          this.diaCreateSF = false;
+
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })
@@ -334,15 +495,18 @@ export default {
     successUploadLyric({data}){
       this.formUploadMusic.lyricUrl = data.data;
     },
+
     //上传封面成功后
     successMusicSongImg({data}){
       this.formUploadMusic.songImg = data.data;
     },
+
     //上传海报成功后
     successMusicPoster({data}){
       this.formUploadMusic.posterUrl = data.data;
     },
-    //打开编辑窗
+
+    //打开编辑用户资料窗
     openDiaEditData(){
       let { photoUrl,accountName,sex, id, type} = this.user;
       this.formEditUser = {photoUrl,accountName,sex, id, type}
@@ -352,15 +516,48 @@ export default {
       this.diaEditData = true;
     },
 
+    //打开编辑作品窗口
+    openEditWorkDia(e){
+      let {id, name, profileUrl, lyricUrl, posterUrl, songImg} = e;
+      this.formUploadMusic = {id, name, profileUrl, lyricUrl, posterUrl, songImg};
+      this.diaUploadMusic = true;//打开窗口
+      this.diaUploadMusicIsEdit = true;//编辑态
+      this.cancelBubbleFlag = false;
+    },
+
+    //打开编辑歌单窗口
+    openEditMusicForm(e){
+      let { id, songFormName} = e;
+      this.formSF = {
+        id,
+        songFormName
+      }
+      this.diaCreateSF = true;//打开窗口
+      this.diaSFTIsEdit = true;//编辑态
+      this.cancelBubbleFlag = false;
+    },
+
+    //打开歌单详细页
     goList(id){
-      this.$router.push({
-        path: `/vanmusic/user/musicList/${id}`
-      })
+      if(this.cancelBubbleFlag){
+        this.$router.push({
+          path: `/vanmusic/user/musicList/${id}`
+        })
+      }
     },
     
+    //播放
+    goPlayer(id){
+      if(this.cancelBubbleFlag){
+        this.$router.push({name:'player',params:{id: id}});
+      }
+    },
+
+    //清空参数
     clearParame(){
+      this.rePwd = "";
       this.formEditPw = { //修改密码
-        id: util.getSession("user").id,
+        id: this.$store.state.user.id,
         oldPassword: '',
         newPassword: '',
       };
@@ -368,24 +565,30 @@ export default {
         photoUrl: null,
         accountName: null,
         sex: "0",
-        id: util.getSession("user").id,
-        type: util.getSession("user").type,
+        id: this.$store.state.user.id,
+        type: this.$store.state.user.type,
       };
       this.formEditSinger = {//修改歌手信息
-        singerId: util.getSession("user").singerId,
-        singerType: util.getSession("user").singerType,
+        singerId: this.$store.state.user.singerId,
+        singerType: this.$store.state.user.singerType,
         info: '',
       };
       this.formUploadMusic = {//上传音乐
         name: null,
         profileUrl: null,
         lyricUrl: null,
-        songerId: util.getSession("user").singerId,
-        creator: util.getSession("user").accountName,
-        singer: util.getSession("user").accountName,
+        songerId: this.$store.state.user.singerId,
+        creator: this.$store.state.user.accountName,
+        singer: this.$store.state.user.accountName,
         posterUrl: '',
         songImg: '',
-      }
+      },
+      this.formSF = { //创建&编辑歌单
+        songFormName:'',
+        accountId: this.$store.state.user.id
+      };
+      this.diaSFTIsEdit = false;
+      this.diaUploadMusicIsEdit = false;
     },
 
     closeDia(val){
@@ -395,7 +598,7 @@ export default {
       this.diaUploadMusic = false;
       this.diaEditData = false;
     },
-  }
+  },
 }
 </script>
 

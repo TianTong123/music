@@ -1,6 +1,8 @@
 import vue from 'vue';
 import loginTemplate from './login.vue';
 import util from '@/util/utils';
+import store from '@/store/store';
+import router from "@/router";
  
 // 创建vue组件实例
 const template = vue.extend(loginTemplate);
@@ -38,12 +40,31 @@ let myLogin = {
           .then(({data}) => {
             if (data.code == 0){
               let token = data.data.token
+
               //存储
-              //this.$store.state.token = token;
-              util.saveSession("token", token);
-              util.saveSession('user', data.data);
+              store.state.user = data.data;
+              util.saveStorage("token", token);
+              util.saveStorage('user', data.data);
               this.show = false;
-              this.$myMsg.notify({content: "登录成功",type: 'success'})
+              this.$myMsg.notify({content: "登录成功",type: 'success'});
+              //模拟菜单管理，可删
+              let menuList = [];
+              if(data.data.type == 1){
+                menuList = [{ name: '用户', code: 'user', id: 8853, class: 'active_menu'}]
+              }else{
+                menuList = [
+                  { name: '首页', code: 'home', id: 8848, class: 'active_menu'},
+                  { name: '榜单', code: 'rank', id: 8849,  class: ''},
+                  { name: '歌手', code: 'singer', id: 8851, class: ''},
+                  { name: '用户', code: 'user', id: 8853, class: ''},
+                  { name: '播放', code: 'player', id: 8858, class: ''},
+                ]
+              }
+              util.saveStorage("menuList", menuList);
+              if(data.data.type == 1){ //歌手就跳转用户页
+                router.push({name:'user'});
+              } 
+              //模拟菜单管理，可删-结束
             }
             else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
           })

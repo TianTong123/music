@@ -96,13 +96,38 @@
   height: 170px;
 }
 .user .user-wrap .music-list .card-wrap .music-list-card .poster{
+  position: relative;
   width: 138px;
   height: 138px;
   border: 1px solid #ccc;
+  overflow: hidden;
+}
+.user .user-wrap .music-list .card-wrap .music-list-card .poster .delete-btn{
+  position: absolute;
+  z-index: 4;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(24, 24, 24, 0.3);
+  cursor: pointer;
+}
+.user .user-wrap .music-list .card-wrap .music-list-card .poster .delete-btn::after{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  height: 4px;
+  width: 35%;
+  border-radius: 2px;
+  background-color: #EB0102;
+  box-shadow: 0 2px 2px 2px rgba(24, 24, 24, 0.3);
 }
 .user .user-wrap .music-list .card-wrap .music-list-card .poster img{
-  max-width: 138px;
-  min-height: 138px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
 }
 .user .user-wrap .music-list .card-wrap .music-list-card .card-name{
   position: absolute;
@@ -129,7 +154,11 @@
   vertical-align: top;
   margin: 2px 7px;
 }
-
+.user .user-wrap .music-list .card-wrap .music-list-card .edit-btn{
+  float: right;
+  margin: 2px 7px;
+  cursor: pointer;
+}
 /* line-style */
 .user .user-wrap .line-style{
   display: flex;

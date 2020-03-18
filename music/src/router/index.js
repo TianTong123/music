@@ -27,7 +27,7 @@ export default new Router({
           component: () => import("@/views/home/home"),
         },
         {//搜索
-          path: 'search/:value',
+          path: 'search/:value/:type',
           name: 'search',
           component: () => import("@/views/search/search"),
         },
@@ -63,10 +63,10 @@ export default new Router({
           path: 'user',
           name: 'user',
           component: () => import("@/views/user/user"),
-          redirect: { path: "user/userInfo/13160502844" },
+          redirect: { path: "user/userInfo" },
           children:[
             {//详情页
-              path: 'userInfo/:id',
+              path: 'userInfo',
               name: 'user_info',
               component: () => import("@/views/user/userInfo"),
             },

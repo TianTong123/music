@@ -171,11 +171,24 @@ html, body{
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+/* 大个的空数据 */
 .my-big-null-box{
   position: relative;
   display: block;
   width: 100%;
   padding: 500px 0;
+  text-align: center;
+  line-height: 25px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #242424;
+}
+/* 小的空数据 */
+.my-min-null-box{
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 300px 0;
   text-align: center;
   line-height: 25px;
   font-size: 20px;

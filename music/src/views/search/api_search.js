@@ -7,7 +7,7 @@ const api = {
   search: data => req({
     baseUrl: baseUrl,
     method: "get",
-    url: "main_order/orderList",
+    url: "music/search",
     isOriginalGET: true,
     params: data
   }),

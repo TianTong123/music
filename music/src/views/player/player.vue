@@ -1,9 +1,11 @@
 <template>
   <div class="player">
-    <div class="bg"><img :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.posterUrl}`" alt=""></div>
+    <div class="bg">
+      <img v-if="musicInfo.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.posterUrl}`" alt="">
+    </div>
     <div class="wrap" @click="musicListFlag = false">
       <div class="content">
-        <div class="poster"><div class="poster-wrap"><img :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.songImg}`" alt=""></div></div>
+        <div class="poster"><div class="poster-wrap"><img v-if="musicInfo.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.songImg}`" alt=""></div></div>
         <div class="info">
           <div class="music-title">{{musicInfo.name}}</div>
           <div class="singer"><span>歌手：</span>{{musicInfo.singer}}</div>
@@ -28,10 +30,9 @@
         </div>
       </div>
     </div>
-    <!-- <audio id="music" ref="music" src="../../../static/images/届かない恋 .mp3"></audio> -->
     <audio id="music" ref="music" :src="`http://192.168.17.126:8848/tiantong/music/play/${musicInfo.profileUrl}`"></audio>
 	  <div class="music-bar" ref="musicBar">
-      <div class="music-bar-bg"><img :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.posterUrl}`" alt=""></div>
+      <div class="music-bar-bg"><img v-if="musicInfo.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.posterUrl}`" alt=""></div>
 	  	<div class="music-bar-wrap" @mouseup="dragFlag = false"  @mousemove="progressDrag">
         <!-- 控制菜单 -->
 	      <div class="control">
@@ -56,10 +57,13 @@
 </template>
 
 <script>
+import util from '@/util/utils';
+
 export default {
   data(){
     return{
       musicInfo: '',
+      mLength: 0,//音乐时长
       dragFlag: false,//拖动flag true按着鼠标不放，false就是松开鼠标
       musicListFlag: false,//播放列表
       voiceIconClass: 'icon-voice',//音量图标
@@ -82,12 +86,14 @@ export default {
     //获取歌
     getMusic(){
       let parames = {
-        musicId: 6,
+        musicId: this.$route.params.id||6,
       }
       this.$http.getMusic( parames ).then(({data}) => {
         if (data.code == 0){
           this.musicInfo = data.data;
           this.lyric = data.data.lrc;
+          this.mLength = data.data.timeLength;
+          this.totalDuration = util.timeFormat(this.mLength);
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })
@@ -108,15 +114,11 @@ export default {
         //时间处理
         let mLength = this.music.currentTime;
         this.nowPlayTime =  parseInt( mLength  * 1000);
-        let play_minutes = parseInt( mLength  / 60);
-        let play_seconds = parseInt( mLength  - play_minutes*60 );
-        let m = play_minutes<10? '0'+ play_minutes : play_minutes;
-        let s = play_seconds<10? '0' + play_seconds : play_seconds;
-        this.playTime = `${m}:${s}`;
+        this.playTime = util.timeFormat(mLength);
 
         //进度条处理
         /*进度条百分比计算*/
-				var long = mLength * 650 /this.music.duration;//得到进度条长度，650是进度条总长度
+				var long = mLength * 650 / this.music.duration;//得到进度条长度，650是进度条总长度
 				this.mProgress.style.width = long + "px";
 				this.mProgressIcon.style.left = long + "px";
 
@@ -184,7 +186,7 @@ export default {
           break;
         }
       }
-      this.$refs.lyricWrap.scrollTop = this.lyricIndex * 35 - 210;
+      this.$refs.lyricWrap.scrollTop = this.lyricIndex * 40 - 210;
     },
 
     //音量点击
@@ -217,17 +219,7 @@ export default {
     this.mProgressIcon = this.$refs.mProgressIcon;
     this.mProgressBar = this.$refs.mProgressBar;
     this.music.volume = 0.5;
-    //计算总时长,等后台返回数据，有数据的话，这段可以弃之不用了
-    setTimeout(() => { //避免出现NaN的问题
-     // let audio = document.getElementById("music");
-     // let mLength = audio.duration;//总时长
-     let mLength = 309;
-      let minutes = parseInt( mLength / 60 );
-      let seconds = parseInt( mLength - minutes*60 );
-      let m = minutes<10? '0'+ minutes : minutes;
-      let s = seconds<10? '0' + seconds : seconds;
-      this.totalDuration = `${m}:${s}`;
-    }, 200);
+    
 
     //初始化歌词位置
     let firsIndex = "";

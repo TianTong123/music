@@ -43,17 +43,14 @@ const utils = {
     return JSON.parse(JSON.stringify(data));
   },
 
-  saveMenuId: (key, data) => {
-    key = key ? key : "default";
-    return sessionStorage.setItem(key, JSON.stringify(data));
-  },
-
-  getMenuId: key => {
-    key = key ? key : "default";
-    return sessionStorage.getItem(key)
-      ? JSON.parse(sessionStorage.getItem(key))
-      : {};
-  },
+  //时分秒转化
+  timeFormat: time => {
+    let minutes = parseInt( time  / 60);
+    let seconds = parseInt( time  - minutes*60 );
+    let m = minutes<10? '0'+ minutes : minutes;
+    let s = seconds<10? '0' + seconds : seconds;
+    return `${m}:${s}`
+  }
 };
 
 export default utils;

@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2020-01-07 17:23:43 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-03-14 09:21:37
+ * @Last Modified time: 2020-03-18 17:26:45
  */
 .player img{
   width: 100%;
@@ -85,8 +85,8 @@
   top: 0;
 }
 .player .wrap .content .info .lyric .lyric-wrap p{
-  margin: 15px 0;
-  height: 20px;
+  margin: 20px 0;
+  height: auto;
   font-size: 15px;
   line-height: 20px;
 }

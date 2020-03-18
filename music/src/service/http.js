@@ -42,9 +42,9 @@ export const http = ({
         if(response.data.code == 3){
           myMsg.confirm({
             type: 'error',
-            content: '系统错误！',
+            content: response.data.msg,
           })
-          return response
+          reject(response);
         }else {
           return response
         }
@@ -106,10 +106,10 @@ export const http = ({
       config.timeout = timeout;
     }
     
-    let token = util.getSession("token");
+    let token = util.getStorage("token");
 
     if (token) {
-      config.headers.uid = util.getSession("user").account;
+      config.headers.uid = util.getStorage("user").account;
       config.headers.token = token;
     }
 

@@ -19,23 +19,25 @@
 
        <!-- 用户 -->
       <div class="user">
-        <div class="user-login" v-show="false">登录</div>
-        <div class="user-img">
-          <img v-if="user.photoUrl==null" src="../../static/images/icon/user.png">
-          <img v-if="user.photoUrl !=null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${user.photoUrl}`"> 
-          <div class="msg-num"></div>
+        <div class="user-login" v-show="user==''" @click="login">登录</div>
+        <div v-show="user != ''">
+          <div class="user-img">
+            <img v-if="user.photoUrl==null" src="../../static/images/icon/user.png">
+            <img v-if="user.photoUrl !=null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${user.photoUrl}`"> 
+            <div class="msg-num"></div>
+          </div>
+          <div class="triangle-down"></div>
+          <div class="user-content">
+            <div class="triangle-up"></div>
+            <ul class="login-out">
+              <li @click="logout"><i class="icon-phone"/>&nbsp;退出</li>
+            </ul>
+            <ul class="login">
+              <li><i class="icon-user"/>我的主页</li>
+            </ul>
+          </div>
         </div>
-        <div class="triangle-down"></div>
-        <div class="user-content">
-          <div class="triangle-up"></div>
-          <ul class="login-out">
-            <li @click="login" v-show="user==''"><i class="icon-phone"/>&nbsp;登录</li>
-            <li @click="logout" v-show="!user==''"><i class="icon-phone"/>&nbsp;退出</li>
-          </ul>
-          <ul class="login">
-            <li><i class="icon-user"/>我的主页</li>
-          </ul>
-        </div>
+        
       </div>
 
       <!-- 搜索 -->
@@ -56,20 +58,21 @@ export default {
   name: "Header",
   data(){
     return{
-      user: util.getSession('user'),
-      menuList:[
-        {name: '首页', code: 'home', id: 8848, class: 'active_menu'},
-        {name: '榜单', code: 'rank', id: 8849, class: ''},
-        {name: '歌手', code: 'singer', id: 8851, class: ''},
-        {name: '用户', code: 'user', id: 8853, class: ''},
-        {name: '播放', code: 'player', id: 8858, class: ''},
-      ],
+      menuList:util.getStorage('menuList'),
       restaurants: [],
       searchKey: '',
+      activeTabIndex: 0,
     }
   },
-  mounted() {
-    
+  computed:{
+    user:{
+      get() {
+        return this.$store.state.user//用户信息
+      },
+      set(newValue) {
+        this.$store.state.user = newValue
+      }
+    }
   },
   methods: {
     goMenu(data){
@@ -82,9 +85,10 @@ export default {
       for(let i = 0; i < this.menuList.length; i ++){
         if(this.menuList[i].code == this.$route.matched[1].name){//二级路由名字
           //控制页脚
-          if(this.$route.matched[1].name == 'player') this.$emit("changeFoot", false);
-          else this.$emit("changeFoot", true);
+          //if(this.$route.matched[1].name == 'player') this.$emit("changeFoot", false);
+          //else this.$emit("changeFoot", true);
           this.menuList[i].class = 'active_menu';
+          this.activeTabIndex = i;
         }else{
           this.menuList[i].class = '';
         }
@@ -96,16 +100,35 @@ export default {
     },
     //注销
     logout(){
-      util.removeSession('user');
-      util.removeSession('token');
+      util.removeStorage('user');
+      util.removeStorage('token');
+      util.removeStorage('menuList');
+      this.$store.state.user = '';
       this.user = "";
-      this.$myMsg.notify({content: "退出成功",type: 'success'})
+      this.$myMsg.notify({content: "退出成功",type: 'success'});
+      
+      this.menuList = [
+            { name: '首页', code: 'home', id: 8848, class: 'active_menu'},
+            { name: '榜单', code: 'rank', id: 8849,  class: ''},
+            { name: '歌手', code: 'singer', id: 8851, class: ''},
+            { name: '用户', code: 'user', id: 8853, class: ''},
+            { name: '播放', code: 'player', id: 8858, class: ''},
+      ]
+      util.saveStorage("menuList", this.menuList);
     },
     //搜索
     search(e){
       let keyCode = window.event? e.keyCode:e.which;
+      let type = 0;
+      if(this.menuList[this.activeTabIndex].code == 'singer'){
+        type = 1;
+      }
       if(keyCode == 13){//回车
-        this.$router.push({name:'search',params:{value: this.searchKey}});
+        if(type == 1){
+          this.$router.push({name:'search',params:{value: this.searchKey, type}});
+        }else{
+          this.$router.push({name:'search',params:{value: this.searchKey, type}});
+        }
       }
     }
   },
