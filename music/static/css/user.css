@@ -77,6 +77,14 @@
   font-size: 22px;
   border-bottom: 2px solid #C20C0C;
 }
+.user .user-wrap .music-list .list-title span{
+  display: inline-block;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.user .user-wrap .music-list .list-title .active-span{
+  border-bottom: 2px solid #C20C0C;
+}
 .user .user-wrap .music-list .list-btn{
   position: relative;
   float: right;

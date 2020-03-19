@@ -11,6 +11,7 @@
         <div class="user-info">
           <div class="user-name">{{user.accountName}}</div>
           <div class="data-bar">账号: <span>{{user.account}}</span></div>
+          <div class="data-bar" v-show="userType==1">个人介绍: <span>{{user.info}}</span></div>
           <div class="data-bar" v-show="userState != 1&&userType != 0">账号状态：<span>{{userState==0?'审核中':'审核不通过'}}</span></div>
           <div class="info-btn my-btn" v-show="userType==0||(userType == 1&&userState==1)" @click="openDiaEditData">修改资料</div>
           <div class="info-btn my-btn" @click="diaEditPw = true">修改密码</div>
@@ -44,16 +45,17 @@
       <!-- 作品 -->
       <div class="music-list" v-if="userType==1">
         <div class="list-title">
-          <span>我的作品</span> 
+          <span :class="{'active-span':isExamine}" @click="getMyWorks">我的作品</span> 
+          <span :class="{'active-span':!isExamine}" @click="getMyWorks">待审核作品</span> 
           <div class="list-btn my-add-btn" v-if="userType == 0" @click="diaCreateSF = true"></div>
-          <div class="list-btn my-full-delete-btn" v-if="userType == 0" @click="showDeleteBtn = !showDeleteBtn"></div>
+          <div class="list-btn my-full-delete-btn" @click="showDeleteBtn = !showDeleteBtn"></div>
         </div>
         <div class="my-min-null-box" v-show="workList.length == 0">你还没有作品，赶紧上传吧！</div>
         <div class="card-wrap" v-show="workList.length != 0">
           <div class="music-list-card" v-for="(e, index) in workList" :key="index" 
             @click="goPlayer(e.id)">
             <div class="poster">
-              <div class="delete-btn" v-show="showDeleteBtn && e.state != 0" @click="deleteMusicForm(e.id)"></div>
+              <div class="delete-btn" v-show="showDeleteBtn" @click="deleteWork(e.id)"></div>
               <img v-if="e.posterUrl == null" src="../../../static/images/logo.png">
               <img v-if="e.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${e.songImg}`">
             </div>
@@ -212,6 +214,7 @@ export default {
       showDeleteBtn: false,
       diaSFTIsEdit: false, //true，编辑态，false，创建态
       diaUploadMusicIsEdit: false,//同上
+      isExamine: true,//是否审核，true已审核，false未审核
       //表单
       formEditPw:{ //修改密码
         id: this.$store.state.user.id,
@@ -342,8 +345,12 @@ export default {
     },
 
     //获取作品
-    getMyWorks(){
+    getMyWorks(flag){
+      if(!flag){
+        this.isExamine = !this.isExamine;
+      }
       let parames = {
+        flag: this.isExamine?1:0,
         songerId: this.user.singerId,
       }
       this.$http.getMyWorks( parames ).then(({data}) => {
@@ -438,6 +445,34 @@ export default {
 
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+    },
+
+    //删除作品
+    deleteWork(id){
+      this.cancelBubbleFlag = false;
+      let list = [];
+      list.push(id);
+      let parames = {
+        idList: list,
+      }
+      this.$myMsg.confirm({
+        type: 'prompt',
+        content: '是否删除该作品！',
+        cancelFlag: true,
+        callback: ()=> {
+          this.$http.deleteMyWorks( parames.idList )
+          .then(({data}) => {
+            this.cancelBubbleFlag = true;
+            if (data.code == 0){
+              this.$myMsg.notify({ content: '删除成功', type: 'success'});
+              this.getMyWorks(true);
+            }
+            else{
+              this.$myMsg.notify({ content: data.msg, type: 'error'});
+            }  
+          })
+        }
       })
     },
 

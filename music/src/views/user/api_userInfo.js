@@ -86,9 +86,8 @@ const api = {
   //删除作品
   deleteMyWorks: data => req({
     baseUrl: baseUrl,
-    method: "get",
-    url: "music/getSingerMusic",
-    isOriginalGET: true,
+    method: "delete",
+    url: "music/batchRemoveMusic",
     params: data
   }),
 }
