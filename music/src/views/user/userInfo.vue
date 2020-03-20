@@ -45,8 +45,9 @@
       <!-- 作品 -->
       <div class="music-list" v-if="userType==1">
         <div class="list-title">
-          <span :class="{'active-span':isExamine}" @click="getMyWorks">我的作品</span> 
-          <span :class="{'active-span':!isExamine}" @click="getMyWorks">待审核作品</span> 
+          <span :class="{'active-span':examineState == 1}" @click="getMyWorks(1)">我的作品</span> 
+          <span :class="{'active-span':examineState == 0}" @click="getMyWorks(0)">待审核作品</span> 
+          <span :class="{'active-span':examineState == 2}" @click="getMyWorks(2)">审核不通过作品</span> 
           <div class="list-btn my-add-btn" v-if="userType == 0" @click="diaCreateSF = true"></div>
           <div class="list-btn my-full-delete-btn" @click="showDeleteBtn = !showDeleteBtn"></div>
         </div>
@@ -214,7 +215,7 @@ export default {
       showDeleteBtn: false,
       diaSFTIsEdit: false, //true，编辑态，false，创建态
       diaUploadMusicIsEdit: false,//同上
-      isExamine: true,//是否审核，true已审核，false未审核
+      examineState: 0,//是否审核，0已审核，1未审核, 2审核未通过
       //表单
       formEditPw:{ //修改密码
         id: this.$store.state.user.id,
@@ -345,12 +346,12 @@ export default {
     },
 
     //获取作品
-    getMyWorks(flag){
-      if(!flag){
-        this.isExamine = !this.isExamine;
-      }
+    getMyWorks(val){
+      //if(flag){
+        this.examineState = val
+      //}
       let parames = {
-        flag: this.isExamine?1:0,
+        flag: val,
         songerId: this.user.singerId,
       }
       this.$http.getMyWorks( parames ).then(({data}) => {
@@ -361,7 +362,7 @@ export default {
       })
     },
 
-    //获取用户列表
+    //获取用户信息
     getUserInfo(){
       if(util.getStorage('user') == ''){
         return
@@ -380,7 +381,7 @@ export default {
             this.getMusicFormList();
           }
           else{
-            this.getMyWorks();
+            this.getMyWorks(this.examineState);
           }
           
         }
@@ -440,7 +441,7 @@ export default {
         this.cancelBubbleFlag = true;
         if (data.code == 0){
           this.$myMsg.notify({content: '修改成功！', type: 'success'});
-          this.getMyWorks();
+          this.getMyWorks(this.examineState);
           this.diaUploadMusic = false;
 
         }
@@ -466,7 +467,7 @@ export default {
             this.cancelBubbleFlag = true;
             if (data.code == 0){
               this.$myMsg.notify({ content: '删除成功', type: 'success'});
-              this.getMyWorks(true);
+              this.getMyWorks(this.examineState);
             }
             else{
               this.$myMsg.notify({ content: data.msg, type: 'error'});

@@ -10,10 +10,10 @@
       <div class="menu">
         <ul>
           <li 
-            v-for="item in menuList" 
+            v-for="(item, index) in menuList" 
             :key="item.id"
             @click="goMenu(item)"
-            :class="item.class">{{item.name}}</li>
+            :class="{'active_menu': index == activeTabIndex}">{{item.name}}</li>
         </ul>
       </div>
 
@@ -67,6 +67,7 @@ export default {
   computed:{
     user:{
       get() {
+        this.menuList = util.getStorage('menuList')
         return this.$store.state.user//用户信息
       },
       set(newValue) {
