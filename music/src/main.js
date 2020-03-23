@@ -11,8 +11,11 @@ import myOption from '@/components/myOption';//引入选择框的option
 import api from "@/service/api.js";
 import message from "@/components/myMsg/index";//引入消息组价
 import login from "@/views/login/login"
+import global from './store/global.js' ; //全局变量
+
 
 Vue.config.productionTip = false
+Vue.prototype.$global = global;
 Vue.prototype.$http = api;
 Vue.use(myInput);//注册自己封装的输入框
 Vue.use(myUpload);//同上

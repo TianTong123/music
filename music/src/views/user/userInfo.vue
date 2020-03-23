@@ -6,7 +6,7 @@
       <div class="info">
         <div class="user-img">
           <img v-if="user.photoUrl==null" src="../../../static/images/icon/user.png">
-          <img v-if="user.photoUrl !=null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${user.photoUrl}`"> 
+          <img v-if="user.photoUrl !=null" :src="`${$global.imgUrl+user.photoUrl}`"> 
         </div>
         <div class="user-info">
           <div class="user-name">{{user.accountName}}</div>
@@ -31,7 +31,7 @@
             <div class="poster">
               <div class="delete-btn" v-show="showDeleteBtn && e.state != 0" @click="deleteMusicForm(e.id)"></div>
               <img v-if="e.posterUrl == null" src="../../../static/images/logo.png">
-              <img v-if="e.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${e.posterUrl}`">
+              <img v-if="e.posterUrl != null" :src="`${$global.imgUrl+e.posterUrl}`">
             </div>
             <div class="card-info">
               <i class="play-btn icon-mini-play"></i>{{e.length}}
@@ -58,7 +58,7 @@
             <div class="poster">
               <div class="delete-btn" v-show="showDeleteBtn" @click="deleteWork(e.id)"></div>
               <img v-if="e.posterUrl == null" src="../../../static/images/logo.png">
-              <img v-if="e.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${e.songImg}`">
+              <img v-if="e.posterUrl != null" :src="`${$global.imgUrl+e.songImg}`">
             </div>
             <div class="card-info">
               <i class="play-btn icon-mini-play"></i>
@@ -99,7 +99,7 @@
           <span class="line-label">音乐：</span>
           <div class="file-wrap">
             <my-upload
-              url="http://192.168.17.126:8848/tiantong/file/upload"
+              :url="$global.imgUploadUrl"
               label="选择文件"
               :beforeUpload="beforeUploadFile"
               :onSuccess="successUploadMusic"
@@ -109,7 +109,7 @@
           <span class="line-label">歌词：</span>
           <div class="file-wrap">
              <my-upload
-              url="http://192.168.17.126:8848/tiantong/file/upload"
+              :url="$global.imgUploadUrl"
               label="选择文件"
               :beforeUpload="beforeUploadFile"
               :onSuccess="successUploadLyric"
@@ -121,25 +121,25 @@
           <span class="line-label">封面：</span>
           <div class="file-wrap">
             <my-upload
-              url="http://192.168.17.126:8848/tiantong/file/upload"
+              :url="$global.imgUploadUrl"
               label="选择封面"
               :beforeUpload="beforeUploadImg"
               :onSuccess="successMusicSongImg"
               ></my-upload>
             <div class="preview-img-wrap">
-              <img v-if="formUploadMusic.songImg != ''" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${formUploadMusic.songImg}`" alt="">
+              <img v-if="formUploadMusic.songImg != ''" :src="`${$global.imgUrl+formUploadMusic.songImg}`" alt="">
             </div>
           </div>
           <span class="line-label">海报：</span>
           <div class="file-wrap">
             <my-upload
-              url="http://192.168.17.126:8848/tiantong/file/upload"
+              :url="$global.imgUploadUrl"
               label="选择海报"
               :beforeUpload="beforeUploadImg"
               :onSuccess="successMusicPoster"
               ></my-upload>
             <div class="preview-img-wrap">
-              <img v-if="formUploadMusic.posterUrl != ''" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${formUploadMusic.posterUrl}`" alt="">
+              <img v-if="formUploadMusic.posterUrl != ''" :src="`${$global.imgUrl+formUploadMusic.posterUrl}`" alt="">
             </div>
           </div>
         </div>
@@ -181,13 +181,13 @@
           <span class="line-label">头像：</span>
           <div class="file-wrap">
             <my-upload
-              url="http://192.168.17.126:8848/tiantong/file/upload"
+              :url="$global.imgUploadUrl"
               label="选择头像"
               :beforeUpload="beforeUploadImg"
               :onSuccess="successUserImg"
               ></my-upload>
             <div class="preview-img-wrap">
-              <img v-if="formEditUser.photoUrl != ''" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${formEditUser.photoUrl}`" alt="">
+              <img v-if="formEditUser.photoUrl != ''" :src="`${$global.imgUrl+formEditUser.photoUrl}`" alt="">
             </div>
           </div>
         </div>
