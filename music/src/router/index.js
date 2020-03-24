@@ -11,14 +11,12 @@ export default new Router({
       redirect: "/vanmusic"
     },
     {
-      path: '/test',
-      name: 'test',
-      component: () => import("@/views/test"),
-    },
-    {
       path: '/vanmusic',
       name: 'vanmusic',
       component: () => import("@/views"),
+      meta: {
+        keepAlive: true
+      },
       redirect: { name: "home" },
       children:[
         {//home
@@ -34,6 +32,9 @@ export default new Router({
         {//排行榜
           path: 'rank',
           name: 'rank',
+          meta: {
+            keepAlive: true
+          },
           component: () => import("@/views/rank/rank"),
         },
         {//歌手页面

@@ -7,7 +7,7 @@ const api = {
   getHotRecommend: data => req({
     baseUrl: baseUrl,
     method: "get",
-    url: "main_order/orderList",
+    url: "song-recommend-table/getSingerList",
     isOriginalGET: true,
     params: data
   }),
@@ -15,7 +15,7 @@ const api = {
   getSwipeList: data => req({
     baseUrl: baseUrl,
     method: "get",
-    url: "main_order/orderList",
+    url: "slide-img/getSlideImgList",
     isOriginalGET: true,
     params: data
   }),

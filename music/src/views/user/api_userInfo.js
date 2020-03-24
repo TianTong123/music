@@ -90,6 +90,13 @@ const api = {
     url: "music/batchRemoveMusic",
     params: data
   }),
+  //申请认证
+  passSinger: data => req({
+    baseUrl: baseUrl,
+    method: "post",
+    url: "songer/passSinger",
+    params: data
+  }),
 }
 
 export default api

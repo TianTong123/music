@@ -1,11 +1,11 @@
 <template>
   <div class="player">
     <div class="bg">
-      <img v-if="musicInfo.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.posterUrl}`" alt="">
+      <img v-if="musicInfo.posterUrl != null" :src="$global.imgUrl+musicInfo.posterUrl" alt="">
     </div>
     <div class="wrap" @click="musicListFlag = false">
       <div class="content">
-        <div class="poster"><div class="poster-wrap"><img v-if="musicInfo.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.songImg}`" alt=""></div></div>
+        <div class="poster"><div class="poster-wrap"><img v-if="musicInfo.posterUrl != null" :src="$global.imgUrl+musicInfo.songImg" alt=""></div></div>
         <div class="info">
           <div class="music-title">{{musicInfo.name}}</div>
           <div class="singer"><span>歌手：</span>{{musicInfo.singer}}</div>
@@ -30,9 +30,9 @@
         </div>
       </div>
     </div>
-    <audio id="music" ref="music" :src="`http://192.168.17.126:8848/tiantong/music/play/${musicInfo.profileUrl}`"></audio>
+    <audio id="music" ref="music" :src="$global.musicUrl+musicInfo.profileUrl"></audio>
 	  <div class="music-bar" ref="musicBar">
-      <div class="music-bar-bg"><img v-if="musicInfo.posterUrl != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${musicInfo.posterUrl}`" alt=""></div>
+      <div class="music-bar-bg"><img v-if="musicInfo.posterUrl != null" :src="$global.imgUrl+musicInfo.posterUrl" alt=""></div>
 	  	<div class="music-bar-wrap" @mouseup="dragFlag = false"  @mousemove="progressDrag">
         <!-- 控制菜单 -->
 	      <div class="control">
@@ -94,6 +94,7 @@ export default {
           this.lyric = data.data.lrc;
           this.mLength = data.data.timeLength;
           this.totalDuration = util.timeFormat(this.mLength);
+          this.initParames();
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })
@@ -205,6 +206,33 @@ export default {
           this.voiceIconClass = 'icon-voice';
           break;
       }
+    },
+
+    //初始化参数
+    initParames(){
+      //赋值
+      this.music = document.getElementById('music'); //this.$refs.music;
+      this.mProgress = this.$refs.mProgress;
+      this.mProgressIcon = this.$refs.mProgressIcon;
+      this.mProgressBar = this.$refs.mProgressBar;
+      this.music.volume = 0.5;
+      console.log()
+      //初始化歌词位置
+      let firsIndex = "";
+      for(let i = 0; i <this.lyric.length; i ++){
+        if(this.lyric[i].type == 5){
+          firsIndex = i;
+          break;
+        }
+      }
+      //每一行的高度为35，高亮位置放在210，所以把第一条歌词放在245
+      let lHeight = 210-firsIndex*35;
+      this.$refs.lyricWrap.scrollTop  = -lHeight;//下面注释的，是为了适配所有情况要用的(暂时不写，没时间啊)
+      // if( lHeight >= 0 ){//当前面很长很长时，要做什么
+      //   this.lyricTop = lHeight;
+      // }else{
+      //   this.lyricTop = lHeight;
+      // }
     }
 
   },
@@ -213,30 +241,10 @@ export default {
   },
   mounted(){
     
-    //赋值
-    this.music = this.$refs.music;
-    this.mProgress = this.$refs.mProgress;
-    this.mProgressIcon = this.$refs.mProgressIcon;
-    this.mProgressBar = this.$refs.mProgressBar;
-    this.music.volume = 0.5;
+   
     
 
-    //初始化歌词位置
-    let firsIndex = "";
-    for(let i = 0; i <this.lyric.length; i ++){
-      if(this.lyric[i].type == 5){
-        firsIndex = i;
-        break;
-      }
-    }
-    //每一行的高度为35，高亮位置放在210，所以把第一条歌词放在245
-    let lHeight = 210-firsIndex*35;
-    this.$refs.lyricWrap.scrollTop  = -lHeight;//下面注释的，是为了适配所有情况要用的(暂时不写，没时间啊)
-    // if( lHeight >= 0 ){//当前面很长很长时，要做什么
-    //   this.lyricTop = lHeight;
-    // }else{
-    //   this.lyricTop = lHeight;
-    // }
+   
     
   },
   watch:{

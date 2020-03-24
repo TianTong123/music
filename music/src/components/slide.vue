@@ -11,7 +11,7 @@
         <div class="slide" 
           v-for="(e, id) in slides"
           :key="id">
-          <img :src="e.imgSrc" alt=""/>
+          <img :src="$global.imgUrl+e.picUrl" alt=""/>
         </div>
       </div> 
      <div class="progress-bar">
@@ -36,13 +36,16 @@
 export default {
   name: "slide",
   props:{
-    slides: [],
+    slides: {
+      default: () => [],
+      type: Array
+    },
   },
   data () {
     return {
       mov: 0,//轮播图移动距离
       pageId: 0,//当前显示的轮播图id
-      activeImg: "../static/images/timg1.jpg",//轮播图横幅背景颜色
+      activeImg: "",//轮播图横幅背景颜色
       sTimer: Object,//轮播图定时器
       leftpProgs: document.getElementsByClassName("left-progress"),
       rightpProgs: document.getElementsByClassName("right-progress"),
@@ -96,7 +99,7 @@ export default {
       
       this.moveTimer();//重新启动定时器
       this.progressPlay();//播放下面小圈圈动画
-      this.activeImg = this.slides[this.pageId].imgSrc;//更改背景图片
+      this.activeImg = this.$global.imgUrl + this.slides[this.pageId].picUrl;//更改背景图片
       this.$refs.slides.style.left = this.mov + "px";
     },
 
@@ -143,7 +146,7 @@ export default {
    
   },
   mounted() {
-    this.activeColor = this.slides[0].color;//更改背景颜色
+   // this.activeColor = this.slides[0].color;//更改背景颜色
    // this.moveTimer();//播放轮播图
   },
   beforeDestroy(){

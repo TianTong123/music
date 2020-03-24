@@ -12,9 +12,11 @@
           <div class="user-name">{{user.accountName}}</div>
           <div class="data-bar">账号: <span>{{user.account}}</span></div>
           <div class="data-bar" v-show="userType==1">个人介绍: <span>{{user.info}}</span></div>
-          <div class="data-bar" v-show="userState != 1&&userType != 0">账号状态：<span>{{userState==0?'审核中':'审核不通过'}}</span></div>
-          <div class="info-btn my-btn" v-show="userType==0||(userType == 1&&userState==1)" @click="openDiaEditData">修改资料</div>
+          <div class="data-bar">账号状态：<span>{{stateTip}}</span></div>
+          <div class="info-btn my-btn" @click="openDiaEditData">修改资料</div>
           <div class="info-btn my-btn" @click="diaEditPw = true">修改密码</div>
+          <div class="info-btn my-btn" @click="getMsg()">我的消息</div>
+          <div class="info-btn my-btn" v-if="userState == -1 || userState == 2" @click="applyAuth">申请认证</div>
           <div class="info-btn my-btn" v-if="userType == 1 && userState == 1" @click="diaUploadMusic = true">上传音乐</div>
         </div>
       </div>
@@ -47,11 +49,10 @@
         <div class="list-title">
           <span :class="{'active-span':examineState == 1}" @click="getMyWorks(1)">我的作品</span> 
           <span :class="{'active-span':examineState == 0}" @click="getMyWorks(0)">待审核作品</span> 
-          <span :class="{'active-span':examineState == 2}" @click="getMyWorks(2)">审核不通过作品</span> 
           <div class="list-btn my-add-btn" v-if="userType == 0" @click="diaCreateSF = true"></div>
           <div class="list-btn my-full-delete-btn" @click="showDeleteBtn = !showDeleteBtn"></div>
         </div>
-        <div class="my-min-null-box" v-show="workList.length == 0">你还没有作品，赶紧上传吧！</div>
+        <div class="my-min-null-box" v-show="workList.length == 0">你还没有待审核作品，赶紧上传吧！</div>
         <div class="card-wrap" v-show="workList.length != 0">
           <div class="music-list-card" v-for="(e, index) in workList" :key="index" 
             @click="goPlayer(e.id)">
@@ -197,6 +198,20 @@
         </div>
       </my-Dialog>
 
+      <!-- 消息弹框 -->
+      <my-Dialog title="我的消息" :visible="diaMsg" @closeDia="closeDia">
+        <div class="msg-wrap">
+          <div class="msg-card" v-for="(e, id) in msgList" :key="id">
+            <p v-if="e.type == 1">你的申请的认证不通过！</p>
+            <p v-else>你的作品<span>{{e.name}}</span>审核不通过</p>
+            
+            <p>理由:<span>{{e.remark}}</span></p>
+          </div>
+        </div>
+        <div slot="footer" class="footer">
+          <div class="info-btn my-btn" @click="closeDia">确认</div>
+        </div>
+      </my-Dialog>
     </div>
   </div>
 </template>
@@ -212,10 +227,12 @@ export default {
       diaCreateSF: false,//创建歌单按钮
       diaUploadMusic:false, //上传音乐
       diaEditData: false, //修改资料
+      diaMsg: false,//消息
       showDeleteBtn: false,
       diaSFTIsEdit: false, //true，编辑态，false，创建态
       diaUploadMusicIsEdit: false,//同上
-      examineState: 0,//是否审核，0已审核，1未审核, 2审核未通过
+      examineState: 0,//是否审核，0已审核，1未审核, 2审核未通过, 
+      stateTip: '',//身份状态提示
       //表单
       formEditPw:{ //修改密码
         id: this.$store.state.user.id,
@@ -256,6 +273,7 @@ export default {
       musicFormList: [],//歌单列表
       cancelBubbleFlag: true,
       workList: [],//作品列表
+      msgList: [],//消息列表
     }
   },
   mounted(){
@@ -375,6 +393,20 @@ export default {
           this.user = data.data;
           this.userType = data.data.type;
           this.userState = data.data.checkState;
+          switch(this.userState){
+            case -1:
+              this.stateTip = "待认证"
+              break;
+            case 0:
+              this.stateTip = "待审核"
+              break;
+            case 1:
+              this.stateTip = "认证通过"
+              break;
+            case 2:
+              this.stateTip = "审核不通过"
+              break;
+          }
           util.removeSession('user');
           util.saveSession('user', data.data);
           if(data.data.type == 0){
@@ -489,6 +521,59 @@ export default {
           this.getMusicFormList();
           this.diaCreateSF = false;
 
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+    },
+    
+    //申请认证
+    applyAuth(){
+      let parames = {
+        state: 0,
+        idList: [this.user.singerId],
+      }
+      this.$myMsg.confirm({
+        type: 'prompt',
+        content: `是否申请认证为歌手？`,
+        cancelFlag: true,
+        callback: ()=> {
+          this.$store.state.isFullLoading = true;
+          this.$http.passSinger( parames ).then(({data}) => {
+            this.closeDia();
+            if (data.code == 0){
+              this.$myMsg.notify({ content: `已申请！`, type: 'success'});
+              this.userState = 0;
+            }
+            else{
+              this.$myMsg.notify({ content: data.msg, type: 'error'});
+            }  
+          })
+        }
+      })
+    },
+
+    //获取消息
+    getMsg(){
+      this.diaMsg = true;
+      let mList = [];
+      let parames = {
+        flag: 2,
+        songerId: this.user.singerId,
+      }
+      this.$http.getMyWorks( parames ).then(({data}) => {
+        if (data.code == 0){
+          mList = data.data;
+          this.$http.getUserInfo( {id: util.getStorage('user').id} ).then(({data}) => {
+            if (data.code == 0){
+              if(data.data.remark)
+                mList.push({
+                  remark: data.data.remark,
+                  type: 1
+                });
+              this.msgList = mList;
+              console.log(this.msgList)
+            }
+          })
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })
@@ -627,12 +712,14 @@ export default {
       this.diaUploadMusicIsEdit = false;
     },
 
+    //关闭弹框
     closeDia(val){
       this.clearParame();
       this.diaEditPw = false;
       this.diaCreateSF = false;
       this.diaUploadMusic = false;
       this.diaEditData = false;
+      this.diaMsg = false;
     },
   },
 }

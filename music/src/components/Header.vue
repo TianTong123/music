@@ -95,10 +95,12 @@ export default {
         }
       }
     },
+
     //登录
     login(){
       this.$myLogin.show();
     },
+
     //注销
     logout(){
       util.removeStorage('user');
@@ -117,6 +119,7 @@ export default {
       ]
       util.saveStorage("menuList", this.menuList);
     },
+
     //搜索
     search(e){
       let keyCode = window.event? e.keyCode:e.which;
@@ -131,7 +134,8 @@ export default {
           this.$router.push({name:'search',params:{value: this.searchKey, type}});
         }
       }
-    }
+    },
+
   },
   watch:{
     $route(to, from) {

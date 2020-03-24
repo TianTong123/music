@@ -7,15 +7,7 @@ const api = {
   getRank: data => req({
     baseUrl: baseUrl,
     method: "get",
-    url: "main_order/orderList",
-    isOriginalGET: true,
-    params: data
-  }),
-  //点赞
-  setIsLikeNum: data => req({
-    baseUrl: baseUrl,
-    method: "get",
-    url: "main_order/orderList",
+    url: "music-rank",
     isOriginalGET: true,
     params: data
   }),

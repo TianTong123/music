@@ -4,6 +4,7 @@ import api_home from "@/views/home/api_home";
 import api_search from "@/views/search/api_search";
 import api_play from "@/views/player/api_play";
 import api_userInfo from "@/views/user/api_userInfo";
+import api_rank from "@/views/rank/api_rank";
 // import api_commodity from "@/views/commodity/api_commodity";
 let api = {
 
@@ -34,7 +35,8 @@ api = Object.assign(
   api_home,
   api_search,
   api_play,
-  api_userInfo
+  api_userInfo,
+  api_rank,
 );
 
 export default api;

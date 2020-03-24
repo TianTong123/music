@@ -64,7 +64,35 @@
   display: inline-block;
   margin-right: 20px;
 }
-
+.user .user-wrap .msg-wrap{
+  display: block;
+  margin-right: -10px;
+  width: 400px;
+  height: 400px;
+  font-size: 14px;
+  overflow-y: auto;
+}
+/* 滚动条 */
+.user .user-wrap .msg-wrap::-webkit-scrollbar{
+  width: 10px;    
+}
+.user .user-wrap .msg-wrap::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: rgba(24,24,24,.8)
+}
+.user .user-wrap .msg-wrap::-webkit-scrollbar-track{
+  border-radius: 5px;
+  background: rgba(24,24,24,.3);
+}
+.user .user-wrap .msg-wrap .msg-card{
+  display: block;
+  margin-bottom: 26px;
+  border-bottom: 1px solid #242424;
+}
+.user .user-wrap .msg-wrap .msg-card p span{
+  padding: 0 5px;
+  font-weight: 600;
+}
 /* 歌单 */
 .user .user-wrap .music-list{
   margin-top: 40px;
