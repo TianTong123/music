@@ -67,7 +67,11 @@ export default {
   computed:{
     user:{
       get() {
-        this.menuList = util.getStorage('menuList')
+        this.menuList = util.getStorage('menuList');
+        let userInfo = '';
+        if( util.getStorage('user') != "" && this.$store.state.user == ""){
+          return util.getStorage('user')
+        }
         return this.$store.state.user//用户信息
       },
       set(newValue) {
@@ -106,6 +110,7 @@ export default {
       util.removeStorage('user');
       util.removeStorage('token');
       util.removeStorage('menuList');
+      util.removeStorage('musicFormList');
       this.$store.state.user = '';
       this.user = "";
       this.$myMsg.notify({content: "退出成功",type: 'success'});

@@ -52,6 +52,9 @@
 .singerinfo .music-list ul{
   list-style: none;
 }
+.singerinfo .music-list li{
+  background-color: #ddd;
+}
 .singerinfo .music-list li div{
   display: inline-block;
   height: 50px;
@@ -70,14 +73,16 @@
   margin-right: 14px;
 }
 .singerinfo .music-list li .play-btn{
-  display: none;
+  position: relative;
   float: right;
-  margin: 14px 14px;
-  width: 22px;
-  height: 22px;
-  background-image: url('../images/icon/btn.png');
-  background-size: 110px;
-  background-repeat: no-repeat;
+  padding: 17px 10px;
+  width: 16px;
+  height: 16px;
+}
+.singerinfo .music-list li .play-btn i{
+  display: block;
+  width: 16px;
+  height: 16px;
 }
 .singerinfo .music-list li .btn{
   position: relative;
@@ -90,11 +95,8 @@
   color: #fff;
   background-color: #242424;
 }
-.singerinfo .music-list li:hover .play-btn{
-  display: block;
-}
 .singerinfo .music-list li:nth-of-type(even){
-  background-color: #ddd;
+  background-color: #ccc;
 } 
 .singerinfo .music-list li:nth-of-type(even):hover{
   color: #fff;

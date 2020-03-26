@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2019-12-05 10:48:52 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-03-26 11:48:55
+ * @Last Modified time: 2020-03-26 15:19:21
  */
 /* 手机 */
 .icon-phone{
@@ -333,6 +333,15 @@
   height: auto;
   display: inline-block;
   background-image: url('../images/icon/collect.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/* 增加 */
+.icon-add{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/add.png');
   background-size: 100%;
   background-repeat: no-repeat;
 }

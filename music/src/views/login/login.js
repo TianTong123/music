@@ -32,6 +32,7 @@ let myLogin = {
         }
       },
       methods:{
+        //登录
         login(){
           let parames = {
             ...this.formData
@@ -52,7 +53,7 @@ let myLogin = {
               if(data.data.type == 1){ //歌手就跳转用户页
                 router.push({name:'user'});
               } 
-              //模拟菜单管理，可删-结束
+              this.getMusicFormList();
             }
             else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
           })
@@ -60,6 +61,8 @@ let myLogin = {
              this.$myMsg.notify({content: err.message,type: 'error'})
           })
         },
+
+        //注册
         register(){
           let parames = {
             ...this.formData,
@@ -77,6 +80,20 @@ let myLogin = {
             this.$myMsg.notify({content: err.message,type: 'error'})
           })
         },
+
+        //获取歌单
+        getMusicFormList(){
+          let parames = {
+            accountId: util.getStorage('user').id,
+          }
+          this.$http.getMusicFormList( parames ).then(({data}) => {
+            if (data.code == 0){
+              util.saveStorage("musicFormList", data.data);
+            }
+            else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+          })
+        },
+
         btnClick(flag){
           switch(flag){
             case 0://点击登录

@@ -195,3 +195,31 @@ html, body{
   font-weight: 600;
   color: #242424;
 }
+/* 我的歌单 */
+.my-form-wrap{
+  position: absolute;
+  z-index: 99999;
+  top: 20px;
+  left: 0px;
+  width: 150px;
+  height: auto;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.my-form-wrap .my-form-card{
+  margin-bottom: 5px;
+  height: 26px !important;
+  border-bottom: 1px solid #242424;
+  border-radius: 4px;
+  font-size: 14px !important;
+  text-align: left;
+  cursor: pointer;
+}
+.my-form-wrap .my-form-card span{
+  margin: 0 7px;
+  font-weight: 600;
+}
+.my-form-wrap .my-form-card:hover{
+  background-color: #fff;
+  color: #242424;
+}

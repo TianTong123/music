@@ -8,9 +8,18 @@
         <div class="poster">
           <div class="poster-wrap"><img v-if="musicInfo.posterUrl != null" :src="$global.imgUrl+musicInfo.songImg" alt=""></div>
           <div class="more-wrap">
-            <div class="more-btn"><i class="icon-islike"></i>{{musicInfo.likeNum}}</div>
-            <div class="more-btn line"><i class="icon-collect"></i>{{musicInfo.collectNum}}</div>
-            <div class="more-btn"><i class="icon-mini-play like"></i>{{musicInfo.playNum}}</div>
+            <div class="more-btn" @click="addIsLike"><i class="icon-islike"></i>{{musicInfo.likeNum}}</div>
+            <div class="more-btn" @click="addCollect(true)"><i class="icon-collect"></i>{{musicInfo.collectNum}}</div>
+            <div class="more-btn"><i class="icon-mini-play"></i>{{musicInfo.playNum}}</div>
+            <div class="more-btn" @click="diaAddMusicForm = !diaAddMusicForm">
+              <i class="icon-add"></i>
+              <div class="my-form-wrap" v-show="diaAddMusicForm">
+                <div class="my-form-card" v-for="(e, index) in addMusicFormList" @click="addCollect(false, e.id)" :key="index">
+                  <span>{{index+1}}</span>
+                  {{e.songFormName}}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="info">
@@ -70,6 +79,8 @@ export default {
   data(){
     return{
       musicInfo: '',
+      diaAddMusicForm: false,
+      addMusicFormList: [],
       mLength: 0,//音乐时长
       dragFlag: false,//拖动flag true按着鼠标不放，false就是松开鼠标
       musicListFlag: false,//播放列表
@@ -89,6 +100,10 @@ export default {
       /* 音乐播放器控制参数 end */
     }
   },
+  beforeMount(){
+    this.getMusic();
+    this.addMusicFormList = util.getStorage('musicFormList')
+  },
   methods:{
     //获取歌
     getMusic(){
@@ -102,11 +117,43 @@ export default {
           this.mLength = data.data.timeLength;
           this.totalDuration = util.timeFormat(this.mLength);
           this.initParames();
+          //增加播放量
+          this.$http.addMusicPlayNum({musicId: this.musicInfo.id});
+          this.musicInfo.playNum ++;
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })
     },
-    
+
+    //点赞
+    addIsLike(){
+      let parames = {
+        musicId: this.musicInfo.id,
+      }
+      this.musicInfo.likeNum++
+      this.$http.addLikeNum( parames )
+    },
+
+    //收藏
+    addCollect(flag, id){
+      if(util.getStorage('user') == ''){
+        this.$myMsg.notify({content: '请登录后再操作！', type: 'error'})
+        return
+      }
+      let parames = {
+        formId: flag?util.getStorage('musicFormList')[1].id:id,
+        songId: this.musicInfo.id,
+      }
+      this.$http.addCollect( parames ).then(({data}) => {
+        this.$myMsg.notify({content: '添加成功', type: 'success'})
+        if(flag){
+          this.musicInfo.collectNum ++;
+          this.$http.addCollectNum({ musicId: parames.songId });//增加收藏数
+        }
+        
+      })
+    },
+
     //播放
     playClick(){
       if( this.music.paused ){
@@ -139,6 +186,7 @@ export default {
         }
       }
     },
+
 
     //进度条点击
     progressClick(event){
@@ -243,17 +291,6 @@ export default {
       // }
     }
 
-  },
-  beforeMount(){
-    this.getMusic();
-  },
-  mounted(){
-    
-   
-    
-
-   
-    
   },
   watch:{
     //监听激活的歌词是否变化，如果有变化就移动歌词
