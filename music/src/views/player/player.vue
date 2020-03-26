@@ -5,7 +5,14 @@
     </div>
     <div class="wrap" @click="musicListFlag = false">
       <div class="content">
-        <div class="poster"><div class="poster-wrap"><img v-if="musicInfo.posterUrl != null" :src="$global.imgUrl+musicInfo.songImg" alt=""></div></div>
+        <div class="poster">
+          <div class="poster-wrap"><img v-if="musicInfo.posterUrl != null" :src="$global.imgUrl+musicInfo.songImg" alt=""></div>
+          <div class="more-wrap">
+            <div class="more-btn"><i class="icon-islike"></i>{{musicInfo.likeNum}}</div>
+            <div class="more-btn line"><i class="icon-collect"></i>{{musicInfo.collectNum}}</div>
+            <div class="more-btn"><i class="icon-mini-play like"></i>{{musicInfo.playNum}}</div>
+          </div>
+        </div>
         <div class="info">
           <div class="music-title">{{musicInfo.name}}</div>
           <div class="singer"><span>歌手：</span>{{musicInfo.singer}}</div>
@@ -99,6 +106,7 @@ export default {
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })
     },
+    
     //播放
     playClick(){
       if( this.music.paused ){

@@ -19,9 +19,9 @@
       </div>
       <div class="list">
         <div class="list-title">歌手列表</div>
-        <div class="card" v-for="(e, id) in singer" :key="id" @click="goSingerInfo(id)">
-          <div class="img-wrap"><img :src="e.headimg" alt=""></div>
-          <span>{{e.name}}</span>
+        <div class="card" v-for="(e, id) in singer" :key="id" @click="goSingerInfo(e.id)">
+          <div class="img-wrap"><img v-if="e.photoUrl" :src="$global.imgUrl+e.photoUrl" alt=""></div>
+          <span>{{e.accountName}}</span>
         </div>
         <div class="pagination">
           <div class="prev p-btn"></div>
@@ -45,10 +45,35 @@ export default {
       //歌手列表
       singer:[
         {name: '刘德华', headimg:'../../../static/images/ldh.jpg'},
-      ]
+      ],
+      pageInfo:{
+        pageSize: 12,
+        current: 0,
+      },
+      search:{
+        type: '国语',
+        sex: 1,
+      }
     }
   },
+  mounted(){
+    this.getSingerList();
+  },
   methods:{
+    getSingerList(){
+      let parames = {
+        ...this.pageInfo,
+        ...this.search
+      }
+      this.$http.getSingerList( parames ).then(({data}) => {
+        if (data.code == 0){
+          this.singer = data.data.records;
+          console.log(data.data.records)
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+    },
+
     activeTitle(id, flag, eid){
       //标题头
       if(flag == 1){ 
@@ -57,6 +82,7 @@ export default {
           this.typeList[i].class = ''
         }
         this.typeList[id].class = 'activeTitle';
+        this.search.type = this.typeList[id].name
         //滚动的控制
         this.tlwLeft = 53 + (-id*240)
       }
@@ -66,8 +92,11 @@ export default {
           this.typeList[eid].list[i].class = '';
         }
         this.typeList[eid].list[id].class = 'activeTitleContent';
+        this.search.sex = id==0?1:0
       }
+      this.getSingerList();
     },
+
     //设置宽度
     setContentWidth(){
       this.$refs['singer'].style.width = 1571 + "px";

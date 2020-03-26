@@ -39,13 +39,47 @@
   margin-top: 50px;
   display: inline-block;
   width: 260px;
-  height: 260px;
+  height: 320px;
   overflow: hidden;
 }
 .player .wrap .content .poster .poster-wrap{
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 260px;
+}
+.player .wrap .content .poster .more-wrap{
+  display: flex;
+  margin-top: 290px;
+  width: 100%;
+  height: 30px;
+  justify-content: space-around;
+}
+.player .wrap .content .poster .more-wrap .more-btn{
+  position: relative;
+  display: inline-block;
+  padding-left: 30px;
+  width: 82px;
+  height: 30px;
+  line-height: 40px;
+  font-size: 12px;
+  color: #fff;
+  cursor: pointer;
+}
+.player .wrap .content .poster .more-wrap .more-btn i{
+  position: absolute;
+  left: 0px;
+  margin: 5px;
+  width: 20px;
+  height: 20px;
+}
+.player .wrap .content .poster .more-wrap .more-btn .like{
+  margin: 7px 5px 0 5px;
+  width: 18px;
+  height: 18px;
+}
+.player .wrap .content .poster .more-wrap .line{
+  border-right: 2px solid #fff;
+  border-left: 2px solid #fff;
 }
 .player .wrap .content .poster img{
   position: absolute;

@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2019-12-05 10:48:52 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-03-18 15:21:20
+ * @Last Modified time: 2020-03-26 11:48:55
  */
 /* 手机 */
 .icon-phone{
@@ -202,10 +202,11 @@
 }
 /* 小型播放按钮 */
 .icon-mini-play{
-  width: 22px;
-  height: 22px;
-  background-image: url('../images/icon/btn.png');
-  background-size: 110px;
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/play.png');
+  background-size: 100%;
   background-repeat: no-repeat;
 }
 /* 暂停按钮 */
@@ -314,6 +315,24 @@
   height: auto;
   display: inline-block;
   background-image: url('../images/icon/isLike.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/* 喜欢 */
+.icon-like{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/like.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/* 收藏 */
+.icon-collect{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/collect.png');
   background-size: 100%;
   background-repeat: no-repeat;
 }

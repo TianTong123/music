@@ -5,29 +5,30 @@ import api_search from "@/views/search/api_search";
 import api_play from "@/views/player/api_play";
 import api_userInfo from "@/views/user/api_userInfo";
 import api_rank from "@/views/rank/api_rank";
-// import api_commodity from "@/views/commodity/api_commodity";
-let api = {
+import api_singer from "@/views/singer/api_singer";
 
-  // 下载文件1
-  // downLoadFile: data =>
-  //   req({
-  //     baseUrl: "osp",
-  //     method: "post",
-  //     url: "uploadFastdfs/downFile",
-  //     params: data
-  //   }),
-  // // 下载文件
-  // getFileFlow: data =>
-  //   req({
-  //     baseUrl: "testUrl",
-  //     method: "get",
-  //     url: "osp/tblResumeBase/downloadFlow",
-  //     params: data,
-  //     isOriginalGET: true,
-  //     responseType: "arraybuffer"
-  //   }),
-  //搜索
-  
+let api = {
+  //增加点赞数
+  addLikeNum: data => req({
+    baseUrl: baseUrl,
+    method: "post",
+    url: "music/addLikeNum",
+    params: data
+  }),
+  //增加播放量
+  addMusicPlayNum: data => req({
+    baseUrl: baseUrl,
+    method: "post",
+    url: "music/addPlayNum",
+    params: data
+  }),
+  //增加收藏数
+  addMusicPlayNum: data => req({
+    baseUrl: baseUrl,
+    method: "post",
+    url: "music/addCollectNum",
+    params: data
+  }),
 };
 api = Object.assign(
   api,
@@ -37,6 +38,7 @@ api = Object.assign(
   api_play,
   api_userInfo,
   api_rank,
+  api_singer,
 );
 
 export default api;

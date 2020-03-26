@@ -2,18 +2,18 @@
   <div class="singerinfo">
     <div class="wrap">
       <div class="info">
-        <div class="poster"><img src="../../../static/images/ldh.jpg" alt=""></div>
-        <div class="name"><span>名字：</span>刘德华</div>
-        <div class="detail-info"><span>介绍：</span>刘德华的父亲刘礼在启德机场做过消防员的工作。20世纪60年代刘德华获香港树仁大学颁予荣誉文学博士刘德华获香港树仁大学颁予荣誉文学博士(7张)，刘礼开了一间小吃杂货店以赚钱维持家用。刘德华在家中还有三位姐姐，一位妹妹以及一位弟弟</div>
+        <div class="poster"><img v-if="user.photoUrl" :src="$global.imgUrl+user.photoUrl" alt=""></div>
+        <div class="name"><span>名字：</span>{{user.accountName}}</div>
+        <div class="detail-info"><span>介绍：</span>{{user.info}}</div>
       </div>
-      <div class="music-list">
+      <div class="music-list" style=" min-height: 1000px">
         <div class="title">他的歌曲</div>
         <div class="list-wrap">
           <ul>
-            <li v-for="(e, index) in 1" :key="index" @click="goMusic(index)">
+            <li v-for="(e, index) in musicList" :key="index" @click="goMusic(e.id)">
               <div class="rank-num">{{index+1}}</div>
-              <div class="music-name">一起走过的日子</div>
-              <div class="time">05:06</div>
+              <div class="music-name">{{e.name}}</div>
+              <div class="time">{{timeFormat(e.timeLength)}}</div>
               <div class="play-btn"></div>
             </li>
           </ul>
@@ -23,18 +23,53 @@
   </div>
 </template>
 <script>
+import util from '@/util/utils';
+
 export default {
   data(){
     return{
-
+      user: {},
+      musicList: [],
     }
   },
+  mounted(){
+    this.getUserInfo();
+  },
   methods:{
+    //获取用户信息
+    getUserInfo(){
+      let parames = {
+        id: this.$route.params.id,
+      }
+      this.$http.getUserInfo( parames ).then(({data}) => {
+        if (data.code == 0){
+          this.user = data.data; 
+          this.getMyWorks(this.user.singerId);   
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      });
+    },
+    //获取作品
+    getMyWorks(id){
+      let parames = {
+        flag: 1,
+        songerId: id,
+      }
+      this.$http.getMyWorks( parames ).then(({data}) => {
+        if (data.code == 0){
+          this.musicList = data.data;
+          
+        }
+        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
+      })
+    },
     goMusic(index){
       this.$router.push({
         path: `../../player/${index}`
       })
-    }
+    },
+    //时间格式
+    timeFormat: (val) => util.timeFormat(val)
   }
 }
 </script>

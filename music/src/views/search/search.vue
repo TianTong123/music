@@ -44,9 +44,6 @@ export default {
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })
-      .catch(err => {
-        this.$myMsg.notify({content: err.message,type: 'error'})
-      })
     },
     getTime: val => {
       return util.timeFormat(val)
