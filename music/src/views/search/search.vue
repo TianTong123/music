@@ -5,7 +5,7 @@
         <div class="title">搜索结果</div>
         <div class="list-wrap">
           <ul v-if="list.length != 0">
-            <li v-for="(e, index) in list" :key="index" @click="goMusic(index)">
+            <li v-for="(e, index) in list" :key="index" @click="goMusic(e.id)">
               <div class="rank-num">{{index+1}}</div>
               <div class="music-name">{{e.name}}</div>
               <div class="time">{{getTime(e.timeLength)}}</div>
@@ -47,6 +47,10 @@ export default {
     },
     getTime: val => {
       return util.timeFormat(val)
+    },
+    //播放
+    goMusic(id){
+      this.$router.push({name:'player',params:{id: id}});
     },
   },
   watch:{

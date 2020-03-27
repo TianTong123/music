@@ -27,7 +27,7 @@
           </div>
           <div class="card-content">
             <ul>
-              <li v-for="(e, cid) in cardList" :key="cid">
+              <li v-for="(e, cid) in cardList" :key="cid" @click="goMusic(e.id)">
                 <div :class="{'rank-num': true,
                               'icon-top':cid == 0,
                               'icon-top2':cid == 1,
@@ -67,28 +67,10 @@ export default {
       })
     },
 
-    //点赞
-    isLike(cid){
-      let parames = {
-        
-      }
-      this.$http.setIsLikeNum( parames )
-      .then(({data}) => {
-        if (data.code == 0){
-          //this.list = data.data;
-        }
-        else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
-      })
-      .catch(err => {
-        this.$myMsg.notify({content: err.message,type: 'error'})
-      })
-    },
 
     //播放
-    play(id){
-      this.$router.push({
-        path: `../../player/${id}`
-      })
+    goMusic(id){
+      this.$router.push({name:'player',params:{id: id}});
     },
 
     //一键喜欢

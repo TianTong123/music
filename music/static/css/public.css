@@ -199,27 +199,45 @@ html, body{
 .my-form-wrap{
   position: absolute;
   z-index: 99999;
-  top: 20px;
-  left: 0px;
+  top: 40px;
+  left: -46px;
+  /* transform: translateX(-50%); */
   width: 150px;
   height: auto;
   border-radius: 4px;
-  overflow: hidden;
+  background-color: #343434;
+  color: #fff;
 }
+/* .my-form-wrap::before{
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #343434;
+} */
 .my-form-wrap .my-form-card{
-  margin-bottom: 5px;
-  height: 26px !important;
+  height: 32px !important;
   border-bottom: 1px solid #242424;
   border-radius: 4px;
+  line-height: 40px;
   font-size: 14px !important;
   text-align: left;
   cursor: pointer;
+  overflow: hidden;
+  user-select: none;
 }
+
 .my-form-wrap .my-form-card span{
   margin: 0 7px;
   font-weight: 600;
 }
 .my-form-wrap .my-form-card:hover{
-  background-color: #fff;
-  color: #242424;
+  background-color: #4f575e;
+  color: #01e5ff;
 }

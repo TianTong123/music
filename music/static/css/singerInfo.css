@@ -55,22 +55,27 @@
 .singerinfo .music-list li{
   background-color: #ddd;
 }
-.singerinfo .music-list li div{
+.singerinfo .music-list li .music-name{
   display: inline-block;
   height: 50px;
   line-height: 50px;
-  font-size: 14px;
-  vertical-align: top;
+  font-size: 15px;
+  cursor: pointer;
 }
 .singerinfo .music-list li .rank-num{
+  display: inline-block;
+  height: 50px;
   width: 36px;
+  line-height: 50px;
   text-align: center;
   font-size: 15px;
   font-weight: 600;
+  cursor: pointer;
 }
 .singerinfo .music-list li .time{
   float: right;
   margin-right: 14px;
+  line-height: 50px;
 }
 .singerinfo .music-list li .play-btn{
   position: relative;
@@ -80,9 +85,19 @@
   height: 16px;
 }
 .singerinfo .music-list li .play-btn i{
+  position: relative;
   display: block;
   width: 16px;
   height: 16px;
+}
+.singerinfo .music-list li .play-btn .delete-btn{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) rotate(90deg);
+  height: 30%;
+  width: 2px;
+  background-color: #fff;
 }
 .singerinfo .music-list li .btn{
   position: relative;

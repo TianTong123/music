@@ -7,7 +7,7 @@
       <div class="content-wrap">
         <div class="title">热门推荐</div>
         <div class="card-wrap">
-          <div class="card" v-for="(e, index) in hotList" :key="e.id">
+          <div class="card" v-for="(e, index) in hotList" :key="e.id" @click="goMusic(e.musicId)">
             <div class="music-poster"><img :src="$global.imgUrl+e.posterUrl" ></div>
             <div class="music-info">
               <div class="rank-num">{{index+1}}</div>
@@ -67,7 +67,12 @@ export default {
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })
-    }
+    },
+
+     //播放
+    goMusic(id){
+      this.$router.push({name:'player',params:{id: id}});
+    },
   }
 }
 </script>

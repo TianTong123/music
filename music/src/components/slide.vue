@@ -10,6 +10,7 @@
       <div class="slides" ref="slides">
         <div class="slide" 
           v-for="(e, id) in slides"
+          @click="goMusic(e.songId)"
           :key="id">
           <img :src="$global.imgUrl+e.picUrl" alt=""/>
         </div>
@@ -63,6 +64,11 @@ export default {
     } 
   },
   methods:{
+    //播放
+    goMusic(id){
+      this.$router.push({name:'player',params:{id: id}});
+    },
+
     /**
      * 定时器，每隔5秒播放动画
      */

@@ -119,7 +119,6 @@ export default {
             { name: '首页', code: 'home', id: 8848, class: 'active_menu'},
             { name: '榜单', code: 'rank', id: 8849,  class: ''},
             { name: '歌手', code: 'singer', id: 8851, class: ''},
-            { name: '播放', code: 'player', id: 8858, class: ''},
       ]
       this.$router.push({name: 'home'})
       util.saveStorage("menuList", this.menuList);

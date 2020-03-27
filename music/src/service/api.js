@@ -40,8 +40,8 @@ let api = {
     url: "song_form_info_table/addMusicToForm",
     params: data
   }),
-  //移除歌单
-  deleteMusicForm: data => req({
+  //移除歌单的歌
+  deleteMusicByForm: data => req({
     baseUrl: baseUrl,
     method: "post",
     url: "song_form_info_table/removeMusicFromForm",

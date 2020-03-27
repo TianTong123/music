@@ -15,17 +15,17 @@
               <div class="music-name">{{e.name}}</div>
               <div class="time">{{timeFormat(e.timeLength)}}</div>
               <div class="play-btn" @click="goMusic(e.id)"><i class="icon-mini-play"></i></div>
-              <div class="play-btn" @click="diaAddMusicForm = !diaAddMusicForm">
+              <div class="play-btn" @click="openOrClocseDiaMusicForm(index)">
                 <i class="icon-add"></i>
-                <div class="my-form-wrap" v-show="diaAddMusicForm">
-                  <div class="my-form-card" v-for="(e, index) in addMusicFormList" @click="addCollect(false, e.id)" :key="index">
-                    <span>{{index+1}}</span>
-                    {{e.songFormName}}
+                <div class="my-form-wrap" v-show="diaAddMusicForm == index">
+                  <div class="my-form-card" v-for="(item, id) in addMusicFormList" @click="addCollect(e.id, item.id)" :key="id">
+                    <span>{{id+1}}</span>
+                    {{item.songFormName}}
                   </div>
                 </div>
               </div>
-              <div class="play-btn" @click="addLike()"><i class="icon-like"></i></div>
-              <div class="play-btn" @click="addCollect(true)"><i class="icon-collect"></i></div>
+              <div class="play-btn" @click="addCollect(e.id, addMusicFormList[0].id)"><i class="icon-like"></i></div>
+              <div class="play-btn" @click="addCollect(e.id, addMusicFormList[1].id)"><i class="icon-collect"></i></div>
             </li>
           </ul>
         </div>
@@ -41,7 +41,7 @@ export default {
     return{
       user: {},
       musicList: [],
-      diaAddMusicForm: false,
+      diaAddMusicForm: -1,
       addMusicFormList: [],
     }
   },
@@ -81,41 +81,30 @@ export default {
     },
 
     //收藏&添加到歌单
-    addCollect(flag, id){
+    addCollect(sId, id){
       if(util.getStorage('user') == ''){
         this.$myMsg.notify({content: '请登录后再操作！', type: 'error'})
         return
       }
       let parames = {
-        formId: flag?util.getStorage('musicFormList')[1].id:id,
-        songId: this.musicInfo.id,
+        formId: id,
+        songId: sId,
       }
       this.$http.addCollect( parames ).then(({data}) => {
         this.$myMsg.notify({content: '添加成功', type: 'success'})
-        if(flag){
+        if(id == util.getStorage('musicFormList')[1].id){
           this.$http.addCollectNum({ musicId: parames.songId });//增加收藏数
         }
-        
-      })
-    },
-    //我喜欢
-    addLike(){
-      if(util.getStorage('user') == ''){
-        this.$myMsg.notify({content: '请登录后再操作！', type: 'error'})
-        return
-      }
-      let parames = {
-        formId: util.getStorage('musicFormList')[0].id,
-        songId: this.musicInfo.id,
-      }
-      this.$http.addCollect( parames ).then(({data}) => {
-        this.$myMsg.notify({content: '添加成功', type: 'success'})
       })
     },
     goMusic(index){
       this.$router.push({
         path: `../../player/${index}`
       })
+    },
+    //打开或添加歌单框
+    openOrClocseDiaMusicForm(index){
+      this.diaAddMusicForm = this.diaAddMusicForm==index?-1:index
     },
     //时间格式
     timeFormat: (val) => util.timeFormat(val)
