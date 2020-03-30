@@ -2,13 +2,16 @@
  * @Author: TianTong 
  * @Date: 2020-01-07 17:23:43 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-03-26 15:27:03
+ * @Last Modified time: 2020-03-30 16:00:13
  */
 .player img{
   width: 100%;
   height: 100%;
 }
 .player{
+  position: relative;
+  margin-top: -70px;
+  height: 100%;
   overflow: hidden;
 }
 .player .bg{

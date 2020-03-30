@@ -8,7 +8,8 @@ const api = {
     baseUrl: baseUrl,
     method: "post",
     url: "account/editAccount",
-    params: data
+    params: data,
+    isFullLoading: true,
   }),
   //获取用户信息
   getUserInfo: data => req({
@@ -22,14 +23,16 @@ const api = {
     baseUrl: baseUrl,
     method: "post",
     url: "account/updatePassword",
-    params: data
+    params: data,
+    isFullLoading: true,
   }),
   //上传音乐
   uploadMusic: data => req({
     baseUrl: baseUrl,
     method: "post",
     url: "music/addMusic",
-    params: data
+    params: data,
+    isFullLoading: true,
   }),
   //获取歌单
   getMusicFormList: data => req({
@@ -59,14 +62,16 @@ const api = {
     baseUrl: baseUrl,
     method: "post",
     url: "song_form_info_table/addForm",
-    params: data
+    params: data,
+    isFullLoading: true,
   }),
   //修改歌单
   editMusicForm: data => req({
     baseUrl: baseUrl,
     method: "post",
     url: "song_form_info_table/editForm",
-    params: data
+    params: data,
+    isFullLoading: true,
   }),
   //获取作品
   getMyWorks: data => req({
@@ -81,7 +86,8 @@ const api = {
     baseUrl: baseUrl,
     method: "post",
     url: "music/editMusic",
-    params: data
+    params: data,
+    isFullLoading: true,
   }),
   //删除作品
   deleteMyWorks: data => req({

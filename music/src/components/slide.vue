@@ -153,7 +153,7 @@ export default {
   },
   mounted() {
    // this.activeColor = this.slides[0].color;//更改背景颜色
-   // this.moveTimer();//播放轮播图
+    this.moveTimer();//播放轮播图
   },
   beforeDestroy(){
     clearInterval(this.sTimer);

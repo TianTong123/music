@@ -8,14 +8,16 @@ const api = {
     baseUrl: baseUrl,
     method: "post",
     url: "account/login",
-    params: data
+    params: data,
+    isFullLoading: true,
   }),
   //注册
   register: data => req({
     baseUrl: baseUrl,
     method: "post",
     url: "account/addAccount",
-    params: data
+    params: data,
+    isFullLoading: true,
   }),
 }
 

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import msg from "@/components/myMsg";
 import router from "@/router";
+import {myLoading} from '@/components/myLoading';//引入loading指令
 import store from "@/store/store";
 import util from "@/util/utils";
 
@@ -13,6 +14,8 @@ let myMsg = msg.myMsg;
  * @timeout 超时时间
  * @responseType 响应的数据类型
  * @isOriginalGET 是否get传参
+ * @isFullLoading 是否启动全局遮罩
+ * @isHalfLoading 是否启动局部遮罩
  */
 
 // 封装请求方法
@@ -23,11 +26,17 @@ export const http = ({
     timeout,
     isOriginalGET,
     responseType,
+    isFullLoading,
+    isHalfLoading,
 }) => {
   
     // axios response拦截器
     axios.interceptors.response.use(
       response => {
+        //关闭遮罩
+        myLoading.close();  
+        store.state.loading = false;
+      
         //登录失效的时候重定向为登录页面
         // if(response.data.code == 2){
         //   myMsg.confirm({
@@ -141,5 +150,23 @@ export const http = ({
     if(responseType){
       config.responseType = responseType
     }
+
+    // axios request拦截器
+    axios.interceptors.request.use(
+      request => {
+        //遮罩启动
+        if(isFullLoading){//全局遮罩
+          myLoading.open("加载中")
+        }else{//局部遮罩
+          if(isHalfLoading) store.state.loading = true;
+        }
+        return request
+      },error => {
+        myMsg.confirm({
+          type: 'error',
+          content: '请求错误',//显示返回的错误信息
+        })
+        return error;
+      });
     return axios(config);
 }

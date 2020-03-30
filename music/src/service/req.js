@@ -9,6 +9,8 @@ import { http } from "./http";
  * @timeout 超时时间
  * @isLogin 是否登录接口
  * @isOriginalGET 是否传统get传参
+ * @isFullLoading 是否启动全局遮罩
+ * @isHalfLoading 是否启动局部遮罩
  */
 const req = ({
   baseUrl,
@@ -18,14 +20,18 @@ const req = ({
   timeout,
   isOriginalGET,
   responseType,
+  isFullLoading = false,
+  isHalfLoading = true,
 }) => {
   let options = {
-    url: apienv.dev.baseUrl + url,//拼接地址
-    method: method,
-    params: params,
-    timeout: timeout,
+    url: apienv.serer.baseUrl + url,//拼接地址
+    method,
+    params,
+    timeout,
     responseType,
     isOriginalGET: isOriginalGET,
+    isFullLoading,
+    isHalfLoading
   };
   return http(options);
 };

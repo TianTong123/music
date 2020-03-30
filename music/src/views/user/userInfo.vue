@@ -1,5 +1,5 @@
 <template>
-  <div class="user" v-loading="false">
+  <div class="user">
     <div v-if="user == ''" class="my-big-null-box">你还没登录</div>
     <div v-if="user != ''" class="user-wrap">
       <!-- 资料头 -->

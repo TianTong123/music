@@ -46,6 +46,10 @@ export default {
   mounted(){
     this.getSlides();
     this.getHotList();
+    //this.$myLoading.open('sahdhskjdhskahdksahd');
+    setTimeout(() => {
+      this.$myLoading.close();
+    }, 2000);
   },
   methods:{
     //获取轮播图

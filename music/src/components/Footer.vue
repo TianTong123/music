@@ -10,7 +10,7 @@
 .footer{
   padding-top: 20px;
   width: 100%;
-  height: 40px;
+  height: 50px;
   background-color: #242424;
 }
 .footer .wrap{

@@ -6,8 +6,8 @@
     </div>
 
     <!-- 内容显示 -->
-    <div class="content" ref="content">
-      <router-view></router-view>
+    <div class="content" v-loading="loading">
+      <router-view ></router-view>
     </div>
 
     <!-- 页脚 -->
@@ -28,6 +28,11 @@ export default {
       footFlag: true,
     }
   },
+  computed:{
+    loading(){
+      return this.$store.state.loading
+    }
+  },
   methods:{
     //页脚控制
     changeFoot(val){
@@ -45,8 +50,9 @@ export default {
   height: 100%;
 }
 .head{
-  /* position: absolute;
-  top :0; */
+  position: absolute;
+  top :0;
+  z-index: 99999;
   width: 100%;
   height: 70px;
 }
@@ -54,7 +60,10 @@ export default {
   /* position: absolute;
   top: 70px;
   bottom: 60px; */
+  margin-top: 70px;
+  margin-bottom: -70px;
   width: 100%;
+  height: 100%;
   /* overflow-y: auto; */
   /* overflow-x: hidden; */
   background-color: #eee;
@@ -63,7 +72,7 @@ export default {
   /* position: absolute;
   bottom: 0; */
   width: 100%;
-	height: 60px;
+	height: 70px;
 }
 </style>
 

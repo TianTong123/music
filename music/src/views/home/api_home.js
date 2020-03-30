@@ -9,7 +9,8 @@ const api = {
     method: "get",
     url: "song-recommend-table/getSingerList",
     isOriginalGET: true,
-    params: data
+    params: data,
+    isFullLoading: true
   }),
   //轮播图
   getSwipeList: data => req({
