@@ -44,16 +44,17 @@ vue.directive('loading', {
 
 
 //服务式遮罩
-let SHOWFLAG = false;
+let SHOW_FLAG = false;
+let IS_SHOW = false;
 let myLoading =  {
   open:(text)=>{ //打开
-    //SHOWFLAG = true;
+    //SHOW_FLAG = true;
     const msgDom = new loading({
       el: document.createElement('div'),
       data () {
         return {
           text,
-          flag: SHOWFLAG
+          flag: SHOW_FLAG
         }
       },
     });
@@ -62,8 +63,8 @@ let myLoading =  {
   },
   
   close:()=>{ //关闭
-    SHOWFLAG = false
-    console.log(SHOWFLAG)
+    SHOW_FLAG = false
+    console.log(SHOW_FLAG)
   }
 }
 
