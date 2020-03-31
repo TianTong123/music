@@ -381,3 +381,21 @@
   background-size: 100%;
   background-repeat: no-repeat;
 }
+/* 加载 */
+.icon-mini-loading{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/loading.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  animation: loading 1s linear infinite;
+}
+@keyframes loading{
+  0%{
+    transform: rotateZ(0deg);
+  }
+  100%{
+    transform: rotateZ(360deg);
+  }
+}

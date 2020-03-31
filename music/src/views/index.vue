@@ -49,16 +49,18 @@ export default {
   height: 70px;
 }
 .index .content{
-  /* position: absolute;
-  top: 70px;
-  bottom: 60px; */
   margin-top: 70px;
   margin-bottom: -70px;
   width: 100%;
   height: 100%;
+  background-color: #eee;
+  /* position: absolute;
+  top: 70px;
+  bottom: 60px; */
+  
   /* overflow-y: auto; */
   /* overflow-x: hidden; */
-  background-color: #eee;
+ 
 }
 .index .foot{
   /* position: absolute;

@@ -83,7 +83,7 @@ export default {
 
      //播放
     goMusic(val){
-      this.$store.state.playList.push(val)
+      this.$store.state.playList.unshift(val)
       //this.$router.push({name:'player',params:{id: id}});
     },
   }

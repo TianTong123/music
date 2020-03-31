@@ -58,11 +58,7 @@ export default {
   name: "Header",
   data(){
     return{
-      menuList: [
-        { name: '首页', code: 'home', id: 8848, class: 'active_menu'},
-        { name: '榜单', code: 'rank', id: 8849,  class: ''},
-        { name: '歌手', code: 'singer', id: 8851, class: ''},
-      ],
+      menuList:[],
       restaurants: [],
       searchKey: '',
       activeTabIndex: 0,
@@ -73,6 +69,13 @@ export default {
     user:{
       get() {
         this.menuList = util.getStorage('menuList');
+        if(this.menuList == ""){
+          this.menuList = [
+            { name: '首页', code: 'home', id: 8848, class: 'active_menu'},
+            { name: '榜单', code: 'rank', id: 8849,  class: ''},
+            { name: '歌手', code: 'singer', id: 8851, class: ''},
+          ]
+        }
         let userInfo = '';
         if( util.getStorage('user') != "" && this.$store.state.user == ""){
           return util.getStorage('user')
