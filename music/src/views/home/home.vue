@@ -6,6 +6,7 @@
     <div class="content">
       <div class="content-wrap">
         <div class="title">热门推荐</div>
+        <button @click="test">测试服务式加载遮罩</button>
         <div class="card-wrap">
           <div class="card" v-for="(e, index) in hotList" :key="e.id" @click="goMusic(e.musicId)">
             <div class="music-poster"><img :src="$global.imgUrl+e.posterUrl" ></div>
@@ -46,12 +47,16 @@ export default {
   mounted(){
     this.getSlides();
     this.getHotList();
-    //this.$myLoading.open('sahdhskjdhskahdksahd');
+    
+  },
+  methods:{
+    test(){
+      this.$myLoading.open('我是第一个遮罩');
+      this.$myLoading.open('我是第二个遮罩');
     setTimeout(() => {
       this.$myLoading.close();
     }, 2000);
-  },
-  methods:{
+    },
     //获取轮播图
     getSlides(){
       this.$http.getSwipeList().then(({data}) => {

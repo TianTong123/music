@@ -24,14 +24,14 @@ const req = ({
   isHalfLoading = true,
 }) => {
   let options = {
-    url: apienv.serer.baseUrl + url,//拼接地址
+    url: apienv.dev.baseUrl + url,//拼接地址
     method,
     params,
     timeout,
     responseType,
-    isOriginalGET: isOriginalGET,
+    isOriginalGET,
     isFullLoading,
-    isHalfLoading
+    isHalfLoading,
   };
   return http(options);
 };

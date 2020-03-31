@@ -44,27 +44,37 @@ vue.directive('loading', {
 
 
 //服务式遮罩
-let SHOW_FLAG = false;
-let IS_SHOW = false;
-let myLoading =  {
-  open:(text)=>{ //打开
-    //SHOW_FLAG = true;
-    const msgDom = new loading({
+let LOADING_COMPONENTS = "";
+
+//生成遮罩
+function generateDia(text, flag){
+    // 添加节点
+    const loadingDom = new loading({
       el: document.createElement('div'),
       data () {
         return {
           text,
-          flag: SHOW_FLAG
+          flag
         }
       },
     });
-     // 添加节点
-    document.body.appendChild(msgDom.$el);
+    document.body.appendChild(loadingDom.$el);
+    LOADING_COMPONENTS = loadingDom;
+};
+
+let myLoading =  {
+  open(text){ //打开
+    if(LOADING_COMPONENTS == ""){//已存在则不创建，不存在则创建
+      generateDia(text, true);
+    }
+    LOADING_COMPONENTS._data.flag = true;
+    LOADING_COMPONENTS._data.text = text;
   },
   
-  close:()=>{ //关闭
-    SHOW_FLAG = false
-    console.log(SHOW_FLAG)
+  close(){ //关闭
+    if(LOADING_COMPONENTS != ""){
+      LOADING_COMPONENTS._data.flag = false
+    }
   }
 }
 

@@ -202,7 +202,7 @@ ul, li{
   transition: width .5s;
 }
 .content .search:hover{
-  width: 220px;
+  width: 220px !important;
 }
 .content .search i{
   margin: 6px;

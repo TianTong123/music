@@ -235,22 +235,22 @@ export default {
       stateTip: '',//身份状态提示
       //表单
       formEditPw:{ //修改密码
-        id: this.$store.state.user.id,
+        id: '',
         oldPassword: '',
         newPassword: '',
       },
       rePwd: '',
       formSF:{ //创建&编辑歌单
         songFormName:'',
-        accountId: this.$store.state.user.id
+        accountId: ''
       },
       formUploadMusic:{//上传音乐
         name: null,
         profileUrl: null,
         lyricUrl: null,
-        songerId: this.$store.state.user.singerId,
-        creator: this.$store.state.user.accountName,
-        singer: this.$store.state.user.accountName,
+        songerId: '',
+        creator: '',
+        singer: '',
         posterUrl: '',
         songImg: '',
       },
@@ -258,12 +258,12 @@ export default {
         photoUrl: null,
         accountName: null,
         sex: "0",
-        id:this.$store.state.user.id,
-        type: this.$store.state.user.type,
+        id: '',
+        type: '',
       },
       formEditSinger:{//修改歌手信息
-        singerId: this.$store.state.user.singerId,
-        singerType: this.$store.state.user.singerType,
+        singerId: '',
+        singerType: '',
         info: '',
       },
       //页面状态
@@ -320,6 +320,7 @@ export default {
         this.$myMsg.notify({content: '两次密码不一致！', type: 'error'});
         return
       }
+      this.formEditPw.id = this.user.id;
       let parames = {
         ...this.formEditPw,
       }
@@ -336,6 +337,10 @@ export default {
 
     //上传音乐
     uploadMusic(){
+      let {songerId, accountName} = this.user
+      this.formUploadMusic.songerId = songerId;
+      this.formUploadMusic.creator = accountName;
+      this.formUploadMusic.singer = accountName;
       let parames = {
         ...this.formUploadMusic,
       }
@@ -466,6 +471,10 @@ export default {
 
     //修改作品
     editWork(){
+      let {songerId, accountName} = this.user
+      this.formUploadMusic.songerId = songerId;
+      this.formUploadMusic.creator = accountName;
+      this.formUploadMusic.singer = accountName;
       let parames = {
         ...this.formUploadMusic,
       }
@@ -632,7 +641,9 @@ export default {
       let { photoUrl,accountName,sex, id, type} = this.user;
       this.formEditUser = {photoUrl,accountName,sex, id, type}
       if(this.userType == 1){
-        this.formEditSinger.info = this.user.info
+        this.formEditSinger.info = this.user.info;
+        this.formEditSinger.singerId = this.user.singerId;
+        this.formEditSinger.singerType = this.user.singerType
       }
       this.diaEditData = true;
     },

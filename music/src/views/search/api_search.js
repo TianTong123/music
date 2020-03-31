@@ -11,6 +11,14 @@ const api = {
     isOriginalGET: true,
     params: data
   }),
+  //全局搜索
+  searchAll: data => req({
+    baseUrl: baseUrl,
+    method: "get",
+    url: "music/searchSingerAndMusic",
+    isOriginalGET: true,
+    params: data
+  }),
 }
 
 export default api

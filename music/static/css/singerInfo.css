@@ -55,6 +55,10 @@
 .singerinfo .music-list li{
   background-color: #ddd;
 }
+.singerinfo .music-list li .list-img{
+  height: 50px;
+  width: 50px;
+}
 .singerinfo .music-list li .music-name{
   display: inline-block;
   height: 50px;

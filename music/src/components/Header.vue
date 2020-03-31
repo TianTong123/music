@@ -23,7 +23,7 @@
         <div v-show="user != ''">
           <div class="user-img">
             <img v-if="user.photoUrl==null" src="../../static/images/icon/user.png">
-            <img v-if="user.photoUrl !=null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${user.photoUrl}`"> 
+            <img v-if="user.photoUrl !=null" :src="`${$global.imgUrl + user.photoUrl}`"> 
             <div class="msg-num"></div>
           </div>
           <div class="triangle-down"></div>
@@ -41,9 +41,9 @@
       </div>
 
       <!-- 搜索 -->
-      <div class="search">
+      <div class="search" :style="`width:${width}px`">
         <i class="icon-search" ></i>
-        <input type="text" v-model="searchKey" placeholder="歌曲/歌单/歌手" @keydown="search" />
+        <input type="text" v-model="searchKey" placeholder="歌曲/歌手" @keydown="search" />
         <div class="preview-content"></div>
       </div>
      
@@ -62,6 +62,7 @@ export default {
       restaurants: [],
       searchKey: '',
       activeTabIndex: 0,
+      width: 30,
     }
   },
   computed:{
@@ -78,6 +79,9 @@ export default {
         this.$store.state.user = newValue
       }
     }
+  },
+  mounted(){
+    this.activeMenu();
   },
   methods: {
     goMenu(data){
@@ -127,16 +131,8 @@ export default {
     //搜索
     search(e){
       let keyCode = window.event? e.keyCode:e.which;
-      let type = 0;
-      if(this.menuList[this.activeTabIndex].code == 'singer'){
-        type = 1;
-      }
       if(keyCode == 13){//回车
-        if(type == 1){
-          this.$router.push({name:'search',params:{value: this.searchKey, type}});
-        }else{
-          this.$router.push({name:'search',params:{value: this.searchKey, type}});
-        }
+        this.$router.push({name:'search',params:{value: this.searchKey}});
       }
     },
 
@@ -145,11 +141,12 @@ export default {
     $route(to, from) {
       //激活当前处于活动页面的菜单标签
       this.activeMenu();
+    },
+    searchKey(val){
+      this.width = val == ''?30:220
     }
   },
-  mounted(){
-    this.activeMenu();
-  }
+  
 }
 </script>
 

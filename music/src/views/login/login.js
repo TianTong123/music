@@ -40,6 +40,7 @@ let myLogin = {
           this.$http.login( parames )
           .then(({data}) => {
             if (data.code == 0){
+              router.go(0)
               let token = data.data.token
               //存储
               store.state.user = data.data;
@@ -52,8 +53,10 @@ let myLogin = {
               util.saveStorage("menuList", menuList);
               if(data.data.type == 1){ //歌手就跳转用户页
                 router.push({name:'user'});
+                router.go(0)
               } 
               this.getMusicFormList();
+              
             }
             else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
           })

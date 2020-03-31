@@ -25,7 +25,7 @@ export default new Router({
           component: () => import("@/views/home/home"),
         },
         {//搜索
-          path: 'search/:value/:type',
+          path: 'search/:value',
           name: 'search',
           component: () => import("@/views/search/search"),
         },
