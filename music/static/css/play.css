@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2020-01-07 17:23:43 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-03-30 16:00:13
+ * @Last Modified time: 2020-03-31 14:21:36
  */
 .player img{
   width: 100%;
@@ -74,6 +74,11 @@
   margin: 0 auto;
   width: 20px;
   height: 20px;
+}
+.player .wrap .content .poster .more-wrap .more-btn i:active{
+  transform: translateX(2px) translateY(2px);
+  width: 18px;
+  height: 18px;
 }
 .player .wrap .content .poster .more-wrap .more-btn .like{
   margin: 7px 5px 0 5px;

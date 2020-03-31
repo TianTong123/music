@@ -7,6 +7,7 @@ const store = new Vuex.Store({
   state: {
     loading: false,
     user: '',
+    playList: [],//播放列表
     // user: {
     //   account: "",
     //   accountName: "",

@@ -29,6 +29,27 @@ export const http = ({
   isFullLoading,
   isHalfLoading,
 }) => {
+  // axios request拦截器
+  axios.interceptors.request.use(
+    request => {
+      //遮罩启动
+      if(isFullLoading){//全局遮罩
+        myLoading.open("加载中");
+      }else{//局部遮罩
+        if(isHalfLoading) {
+          store.state.loading = true;
+        }
+      }
+      return request
+      
+    },error => {
+      myMsg.confirm({
+        type: 'error',
+        content: '请求错误',//显示返回的错误信息
+      })
+      return error;
+    }
+  );
   // axios response拦截器
   axios.interceptors.response.use(
     response => {
@@ -142,24 +163,6 @@ export const http = ({
     config.responseType = responseType
   }
 
-  // axios request拦截器
-  axios.interceptors.request.use(
-    request => {
-      //遮罩启动
-      if(isFullLoading){//全局遮罩
-        myLoading.open("加载中");
-      }else{//局部遮罩
-        if(isHalfLoading) store.state.loading = true;
-      }
-      return request
-      
-    },error => {
-      myMsg.confirm({
-        type: 'error',
-        content: '请求错误',//显示返回的错误信息
-      })
-      return error;
-    }
-  );
+  
   return axios(config);
 }

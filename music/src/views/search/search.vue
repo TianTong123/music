@@ -1,19 +1,20 @@
 <template>
-  <div class="singerinfo">
-    <div class="wrap">
+  <div class="search">
+    <div class="singerinfo">
+      <div class="wrap">
       <div class="music-list" style="width: 100%;">
         <div class="title">搜索结果</div>
-        <div class="my-min-null-box" v-if="singerList.length == 0">结果为空</div>
-        <div class="list-wrap" style="margin-bottom: 30px">
+        <div class="my-min-null-box" v-if="singerList.length == 0 && musicList.length == 0">结果为空</div>
+        <div class="list-wrap" style="margin-bottom: 30px" v-if="singerList.length != 0">
           <div class="search-title">歌手</div>
           <ul v-if="singerList.length != 0">
-            <li v-for="(e, index) in singerList" :key="index" @click="goMusic(e.id)">
+            <li v-for="(e, index) in singerList" :key="index" @click="goSingerInfo(e.id)">
               <div class="list-img"><img v-if="e.photoUrl != null" :src="`${$global.imgUrl+e.photoUrl}`" alt="图片我裂开来"></div>
-              <div class="music-name">{{e.accountName}}</div>
+              <div class="music-name singer-name">{{e.accountName}}</div>
             </li>
           </ul>
         </div>
-        <div class="list-wrap">
+        <div class="list-wrap" v-if="musicList.length != 0">
           <div class="search-title">歌曲</div>
           <ul v-if="musicList.length != 0">
             <li v-for="(e, index) in musicList" :key="index" @click="goMusic(e.id)">
@@ -26,14 +27,19 @@
           
         </div>
       </div>
+      </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import util from '@/util/utils';
-
+import Footer from "@/components/myFooter/Footer";
 export default {
+  components:{
+    Footer
+  },
   data(){
     return{
       musicList: [],
@@ -64,6 +70,11 @@ export default {
     goMusic(id){
       this.$router.push({name:'player',params:{id: id}});
     },
+
+    //歌手详情
+    goSingerInfo(id){
+      this.$router.push({name:'singer_info',params:{id: id}});
+    }
   },
   watch:{
     $route(to, from) {
@@ -75,7 +86,4 @@ export default {
 
 <style scoped>
 @import '../../../static/css/singerInfo.css';
-.search-title{
-
-}
 </style>

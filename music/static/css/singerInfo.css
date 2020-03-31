@@ -15,6 +15,7 @@
 }
 .singerinfo .wrap .music-list{
   width: 920px;
+  min-height: 900px;
   overflow-y: auto;
 }
 .singerinfo .info .poster{
@@ -56,8 +57,22 @@
   background-color: #ddd;
 }
 .singerinfo .music-list li .list-img{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin: 15px;
   height: 50px;
   width: 50px;
+}
+.singerinfo .music-list ul li .singer-name{
+  line-height: 80px;
+}
+.singerinfo .music-list li .list-img img{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+
 }
 .singerinfo .music-list li .music-name{
   display: inline-block;

@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2019-12-05 10:48:52 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-03-26 15:19:21
+ * @Last Modified time: 2020-03-31 16:53:19
  */
 /* 手机 */
 .icon-phone{
@@ -342,6 +342,42 @@
   height: auto;
   display: inline-block;
   background-image: url('../images/icon/add.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/* 暂停 */
+.icon-mini-pause{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/pause.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/* 扩展 */
+.icon-mini-extend{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/extend.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/* 菜单 */
+.icon-mini-menu{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/menu.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/* 垃圾桶 */
+.icon-mini-clear{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/clear.png');
   background-size: 100%;
   background-repeat: no-repeat;
 }

@@ -10,34 +10,26 @@
       <router-view ></router-view>
     </div>
 
-    <!-- 页脚 -->
-    <div class="foot">
-      <Footer v-show="footFlag"/>
-    </div>    
+    <playerControl :style="`bottom:${top}px`" />
   </div>
 </template>
 <script>
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/myHeader/Header";
+import Footer from "@/components/myFooter/Footer";
+import playerControl from "@/components/playerControl/playerControl";
 export default {
   components:{
-    Header, Footer
+    Header, Footer, playerControl
   },
   data(){
     return{
-      footFlag: true,
+      top: 0,
     }
   },
   computed:{
     loading(){
       return this.$store.state.loading
     }
-  },
-  methods:{
-    //页脚控制
-    changeFoot(val){
-      this.footFlag = val;
-    },
   },
 
 }

@@ -6,7 +6,7 @@
         <div class="name"><span>名字：</span>{{user.accountName}}</div>
         <div class="detail-info"><span>介绍：</span>{{user.info}}</div>
       </div>
-      <div class="music-list" style=" min-height: 1000px">
+      <div class="music-list">
         <div class="title">他的歌曲</div>
         <div class="list-wrap">
           <ul>
@@ -31,12 +31,16 @@
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import util from '@/util/utils';
-
+import Footer from "@/components/myFooter/Footer";
 export default {
+  components:{
+    Footer
+  },
   data(){
     return{
       user: {},

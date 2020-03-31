@@ -44,12 +44,12 @@ export default new Router({
           redirect: { name: "singer_list" },
           children:[
             {
-              path: 'singerList',//排行榜
+              path: 'singerList',//歌手列表
               name: 'singer_list',
               component: () => import("@/views/singer/singerList"),
             },
             {
-              path: 'info/:id',//用户详细页
+              path: 'info/:id',//歌手详细页
               name: 'singer_info',
               component: () => import("@/views/singer/singerInfo"),
             },

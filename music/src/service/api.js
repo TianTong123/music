@@ -15,7 +15,8 @@ let api = {
     method: "get",
     url: "music/addLikeNum",
     isOriginalGET: true,
-    params: data
+    params: data,
+    isHalfLoading: false
   }),
   //增加播放量
   addMusicPlayNum: data => req({
@@ -23,7 +24,8 @@ let api = {
     method: "get",
     url: "music/addPlayNum",
     isOriginalGET: true,
-    params: data
+    params: data,
+    isHalfLoading: false
   }),
   //增加收藏数
   addCollectNum: data => req({
@@ -31,7 +33,8 @@ let api = {
     method: "get",
     url: "music/addCollectNum",
     isOriginalGET: true,
-    params: data
+    params: data,
+    isHalfLoading: false
   }),
   //收藏&添加到歌单
   addCollect: data => req({

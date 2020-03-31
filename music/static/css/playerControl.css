@@ -1,0 +1,121 @@
+.playerControl{
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 45px;
+  border-top: 1px solid #242424;
+  background-color: #545454;
+  color: #fff;
+}
+.playerControl audio{
+  display: none;;
+}
+.playerControl .player-control-wrap{
+  position: relative;
+  margin: 0 auto;
+  width: 1100px;
+  height: 100%;
+}
+.playerControl .music-name{
+  display: inline-block;
+  line-height: 45px;
+  user-select: none;
+  font-size: 14px;
+}
+.playerControl .music-name span{
+  font-weight: 600;
+  font-size: 16px;
+}
+.playerControl .play-btn{
+  float: right;
+  padding: 15px 10px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.playerControl .play{
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.playerControl .play-btn i{
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+.playerControl .play-btn i:active{
+  transform: translateX(2px) translateY(2px);
+  width: 14px;
+  height: 14px;
+}
+
+/* 播放列表 */
+.playerControl .play-list{
+  position: absolute;
+  bottom: 46px;
+  right: 0px;
+  width: 480px;
+  height: 410px;
+  background-color: #343434;  
+  cursor: pointer;
+}
+.playerControl .play-list .p-l-title{
+  padding: 0 19px;
+  height: 50px;
+  background-color: #242424;
+  line-height: 50px;
+  font-size: 16px;
+}
+.playerControl .play-list .p-l-clear{
+  position: absolute;
+  top: 2px;
+  right: 15px;
+}
+.playerControl .play-list .p-l-wrap{
+  position: absolute;
+  top: 50px;left: 0;bottom: 0;right: 0;
+  padding: 0 10px;
+  list-style: none;
+  overflow-y: auto;
+}
+/* 滚动条 */
+.playerControl .play-list .p-l-wrap::-webkit-scrollbar{
+  width: 10px;  
+}
+.playerControl .play-list .p-l-wrap::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.3)
+}
+.playerControl .play-list .p-l-wrap::-webkit-scrollbar-track{
+  background: rgba(255,255,255,.1);
+}
+.playerControl .play-list .p-l-wrap li{
+  padding: 0 9px;
+  height: 39px;
+  font-size: 15px;
+  border-bottom: 1px solid #42484e;
+}
+.playerControl .play-list .p-l-wrap .active-music{
+  background-color: #42484e;
+}
+.playerControl .play-list .p-l-wrap li:hover{
+  background-color: #4f575e;
+  color: #01e5ff;
+}
+.playerControl .play-list .p-l-wrap li div{
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+  line-height: 39px;
+}
+.playerControl .play-list .p-l-wrap li .rank-num{
+  margin-right: 16px;
+}
+.playerControl .play-list .p-l-wrap li .singer{
+  float: right;
+  margin: 0 16px 0 0;
+}
+.playerControl .play-list .p-l-wrap li .time{
+  float: right;
+}

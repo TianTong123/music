@@ -213,13 +213,17 @@
         </div>
       </my-Dialog>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import util from '@/util/utils';
-
+import Footer from "@/components/myFooter/Footer";
 export default {
+  components:{
+    Footer
+  },
   data(){
     return{
       //弹框

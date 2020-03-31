@@ -29,10 +29,15 @@
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
+import Footer from "@/components/myFooter/Footer";
 export default {
+  components:{
+    Footer
+  },
   data(){
     return{
       tlwLeft: 53,
@@ -68,7 +73,6 @@ export default {
       this.$http.getSingerList( parames ).then(({data}) => {
         if (data.code == 0){
           this.singer = data.data.records;
-          console.log(data.data.records)
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })

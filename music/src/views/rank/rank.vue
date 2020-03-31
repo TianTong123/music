@@ -17,7 +17,7 @@
               <span>TianTong</span>
             </div>
             <div class="operating-wrap">
-              <img class="top-img" src="../../../static/images/timg1.jpg" alt="">
+              <!-- <img class="top-img" src="../../../static/images/timg1.jpg" alt=""> -->
               <div class="operating">
                 <span>喜欢</span>
                 <span>收藏</span>
@@ -44,10 +44,15 @@
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
+import Footer from "@/components/myFooter/Footer";
 export default {
+  components:{
+    Footer
+  },
   data(){
     return{
       rankList:[]

@@ -8,7 +8,7 @@
         <div class="title">热门推荐</div>
         <button @click="test">测试服务式加载遮罩</button>
         <div class="card-wrap">
-          <div class="card" v-for="(e, index) in hotList" :key="e.id" @click="goMusic(e.musicId)">
+          <div class="card" v-for="(e, index) in hotList" :key="e.id" @click="goMusic(e)">
             <div class="music-poster"><img :src="$global.imgUrl+e.posterUrl" ></div>
             <div class="music-info">
               <div class="rank-num">{{index+1}}</div>
@@ -29,14 +29,17 @@
         </div>
       </div>
     </div>
+
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-import slide from "@/components/slide"
+import Footer from "@/components/myFooter/Footer";
+import slide from "@/components/mySlide/slide"
 export default {
   components:{
-    slide
+    slide,Footer,
   },
   data(){
     return{
@@ -79,8 +82,9 @@ export default {
     },
 
      //播放
-    goMusic(id){
-      this.$router.push({name:'player',params:{id: id}});
+    goMusic(val){
+      this.$store.state.playList.push(val)
+      //this.$router.push({name:'player',params:{id: id}});
     },
   }
 }

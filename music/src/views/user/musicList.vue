@@ -4,12 +4,12 @@
       <div class="info">
         <div class="poster">
           <img v-if="poster == null" src="../../../static/images/logo.png">
-          <img v-if="poster != null" :src="`http://192.168.17.126:8848/tiantong/file/imgShow/${poster}`">
+          <img v-if="poster != null" :src="`${$global.imgUrl+poster}`">
         </div>
       </div>
-      <div class="music-list" style="width: 100%; min-height: 1000px">
+      <div class="music-list" style="width: 100%; min-height: 900px;">
         <div class="title">{{formName}}</div>
-        <div class="list-wrap">
+        <div class="list-wrap" style="">
           <ul>
             <li v-for="(e, index) in list" :key="index">
               <div class="rank-num">{{index+1}}</div>
@@ -34,13 +34,17 @@
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import util from '@/util/utils';
-
+import Footer from "@/components/myFooter/Footer";
 export default {
-   data(){
+  components:{
+    Footer
+  },
+  data(){
     return{
       formId: '',
       formName: '',
