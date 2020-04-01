@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2020-01-07 17:23:43 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-03-31 14:21:36
+ * @Last Modified time: 2020-04-01 17:13:57
  */
 .player img{
   width: 100%;
@@ -159,6 +159,29 @@
   height: 410px;
   background-color: #343434;  
   cursor: pointer;
+}
+.player .wrap .content .play-list .p-l-clear{
+  position: absolute;
+  top: 2px;
+  right: 15px;
+}
+.player .wrap .content .play-list .play-btn{
+  float: right;
+  padding: 15px 10px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.player .wrap .content .play-list .play-btn i{
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+.player .wrap .content .play-list .play-btn i:active{
+  transform: translateX(2px) translateY(2px);
+  width: 14px;
+  height: 14px;
 }
 .player .wrap .content .play-list .p-l-title{
   padding: 0 19px;

@@ -6,12 +6,11 @@
     <div class="content">
       <div class="content-wrap">
         <div class="title">热门推荐</div>
-        <button @click="test">测试服务式加载遮罩</button>
         <div class="card-wrap">
-          <div class="card" v-for="(e, index) in hotList" :key="e.id" @click="toPlay(e)">
+          <div class="card" v-for="e in hotList" :key="e.id" @click="toPlay(e)">
             <div class="music-poster"><img :src="$global.imgUrl+e.posterUrl" ></div>
             <div class="music-info">
-              <div class="rank-num">{{index+1}}</div>
+              <!-- <div class="rank-num">{{index+1}}</div> -->
               <div class="info">
                 <div class="name">歌名:</div>
                 <div class="info-value">{{e.name}}</div>
@@ -51,13 +50,6 @@ export default {
     
   },
   methods:{
-    test(){
-      this.$myLoading.open('我是第一个遮罩');
-      this.$myLoading.open('我是第二个遮罩');
-    setTimeout(() => {
-      this.$myLoading.close();
-    }, 2000);
-    },
     //获取轮播图
     getSlides(){
       this.$http.getSwipeList().then(({data}) => {

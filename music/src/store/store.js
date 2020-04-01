@@ -8,6 +8,7 @@ const store = new Vuex.Store({
     loading: false,
     user: '',
     playList: [],//播放列表
+    activeIndex: 0,//选中的音乐
     // user: {
     //   account: "",
     //   accountName: "",

@@ -33,13 +33,17 @@
           </div>
           <!-- 播放列表 -->
           <div class="play-list" v-show="musicListFlag">
-            <div class="p-l-title">播放列表/12</div>
+            <div class="p-l-title">播放列表/{{playList.length}}</div>
+            <div class="p-l-clear play-btn" @click="clearPlayList"><i class="icon-mini-clear"></i></div>
             <ul class="p-l-wrap">
-              <li v-for="(e, index) in 33" :key="index" :class="{'active-music': index == 1}">
+              <li v-for="(e, index) in playList" 
+                :key="index" 
+                @click="select(e, index)"
+                :class="{'active-music': index == activeIndex}">
                 <div class="rank-num">{{index+1}}</div>
-                <div class="music-name">届かない恋</div>
-                <div class="time">05:09</div>
-                <div class="singer">上原れな</div>
+                <div class="music-name">{{e.name}}</div>
+                <div class="time">{{timeFormat(e.timeLength)}}</div>
+                <div class="singer">{{e.singer}}</div>
               </li>
             </ul>
           </div>
@@ -52,9 +56,9 @@
 	  	<div class="music-bar-wrap" @mouseup="dragFlag = false"  @mousemove="progressDrag">
         <!-- 控制菜单 -->
 	      <div class="control">
-	      	<div class="previous"><i class="icon-previous"></i></div>
+	      	<div class="previous" @click="changeMusic(true)"><i class="icon-previous"></i></div>
 	      	<div class="play" @click="playClick" ><i :class="playBtn"></i></div>
-	      	<div class="previous"><i class="icon-next"></i></div>
+	      	<div class="previous" @click="changeMusic(false)"><i class="icon-next"></i></div>
 	      </div>
 	      <!-- 进度条 -->
 	      <div class="progress-bar noselect" ref="mProgressBar" @click="progressClick">
@@ -66,7 +70,7 @@
         <!-- 音量 -->
 	      <div :class="voiceIconClass" @click="voiceClick"></div>
         <!-- 播放列表 -->
-        <div class="icon-music-list music-list-btn" @click="musicListFlag = !musicListFlag">33</div>
+        <div class="icon-music-list music-list-btn" @click="musicListFlag = !musicListFlag">{{playList.length}}</div>
       </div>
     </div><!-- music_bar end --> 
   </div>
@@ -79,6 +83,7 @@ export default {
   data(){
     return{
       musicInfo: '',
+      isPlay: -1,
       diaAddMusicForm: false,
       addMusicFormList: [],
       mLength: 0,//音乐时长
@@ -104,11 +109,44 @@ export default {
     this.getMusic();
     this.addMusicFormList = util.getStorage('musicFormList')
   },
+  computed:{
+    playList:{
+      get() {
+        let tempList = util.getSession('playList');
+        if(this.$store.state.playList.length == 0){
+          return tempList==""?[]:tempList;
+        }else{
+          tempList = this.$store.state.playList
+        }
+        return tempList;
+      },
+      set(val) {
+        util.saveSession('playList', val);
+        this.$store.state.playList = val;
+      }
+    },
+    activeIndex:{
+      get() {
+        let index = util.getSession('activeIndex');
+        if(this.$store.state.activeIndex != ''){
+          return this.$store.state.activeIndex
+        }
+        return index;
+      },
+      set(val) {
+        util.saveSession('activeIndex', val);
+        this.$store.state.activeIndex = val;
+      }
+    }
+  },
   methods:{
     //获取歌
-    getMusic(){
+    getMusic(id, type=false){
       let parames = {
         musicId: this.$route.params.id||6,
+      }
+      if(id){
+        parames.musicId = id
       }
       this.$http.getMusic( parames ).then(({data}) => {
         if (data.code == 0){
@@ -116,6 +154,9 @@ export default {
           this.lyric = data.data.lrc;
           this.mLength = data.data.timeLength;
           this.totalDuration = util.timeFormat(this.mLength);
+          if( id != '' && type){
+            document.getElementById('cMusic').src = this.$global.musicUrl+data.data.profileUrl
+          }
           this.initParames();
           //增加播放量
           this.$http.addMusicPlayNum({musicId: this.musicInfo.id});
@@ -183,10 +224,10 @@ export default {
 				if( this.music.ended ){//归零
           this.music.currentTime = 0;
           this.nowPlayTime = 0;
+          this.changeMusic(false);
         }
       }
     },
-
 
     //进度条点击
     progressClick(event){
@@ -237,7 +278,11 @@ export default {
     lyricScoll(){
       let mLength = this.music.currentTime;
       this.nowPlayTime =  parseInt( mLength  * 1000);
+      
       for(let i = 0; i <this.lyric.length; i ++){
+        if(this.lyric[i] == null){
+          break
+        }
         if(this.lyric[i].TimeMs >= this.nowPlayTime){
           this.lyricIndex = i;
           break;
@@ -267,12 +312,51 @@ export default {
     //初始化参数
     initParames(){
       //赋值
-      this.music = document.getElementById('music'); //this.$refs.music;
+      //this.music = document.getElementById('music'); //this.$refs.music;
+      this.music = document.getElementById('cMusic')
       this.mProgress = this.$refs.mProgress;
       this.mProgressIcon = this.$refs.mProgressIcon;
       this.mProgressBar = this.$refs.mProgressBar;
       this.music.volume = 0.5;
-      console.log()
+      this.nowPlayTime = 0;
+
+      this.mProgress.style.width = 0 + "px";
+      this.mProgressIcon.style.left = 0 + "px";
+
+      if( this.music.paused ){
+        this.playBtn = "icon-play"
+        /*进度条百分比计算*/
+          let mLength = this.music.currentTime;
+          let longer = mLength * 650 / this.music.duration;//得到进度条长度，650是进度条总长度
+			  	this.mProgress.style.width = longer + "px";
+			  	this.mProgressIcon.style.left = longer + "px";
+			}else{
+        this.playBtn = "icon-pause";
+        //启动时间监听钩子
+        this.music.ontimeupdate = () =>{
+          //时间处理
+          let mLength = this.music.currentTime;
+          this.nowPlayTime =  parseInt( mLength  * 1000);
+          this.playTime = util.timeFormat(mLength);
+
+          //进度条处理
+          /*进度条百分比计算*/
+			  	var long = mLength * 650 / this.music.duration;//得到进度条长度，650是进度条总长度
+			  	this.mProgress.style.width = long + "px";
+			  	this.mProgressIcon.style.left = long + "px";
+
+
+          //结束处理
+			  	if( this.music.ended ){//归零
+            this.music.currentTime = 0;
+            this.nowPlayTime = 0;
+            this.changeMusic(false);
+          }
+        }
+      }
+
+      
+      
       //初始化歌词位置
       let firsIndex = "";
       for(let i = 0; i <this.lyric.length; i ++){
@@ -289,8 +373,48 @@ export default {
       // }else{
       //   this.lyricTop = lHeight;
       // }
-    }
+    },
 
+    //选中播放列表的音乐
+    select(val, index){
+      this.selectMusic = val;
+      this.activeIndex = index;
+      if(val.musicId){
+        this.getMusic(val.musicId, true)
+      }else{
+        this.getMusic(val.id, true)
+      } 
+    },
+
+    //上下首切换
+    changeMusic(flag){
+      if(flag){//上一页
+        if(this.activeIndex == 0){
+          this.activeIndex = this.playList.length - 1;
+        }else{
+          this.activeIndex -= 1
+        }
+      }else{//下一页
+        if(this.activeIndex == this.playList.length - 1){
+          this.activeIndex = 0
+        }else{
+          this.activeIndex += 1
+        }
+      }
+      
+      this.select(this.playList[this.activeIndex], this.activeIndex)
+    },
+
+    //清空播放列表，留下当前播放的
+    clearPlayList(){    
+      let temp = this.playList[this.activeIndex]
+      this.playList = [];
+      this.playList.unshift(temp);
+      this.activeIndex = 0
+    },
+
+    //时间格式
+    timeFormat: (val) => util.timeFormat(val)
   },
   watch:{
     //监听激活的歌词是否变化，如果有变化就移动歌词

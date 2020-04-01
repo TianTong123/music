@@ -1,9 +1,9 @@
 <template>
   <div class="playerControl" >
-    <audio  ref="cMusic" ></audio>
+    <audio  ref="cMusic" id="cMusic" ></audio>
     <!-- 控制条 -->
     <div class="player-control-wrap">
-      <div class="music-name"><span>{{selectMusic.name}}</span></div>
+      <div class="music-name"><span v-if="playList.length != 0">{{playList[activeIndex].name}}</span></div>
       <div class="play-btn play" >
         <i v-show="isPlay == -1" class="icon-mini-loading"></i>
         <i v-show="isPlay == 1" @click="play" class="icon-mini-pause"></i>
@@ -11,7 +11,7 @@
       </div>
       <div class="play-btn">{{playList.length}}</div>
       <div class="play-btn" @click="playListFlag = !playListFlag"><i class="icon-mini-menu"></i></div>
-      <div class="play-btn" @click="goMusic"><i class="icon-mini-extend"></i></div>
+      <div class="play-btn" v-if="playList.length != 0" @click="goMusic"><i class="icon-mini-extend"></i></div>
       <div class="play-btn" @click="lockBar">
         <i v-show="isLock" class="icon-mini-lock"></i>
         <i v-show="!isLock" class="icon-mini-unlock"></i>
@@ -50,7 +50,6 @@ export default {
       isPlay: 0,//是否播放 0暂停， -1加载， 1播放
       playListFlag: false, //显示播放列表的flag
       selectMusic: '',//选中播放的音乐
-      activeIndex: 0,//选中的音乐的下标
       isLock: false,
     }
   },
@@ -72,7 +71,34 @@ export default {
         util.saveSession('playList', val);
         this.$store.state.playList = val;
       }
+    },
+    activeIndex:{
+      get() {
+        let index = util.getSession('activeIndex');
+        if(this.$store.state.activeIndex != ''){
+          return this.$store.state.activeIndex
+        }
+        if( index != '' && this.$refs['cMusic']){//如果有歌就播放第一首
+          this.select(tempList[index], index);
+        }
+        return index;
+      },
+      set(val) {
+        util.saveSession('activeIndex', val);
+        this.$store.state.activeIndex = val;
+      }
     }
+  },
+  mounted(){
+    let playList = util.getSession('playList'); //因为判断是刷新操作，所以如果是刷新 vuex必定全空，获取session肯定对
+    let active = util.getSession('activeIndex');
+    if(playList == ""){
+      return 
+    }
+    if(playList.length != 0){
+      this.$refs['cMusic'].src = this.$global.musicUrl+playList[active].profileUrl;
+    }
+    
   },
   methods:{
     play(){
@@ -105,16 +131,22 @@ export default {
       }
     },
 
-    //清空播放列表
-    clearPlayList(){
+    //清空播放列表，留下当前播放的
+    clearPlayList(){    
+      let temp = this.playList[this.activeIndex]
       this.playList = [];
+      this.playList.unshift(temp);
+      this.activeIndex = 0
     },
 
     //跳转播放详情页
-    goMusic(id){
-      this.play();
+    goMusic(){
       this.playListFlag = false;
-      this.$router.push({name:'player',params:{id: this.selectMusic.musicId}});
+      let id = this.playList[this.activeIndex].musicId;
+      if( id == null ){
+        id = this.playList[this.activeIndex].id
+      }
+      this.$router.push({name:'player',params:{id}});
     },
 
     //解锁
@@ -125,6 +157,15 @@ export default {
 
     //时间格式
     timeFormat: (val) => util.timeFormat(val)
+  },
+  watch:{
+    $route(to, from) {
+      if(this.$refs['cMusic'].paused){
+        this.isPlay = 0
+      }else{
+        this.isPlay = 1
+      }
+    }
   }
 }
 </script>

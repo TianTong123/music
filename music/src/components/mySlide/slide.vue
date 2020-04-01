@@ -10,7 +10,7 @@
       <div class="slides" ref="slides">
         <div class="slide" 
           v-for="(e, id) in slides"
-          @click="goMusic(e.songId)"
+          @click="toPlay(e)"
           :key="id">
           <img :src="$global.imgUrl+e.picUrl" alt=""/>
         </div>
@@ -34,6 +34,7 @@
   </div>
 </template>
 <script>
+import util from '@/util/utils';
 export default {
   name: "slide",
   props:{
@@ -64,9 +65,15 @@ export default {
     } 
   },
   methods:{
-    //播放
+    //去音乐详情页
     goMusic(id){
       this.$router.push({name:'player',params:{id: id}});
+    },
+
+    //播放
+    toPlay(val){
+      this.goMusic(val.songId)
+      util.toPlay(val)
     },
 
     /**

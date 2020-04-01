@@ -15,7 +15,8 @@ const api = {
   getSwipeList: data => req({
     baseUrl: baseUrl,
     method: "get",
-    url: "slide-img/getSlideImgList",
+    //url: "slide-img/getSlideImgList",//旧
+    url: "slide-img/getSlideWithMusicList",
     isOriginalGET: true,
     params: data
   }),
