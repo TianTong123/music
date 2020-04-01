@@ -16,7 +16,7 @@
               <div class="music-name">{{e.name}}</div>
               <div class="time">{{timeFormat(e.timeLength)}}</div>
               <div class="play-btn" @click="deleteMusic(e.id)"><i class="delete-btn"></i></div>
-              <div class="play-btn" @click="goMusic(e.id)"><i class="icon-mini-play"></i></div>
+              <div class="play-btn" @click="toPlay(e)"><i class="icon-mini-play"></i></div>
               <div class="play-btn" @click="openOrClocseDiaMusicForm(index)">
                 <i class="icon-add"></i>
                 <div class="my-form-wrap" v-show="diaAddMusicForm == index">
@@ -34,16 +34,11 @@
         </div>
       </div>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 <script>
 import util from '@/util/utils';
-import Footer from "@/components/myFooter/Footer";
 export default {
-  components:{
-    Footer
-  },
   data(){
     return{
       formId: '',
@@ -115,9 +110,7 @@ export default {
     },
 
     //播放
-    goMusic(id){
-      this.$router.push({name:'player',params:{id: id}});
-    },
+    toPlay: (val) => util.toPlay(val),
 
     //打开或添加歌单框
     openOrClocseDiaMusicForm(index){

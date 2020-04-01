@@ -6,6 +6,7 @@
   border-top: 1px solid #242424;
   background-color: #545454;
   color: #fff;
+  transition-duration: .5s;
 }
 .playerControl audio{
   display: none;;

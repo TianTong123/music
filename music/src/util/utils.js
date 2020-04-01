@@ -1,3 +1,5 @@
+import store from '@/store/store';
+
 const utils = {
   // 取出本地存储
   getStorage: key => {
@@ -50,7 +52,42 @@ const utils = {
     let m = minutes<10? '0'+ minutes : minutes;
     let s = seconds<10? '0' + seconds : seconds;
     return `${m}:${s}`
-  }
+  },
+
+  //添加到播放列表
+  toPlay(val){
+    let tempList = []
+    tempList = this.getSession('playList');
+    
+    if(store.state.playList.length == 0){
+      if( tempList==""){
+        tempList = []
+        tempList.unshift(val)
+      }
+    }else{
+      tempList = store.state.playList
+      let index = this.isHave(val, tempList);
+      
+      if( index != -1 ){
+        tempList.splice(index, 1);
+      }
+      tempList.unshift(val);
+    }
+    this.saveSession('playList', tempList);
+    store.state.playList = tempList;
+  },
+
+  //是否重复
+  isHave(val, list){
+    for(let i = 0; i < list.length; i++){
+      if(val.name == list[i].name){
+        return i
+      }
+    }
+    return -1
+  },
+
+
 };
 
 export default utils;

@@ -19,15 +19,15 @@
             <div class="operating-wrap">
               <!-- <img class="top-img" src="../../../static/images/timg1.jpg" alt=""> -->
               <div class="operating">
-                <span>喜欢</span>
-                <span>收藏</span>
-                <span>播放</span>
+                <span @click="tip">喜欢</span>
+                <span @click="tip">收藏</span>
+                <span @click="tip">播放</span>
               </div>
             </div>
           </div>
           <div class="card-content">
             <ul>
-              <li v-for="(e, cid) in cardList" :key="cid" @click="goMusic(e.id)">
+              <li v-for="(e, cid) in cardList" :key="cid" @click="toPlay(e)">
                 <div :class="{'rank-num': true,
                               'icon-top':cid == 0,
                               'icon-top2':cid == 1,
@@ -44,15 +44,11 @@
         </div>
       </div>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 <script>
-import Footer from "@/components/myFooter/Footer";
+import util from '@/util/utils';
 export default {
-  components:{
-    Footer
-  },
   data(){
     return{
       rankList:[]
@@ -72,11 +68,8 @@ export default {
       })
     },
 
-
     //播放
-    goMusic(id){
-      this.$router.push({name:'player',params:{id: id}});
-    },
+    toPlay: (val) => util.toPlay(val),
 
     //一键喜欢
     allLike(index){
@@ -94,6 +87,10 @@ export default {
       .catch(err => {
         this.$myMsg.notify({content: err.message,type: 'error'})
       })
+    },
+
+    tip(){
+      this.$myMsg.notify({content: '这个是不可能做的了！~(￣▽￣)~*',type: 'success'})
     },
 
     //一键收藏

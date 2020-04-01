@@ -6,11 +6,18 @@
     </div>
 
     <!-- 内容显示 -->
-    <div class="content" v-loading="loading">
+    <div class="content" v-loading="loading" @mouseover="hiddenControl()">
       <router-view ></router-view>
     </div>
-
-    <playerControl :style="`bottom:${top}px`" />
+    <Footer></Footer>
+    <!-- 空气墙 -->
+    <div class="control-bar"  @mouseover="showControl" ></div>
+    <playerControl 
+      :style="`bottom:${top}px`" 
+      @mouseover="showControl" 
+      @show="showChange" 
+      @isLock="lockChange"
+      :hiddenList="hiddenList" />
   </div>
 </template>
 <script>
@@ -23,7 +30,9 @@ export default {
   },
   data(){
     return{
-      top: 0,
+      top: -45,
+      hiddenList: true,
+      isLock: false,
     }
   },
   computed:{
@@ -31,7 +40,30 @@ export default {
       return this.$store.state.loading
     }
   },
-
+  methods:{
+    //显示控制条
+    showControl(){
+      this.top = 0;
+      this.hiddenList = true;
+    },
+    //隐藏控制条
+    hiddenControl(){
+      if(!this.isLock){
+        this.top = -45;
+        this.hiddenList = false;
+      }
+    },
+    //监听是否要自己显示
+    showChange(val){
+      if(val){
+        this.showControl();
+      }
+    },
+    //监听是否锁住
+    lockChange(val){
+      this.isLock = val;
+    }
+  }
 }
 </script>
 
@@ -67,6 +99,12 @@ export default {
   bottom: 0; */
   width: 100%;
 	height: 70px;
+}
+.index .control-bar{
+  position: fixed;
+  bottom: 0px;
+  height: 20px;
+  width: 100%;
 }
 </style>
 

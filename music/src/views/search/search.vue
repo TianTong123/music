@@ -17,7 +17,7 @@
         <div class="list-wrap" v-if="musicList.length != 0">
           <div class="search-title">歌曲</div>
           <ul v-if="musicList.length != 0">
-            <li v-for="(e, index) in musicList" :key="index" @click="goMusic(e.id)">
+            <li v-for="(e, index) in musicList" :key="index" @click="toPlay(e)">
               <div class="rank-num">{{index+1}}</div>
               <div class="music-name">{{e.name}}</div>
               <div class="time">{{getTime(e.timeLength)}}</div>
@@ -29,17 +29,12 @@
       </div>
       </div>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import util from '@/util/utils';
-import Footer from "@/components/myFooter/Footer";
 export default {
-  components:{
-    Footer
-  },
   data(){
     return{
       musicList: [],
@@ -66,10 +61,9 @@ export default {
     getTime: val => {
       return util.timeFormat(val)
     },
+
     //播放
-    goMusic(id){
-      this.$router.push({name:'player',params:{id: id}});
-    },
+    toPlay: (val) => util.toPlay(val),
 
     //歌手详情
     goSingerInfo(id){

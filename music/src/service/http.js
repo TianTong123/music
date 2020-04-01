@@ -29,27 +29,16 @@ export const http = ({
   isFullLoading,
   isHalfLoading,
 }) => {
-  // axios request拦截器
-  axios.interceptors.request.use(
-    request => {
-      //遮罩启动
-      if(isFullLoading){//全局遮罩
-        myLoading.open("加载中");
-      }else{//局部遮罩
-        if(isHalfLoading) {
-          store.state.loading = true;
-        }
-      }
-      return request
-      
-    },error => {
-      myMsg.confirm({
-        type: 'error',
-        content: '请求错误',//显示返回的错误信息
-      })
-      return error;
+
+  //遮罩启动
+  if(isFullLoading){//全局遮罩
+    myLoading.open("加载中");
+  }else{//局部遮罩
+    if(isHalfLoading) {
+      store.state.loading = true;
     }
-  );
+  }
+
   // axios response拦截器
   axios.interceptors.response.use(
     response => {
@@ -57,6 +46,28 @@ export const http = ({
       myLoading.close();
       store.state.loading = false;
 
+      //登录失效的时候重定向为登录页面
+      if(response.data.code == 2){
+        myMsg.confirm({
+          type: 'error',
+          content: '用户数据失效！请登录后重试！',
+          callback: ()=>{
+            util.removeStorage('user');
+            util.removeStorage('token');
+            util.removeStorage('menuList');
+            util.removeStorage('musicFormList');
+            store.state.user = '';
+            // this.menuList = [
+            //       { name: '首页', code: 'home', id: 8848, class: 'active_menu'},
+            //       { name: '榜单', code: 'rank', id: 8849,  class: ''},
+            //       { name: '歌手', code: 'singer', id: 8851, class: ''},
+            // ]
+            // util.saveStorage("menuList", menuList);
+            router.push({name: 'home'})
+          }
+        })
+        reject(response);
+      }
       if(response.data.code == 3){
         myMsg.confirm({
           type: 'error',

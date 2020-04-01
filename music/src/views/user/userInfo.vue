@@ -55,7 +55,7 @@
         <div class="my-min-null-box" v-show="workList.length == 0">你还没有待审核作品，赶紧上传吧！</div>
         <div class="card-wrap" v-show="workList.length != 0">
           <div class="music-list-card" v-for="(e, index) in workList" :key="index" 
-            @click="goPlayer(e.id)">
+            @click="toPlay(e)">
             <div class="poster">
               <div class="delete-btn" v-show="showDeleteBtn" @click="deleteWork(e.id)"></div>
               <img v-if="e.posterUrl == null" src="../../../static/images/logo.png">
@@ -213,17 +213,12 @@
         </div>
       </my-Dialog>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import util from '@/util/utils';
-import Footer from "@/components/myFooter/Footer";
 export default {
-  components:{
-    Footer
-  },
   data(){
     return{
       //弹框
@@ -683,11 +678,7 @@ export default {
     },
     
     //播放
-    goPlayer(id){
-      if(this.cancelBubbleFlag){
-        this.$router.push({name:'player',params:{id: id}});
-      }
-    },
+    toPlay: (val) => util.toPlay(val),
 
     //清空参数
     clearParame(){

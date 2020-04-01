@@ -14,7 +14,7 @@
               <div class="rank-num">{{index+1}}</div>
               <div class="music-name">{{e.name}}</div>
               <div class="time">{{timeFormat(e.timeLength)}}</div>
-              <div class="play-btn" @click="goMusic(e.id)"><i class="icon-mini-play"></i></div>
+              <div class="play-btn" @click="toPlay(e)"><i class="icon-mini-play"></i></div>
               <div class="play-btn" @click="openOrClocseDiaMusicForm(index)">
                 <i class="icon-add"></i>
                 <div class="my-form-wrap" v-show="diaAddMusicForm == index">
@@ -31,16 +31,11 @@
         </div>
       </div>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 <script>
 import util from '@/util/utils';
-import Footer from "@/components/myFooter/Footer";
 export default {
-  components:{
-    Footer
-  },
   data(){
     return{
       user: {},
@@ -101,11 +96,10 @@ export default {
         }
       })
     },
-    goMusic(index){
-      this.$router.push({
-        path: `../../player/${index}`
-      })
-    },
+    
+    //播放
+    toPlay: (val) => util.toPlay(val),
+
     //打开或添加歌单框
     openOrClocseDiaMusicForm(index){
       this.diaAddMusicForm = this.diaAddMusicForm==index?-1:index

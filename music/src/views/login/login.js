@@ -40,7 +40,6 @@ let myLogin = {
           this.$http.login( parames )
           .then(({data}) => {
             if (data.code == 0){
-              router.push({name: 'home'})
               let token = data.data.token
               //存储
               store.state.user = data.data;

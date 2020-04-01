@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2019-12-05 10:48:52 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-03-31 16:53:19
+ * @Last Modified time: 2020-04-01 11:21:32
  */
 /* 手机 */
 .icon-phone{
@@ -378,6 +378,24 @@
   height: auto;
   display: inline-block;
   background-image: url('../images/icon/clear.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/* 锁 */
+.icon-mini-lock{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/lock.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/* 解锁 */
+.icon-mini-unlock{
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-image: url('../images/icon/unLock.png');
   background-size: 100%;
   background-repeat: no-repeat;
 }

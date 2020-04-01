@@ -122,7 +122,9 @@ export default {
       util.removeStorage('token');
       util.removeStorage('menuList');
       util.removeStorage('musicFormList');
+      util.removeSession('playList');
       this.$store.state.user = '';
+      this.$store.state.playList = [];
       this.user = "";
       this.$myMsg.notify({content: "退出成功",type: 'success'});
       
@@ -133,7 +135,6 @@ export default {
       ]
       this.$router.push({name: 'home'})
       util.saveStorage("menuList", this.menuList);
-      this.$router.go(0)
     },
 
     //搜索

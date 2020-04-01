@@ -8,7 +8,7 @@
         <div class="title">热门推荐</div>
         <button @click="test">测试服务式加载遮罩</button>
         <div class="card-wrap">
-          <div class="card" v-for="(e, index) in hotList" :key="e.id" @click="goMusic(e)">
+          <div class="card" v-for="(e, index) in hotList" :key="e.id" @click="toPlay(e)">
             <div class="music-poster"><img :src="$global.imgUrl+e.posterUrl" ></div>
             <div class="music-info">
               <div class="rank-num">{{index+1}}</div>
@@ -29,17 +29,15 @@
         </div>
       </div>
     </div>
-
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
-import Footer from "@/components/myFooter/Footer";
-import slide from "@/components/mySlide/slide"
+import slide from "@/components/mySlide/slide";
+import util from '@/util/utils';
 export default {
   components:{
-    slide,Footer,
+    slide,
   },
   data(){
     return{
@@ -81,11 +79,13 @@ export default {
       })
     },
 
-     //播放
+    //去到音乐详情页
     goMusic(val){
-      this.$store.state.playList.unshift(val)
-      //this.$router.push({name:'player',params:{id: id}});
+      this.$router.push({name:'player',params:{id: id}});
     },
+
+    //播放
+    toPlay: (val) => util.toPlay(val)
   }
 }
 </script>

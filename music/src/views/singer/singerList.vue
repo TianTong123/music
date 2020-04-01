@@ -29,15 +29,10 @@
         </div>
       </div>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 <script>
-import Footer from "@/components/myFooter/Footer";
 export default {
-  components:{
-    Footer
-  },
   data(){
     return{
       tlwLeft: 53,

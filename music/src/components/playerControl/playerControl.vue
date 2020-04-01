@@ -3,7 +3,7 @@
     <audio  ref="cMusic" ></audio>
     <!-- 控制条 -->
     <div class="player-control-wrap">
-      <div class="music-name">当前播放：<span>{{selectMusic.name}}</span></div>
+      <div class="music-name"><span>{{selectMusic.name}}</span></div>
       <div class="play-btn play" >
         <i v-show="isPlay == -1" class="icon-mini-loading"></i>
         <i v-show="isPlay == 1" @click="play" class="icon-mini-pause"></i>
@@ -12,9 +12,13 @@
       <div class="play-btn">{{playList.length}}</div>
       <div class="play-btn" @click="playListFlag = !playListFlag"><i class="icon-mini-menu"></i></div>
       <div class="play-btn" @click="goMusic"><i class="icon-mini-extend"></i></div>
+      <div class="play-btn" @click="lockBar">
+        <i v-show="isLock" class="icon-mini-lock"></i>
+        <i v-show="!isLock" class="icon-mini-unlock"></i>
+      </div>
     </div>
     <!-- 播放列表 -->
-    <div class="play-list" v-show="playListFlag">
+    <div class="play-list" v-show="playListFlag && hiddenList">
       <div class="p-l-title">播放列表/{{playList.length}}</div>
       <div class="p-l-clear play-btn" @click="clearPlayList"><i class="icon-mini-clear"></i></div>
       <ul class="p-l-wrap">
@@ -35,21 +39,25 @@
 <script>
 import util from '@/util/utils';
 export default {
+  props:{
+    hiddenList: {
+      type: Boolean,
+      default: false
+    },
+  },
   data(){
     return{
       isPlay: 0,//是否播放 0暂停， -1加载， 1播放
       playListFlag: false, //显示播放列表的flag
       selectMusic: '',//选中播放的音乐
       activeIndex: 0,//选中的音乐的下标
+      isLock: false,
     }
-  },
-  mounted(){
-
   },
   computed:{
     playList:{
       get() {
-        let tempList = util.getStorage('playList');
+        let tempList = util.getSession('playList');
         if(this.$store.state.playList.length == 0){
           return tempList==""?[]:tempList;
         }else{
@@ -61,7 +69,7 @@ export default {
         return tempList;
       },
       set(val) {
-        util.saveStorage('playList', val);
+        util.saveSession('playList', val);
         this.$store.state.playList = val;
       }
     }
@@ -69,6 +77,11 @@ export default {
   methods:{
     play(){
       let music = this.$refs['cMusic'];
+      if(music.src == ''){
+        this.$myMsg.notify({content: '请选择一首歌再操作！', type: 'error'});
+        return
+      }
+
       if( music.paused ){
         this.isPlay = -1
         music.oncanplay = this.isPlay = 1;
@@ -83,13 +96,13 @@ export default {
     select(val, index){
       this.selectMusic = val;
       this.activeIndex = index;
+      this.$emit('show', true);
       this.$refs['cMusic'].src = this.$global.musicUrl+val.profileUrl;
       this.isPlay = -1
       this.$refs['cMusic'].oncanplay = () =>{
         this.$refs['cMusic'].play();
         this.isPlay = 1;
       }
-     
     },
 
     //清空播放列表
@@ -102,6 +115,12 @@ export default {
       this.play();
       this.playListFlag = false;
       this.$router.push({name:'player',params:{id: this.selectMusic.musicId}});
+    },
+
+    //解锁
+    lockBar(){
+      this.isLock = !this.isLock;
+      this.$emit('isLock', this.isLock)
     },
 
     //时间格式
