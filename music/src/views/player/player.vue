@@ -24,7 +24,6 @@
         </div>
         <div class="info">
           <div class="music-title">{{musicInfo.name}}</div>
-          <button @click="fontFormat">测试</button>
           <div class="singer"><span>歌手：</span>{{musicInfo.singer}}</div>
           <div class="my-btn l-btn" @click=" preViewLyrc = ! preViewLyrc ">{{ preViewLyrc?'退出预览':'歌词预览'}}</div>
           <!-- 歌词 -->
