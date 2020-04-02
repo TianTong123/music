@@ -47,10 +47,10 @@ export default {
   },
   data(){
     return{
-      isPlay: 0,//是否播放 0暂停， -1加载， 1播放
+      //isPlay: 0,//是否播放 0暂停， -1加载， 1播放
       playListFlag: false, //显示播放列表的flag
       selectMusic: '',//选中播放的音乐
-      isLock: false,
+      isLock: false,//锁定控制条
     }
   },
   computed:{
@@ -72,7 +72,7 @@ export default {
         this.$store.state.playList = val;
       }
     },
-    activeIndex:{
+    activeIndex:{//当前播放列表下标
       get() {
         let index = util.getSession('activeIndex');
         if(this.$store.state.activeIndex != ''){
@@ -87,6 +87,19 @@ export default {
         util.saveSession('activeIndex', val);
         this.$store.state.activeIndex = val;
       }
+    },
+    isPlay:{//是否播放 0暂停， -1加载， 1播放
+      get() {
+        let num = util.getSession('isPlay');
+        if(this.$store.state.isPlay != ''){
+          return this.$store.state.isPlay
+        }
+        return num;
+      },
+      set(val) {
+        util.saveSession('isPlay', val);
+        this.$store.state.isPlay = val;
+      }
     }
   },
   mounted(){
@@ -98,7 +111,11 @@ export default {
     if(playList.length != 0){
       this.$refs['cMusic'].src = this.$global.musicUrl+playList[active].profileUrl;
     }
-    
+    if(this.$refs['cMusic'].paused ){
+     this.isPlay = 0;
+    }else{
+     this.isPlay = 1;
+    }
   },
   methods:{
     play(){
@@ -116,6 +133,7 @@ export default {
         music.pause();
         this.isPlay = 0;
       } 
+     
     },
 
     //选中播放列表的音乐
@@ -135,7 +153,7 @@ export default {
     clearPlayList(){    
       let temp = this.playList[this.activeIndex]
       this.playList = [];
-      this.playList.unshift(temp);
+      util.toPlay(temp);
       this.activeIndex = 0
     },
 
@@ -157,16 +175,23 @@ export default {
 
     //时间格式
     timeFormat: (val) => util.timeFormat(val)
-  },
+  }, 
   watch:{
     $route(to, from) {
-      if(this.$refs['cMusic'].paused){
-        this.isPlay = 0
-      }else{
-        this.isPlay = 1
+      let music = this.$refs['cMusic'];
+      music.ontimeupdate = () =>{
+        //结束处理
+        if( music.ended ){//归零
+          if(this.activeIndex == this.playList.length - 1){
+            this.activeIndex = 0
+          }else{
+            this.activeIndex += 1
+          }
+          this.select(this.playList[this.activeIndex], this.activeIndex);
+        }
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

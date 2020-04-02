@@ -24,11 +24,19 @@
         </div>
         <div class="info">
           <div class="music-title">{{musicInfo.name}}</div>
+          <button @click="fontFormat">测试</button>
           <div class="singer"><span>歌手：</span>{{musicInfo.singer}}</div>
+          <div class="my-btn l-btn" @click=" preViewLyrc = ! preViewLyrc ">{{ preViewLyrc?'退出预览':'歌词预览'}}</div>
           <!-- 歌词 -->
           <div class="lyric" ref="lyricWrap" > 
-            <div class="lyric-wrap">
-              <p :class="{'active-line': activeLine(e, index, nowPlayTime)}" v-for="(e, index) in lyric" :key="index">{{e.LrcLine}}</p>
+            <div class="lyric-wrap" :style="`top: ${scollTop}px`">
+              <div class="my-min-null-box" v-if="lyric == null">纯音乐</div>
+              <p 
+                :class="{'active-line': activeLine(e, index, nowPlayTime)}" 
+                v-for="(e, index) in lyric" 
+                :key="index"
+                v-html="fontFormat(e.LrcLine)">
+              </p>
             </div>
           </div>
           <!-- 播放列表 -->
@@ -57,7 +65,11 @@
         <!-- 控制菜单 -->
 	      <div class="control">
 	      	<div class="previous" @click="changeMusic(true)"><i class="icon-previous"></i></div>
-	      	<div class="play" @click="playClick" ><i :class="playBtn"></i></div>
+	      	<div class="play">
+            <i v-show="isPlay == 0" @click="playClick" class="icon-play"></i>
+            <i v-show="isPlay == 1" @click="playClick" class="icon-pause"></i>
+            <i v-show="isPlay == -1" class="icon-mini-loading"></i>
+          </div>
 	      	<div class="previous" @click="changeMusic(false)"><i class="icon-next"></i></div>
 	      </div>
 	      <!-- 进度条 -->
@@ -83,7 +95,8 @@ export default {
   data(){
     return{
       musicInfo: '',
-      isPlay: -1,
+      scollTop: 0,
+      preViewLyrc: false,//预览歌词，false不预览， true，预览
       diaAddMusicForm: false,
       addMusicFormList: [],
       mLength: 0,//音乐时长
@@ -98,7 +111,6 @@ export default {
       mProgress: '',//进度条（会动的那条）
       mProgressIcon: '',//进度条头上的那个点
       mProgressBar: '',//进度条背景
-      playBtn: 'icon-play',
       totalDuration: "00/00",//进度条右下角播放时间
       playTime: "00:00",//当前播放时长
       progressWidth: 0,//当前播放的进度条长度
@@ -137,6 +149,19 @@ export default {
         util.saveSession('activeIndex', val);
         this.$store.state.activeIndex = val;
       }
+    },
+    isPlay:{
+      get() {
+        let num = util.getSession('isPlay');
+        if(this.$store.state.isPlay != ''){
+          return this.$store.state.isPlay
+        }
+        return num;
+      },
+      set(val) {
+        util.saveSession('isPlay', val);
+        this.$store.state.isPlay = val;
+      }
     }
   },
   methods:{
@@ -154,10 +179,18 @@ export default {
           this.lyric = data.data.lrc;
           this.mLength = data.data.timeLength;
           this.totalDuration = util.timeFormat(this.mLength);
-          if( id != '' && type){
-            document.getElementById('cMusic').src = this.$global.musicUrl+data.data.profileUrl
+          if( type ){
+            let musicTemp = document.getElementById('cMusic')
+            musicTemp.src = this.$global.musicUrl+data.data.profileUrl
+            musicTemp.play();
+            musicTemp.addEventListener("canplay", ()=>{//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
+              this.isPlay = 1;
+            });
+            this.isPlay = -1
           }
-          this.initParames();
+          if(this.$route.name == 'player'){
+            this.initParames();
+          }  
           //增加播放量
           this.$http.addMusicPlayNum({musicId: this.musicInfo.id});
           this.musicInfo.playNum ++;
@@ -197,12 +230,22 @@ export default {
 
     //播放
     playClick(){
-      if( this.music.paused ){
+      if( this.music.paused ){   
         this.music.play();//播放音乐
-        this.playBtn = "icon-pause";
+      
+        this.music.addEventListener("canplay", ()=>{//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
+            this.isPlay = 1;
+        });
+
+        if(this.isPlay === ''){
+          this.isPlay = -1;
+        }else{
+          this.isPlay = 1
+        }
+
 			}else{
         this.music.pause();
-        this.playBtn = "icon-play"
+        this.isPlay = 0;
         return;
       }
 
@@ -266,6 +309,9 @@ export default {
 
     //激活歌词
     activeLine(e, index, time){
+      if(index+1 >= this.lyric.length){
+        return
+      }
       let timeFlag = time >= e.TimeMs && time < this.lyric[index+1].TimeMs;
       if( e.type == 5 && timeFlag ){
         this.lyricIndex = index;
@@ -276,11 +322,19 @@ export default {
 
     //歌词滚动计算方法
     lyricScoll(){
-      let mLength = this.music.currentTime;
-      this.nowPlayTime =  parseInt( mLength  * 1000);
+      if(this.lyric == null){//纯音乐打断
+        return
+      }
       
+      if(this.preViewLyrc){//预览歌词打断
+        return
+      }
+
+      //计算当前歌词播放行
+      let mLength = this.music.currentTime;   
+      this.nowPlayTime =  parseInt( mLength  * 1000);
       for(let i = 0; i <this.lyric.length; i ++){
-        if(this.lyric[i] == null){
+        if(this.lyric[i] == null){ //判空
           break
         }
         if(this.lyric[i].TimeMs >= this.nowPlayTime){
@@ -288,7 +342,15 @@ export default {
           break;
         }
       }
-      this.$refs.lyricWrap.scrollTop = this.lyricIndex * 40 - 210;
+
+      //计算歌词整体高度
+      let tempHeight = 0;
+      for(let i = 0; i <this.lyricIndex; i ++){
+        tempHeight += (40 + Math.ceil(this.lyric[i].LrcLine.length / 18 - 1) * 20)
+      }
+
+      //this.scollTop = - tempHeight + 150;//150是初始高度.有过渡动画
+      this.$refs.lyricWrap.scrollTop =  tempHeight - 150;//没过渡动画的
     },
 
     //音量点击
@@ -322,16 +384,22 @@ export default {
 
       this.mProgress.style.width = 0 + "px";
       this.mProgressIcon.style.left = 0 + "px";
+      
+      if(this.music.src == ''){
+        this.music.src = this.$global.musicUrl+this.musicInfo.profileUrl
+      }
 
       if( this.music.paused ){
-        this.playBtn = "icon-play"
-        /*进度条百分比计算*/
+         //时间处理
           let mLength = this.music.currentTime;
+          this.nowPlayTime =  parseInt( mLength  * 1000);
+          this.playTime = util.timeFormat(mLength);
+
+        /*进度条百分比计算*/
           let longer = mLength * 650 / this.music.duration;//得到进度条长度，650是进度条总长度
 			  	this.mProgress.style.width = longer + "px";
 			  	this.mProgressIcon.style.left = longer + "px";
 			}else{
-        this.playBtn = "icon-pause";
         //启动时间监听钩子
         this.music.ontimeupdate = () =>{
           //时间处理
@@ -355,7 +423,9 @@ export default {
         }
       }
 
-      
+      if(this.lyric == null){//纯音乐打断
+        return
+      }
       
       //初始化歌词位置
       let firsIndex = "";
@@ -365,8 +435,8 @@ export default {
           break;
         }
       }
-      //每一行的高度为35，高亮位置放在210，所以把第一条歌词放在245
-      let lHeight = 210-firsIndex*35;
+      //每一行的高度为40，高亮位置放在100，所以把第一条歌词放在100 -40
+      let lHeight = 100-firsIndex*40;
       this.$refs.lyricWrap.scrollTop  = -lHeight;//下面注释的，是为了适配所有情况要用的(暂时不写，没时间啊)
       // if( lHeight >= 0 ){//当前面很长很长时，要做什么
       //   this.lyricTop = lHeight;
@@ -377,7 +447,6 @@ export default {
 
     //选中播放列表的音乐
     select(val, index){
-      this.selectMusic = val;
       this.activeIndex = index;
       if(val.musicId){
         this.getMusic(val.musicId, true)
@@ -401,7 +470,6 @@ export default {
           this.activeIndex += 1
         }
       }
-      
       this.select(this.playList[this.activeIndex], this.activeIndex)
     },
 
@@ -409,18 +477,37 @@ export default {
     clearPlayList(){    
       let temp = this.playList[this.activeIndex]
       this.playList = [];
-      this.playList.unshift(temp);
+      util.toPlay(temp);
       this.activeIndex = 0
     },
 
     //时间格式
-    timeFormat: (val) => util.timeFormat(val)
+    timeFormat: (val) => util.timeFormat(val),
+
+    //固定字数
+    fontFormat(val){   
+      if(val.length < 18){
+        return val
+      }
+
+      let font = '';
+      for(let i = 0; i < val.length; i+=18){
+        if(val.length > i*(i/18)){
+          font += val.substring(i, i +18) + '<br>' +'\r\n'
+        }
+        else{
+          font += val.substring(i, val.length - 1);
+        }
+      }
+      return font
+    },
   },
   watch:{
     //监听激活的歌词是否变化，如果有变化就移动歌词
     lyricIndex(){
       //滚动歌词
       //this.$refs.lyricWrap.scrollTop  += 35;
+      
       this.lyricScoll();
     },
   }

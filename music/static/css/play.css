@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2020-01-07 17:23:43 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-04-01 17:13:57
+ * @Last Modified time: 2020-04-02 16:11:11
  */
 .player img{
   width: 100%;
@@ -110,7 +110,7 @@
   font-size: 24px;
 }
 .player .wrap .content .info .singer{
-  margin: 16px 0 60px 0;
+  margin: 16px 0 35px 0;
 }
 .player .wrap .content .info .singer span{
   opacity: .6;
@@ -120,17 +120,27 @@
   height: 60%;
   min-height: 300px;
   overflow-y: auto;
-  transition-duration: .3s;
+  
+}
+.player .wrap .content .info .l-btn{
+  position: absolute;
+  top: 70px;
+  right: 0px;
+  background-color: #242424;
 }
 .player .wrap .content .info .lyric .lyric-wrap{
   position: absolute;
   top: 0;
+  padding-bottom: 800px;
+  transition-duration: .3s;
 }
 .player .wrap .content .info .lyric .lyric-wrap p{
   margin: 20px 0;
   height: auto;
+  width: 80%;
   font-size: 15px;
   line-height: 20px;
+  white-space:nowrap;
 }
 .player .wrap .content .info .lyric .lyric-wrap .active-line{
   color: #01e5ff;
@@ -276,6 +286,10 @@
   height: 60px;
   margin: 10px 13px;
   transition: all 0.2s;
+}
+.player .control .play i{
+  width: 60px;
+  height: 60px;
 }
 .player .control .previous{
   width: 36px;

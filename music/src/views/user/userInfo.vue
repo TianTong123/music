@@ -12,7 +12,7 @@
           <div class="user-name">{{user.accountName}}</div>
           <div class="data-bar">账号: <span>{{user.account}}</span></div>
           <div class="data-bar" v-show="userType==1">个人介绍: <span>{{user.info}}</span></div>
-          <div class="data-bar">账号状态：<span>{{stateTip}}</span></div>
+          <div class="data-bar" v-show="userType==1">账号状态：<span>{{stateTip}}</span></div>
           <div class="info-btn my-btn" @click="openDiaEditData">修改资料</div>
           <div class="info-btn my-btn" @click="diaEditPw = true">修改密码</div>
           <div class="info-btn my-btn" @click="getMsg()">我的消息</div>
@@ -230,7 +230,7 @@ export default {
       showDeleteBtn: false,
       diaSFTIsEdit: false, //true，编辑态，false，创建态
       diaUploadMusicIsEdit: false,//同上
-      examineState: 0,//是否审核，0已审核，1未审核, 2审核未通过, 
+      examineState: 1,//是否审核，0待审核，0未审核, 2审核未通过, 
       stateTip: '',//身份状态提示
       //表单
       formEditPw:{ //修改密码
@@ -281,11 +281,16 @@ export default {
   computed:{
     user:{
       get() {
-        this.userType = this.$store.state.user.type;
-        this.userState = this.$store.state.user.checkState;
-        return this.$store.state.user//用户信息
+        let info = this.$store.state.user;
+        if(info == ''){
+          info = util.getStorage('user')
+        }
+        this.userType = info.type;
+        this.userState = info.checkState;
+        return info//用户信息
       },
       set(val) {
+        util.saveStorage('user', val)
         this.$store.state.user = val;
       }
     }
@@ -336,8 +341,8 @@ export default {
 
     //上传音乐
     uploadMusic(){
-      let {songerId, accountName} = this.user
-      this.formUploadMusic.songerId = songerId;
+      let {singerId, accountName} = this.user
+      this.formUploadMusic.songerId = singerId;
       this.formUploadMusic.creator = accountName;
       this.formUploadMusic.singer = accountName;
       let parames = {
@@ -355,13 +360,13 @@ export default {
 
     //获取歌单
     getMusicFormList(){
-      //console.log(util.getStorage('user'))
       let parames = {
         accountId: this.user.id,
       }
       this.$http.getMusicFormList( parames ).then(({data}) => {
         if (data.code == 0){
           this.musicFormList = data.data;
+          util.saveStorage('musicFormList', data.data)
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })
@@ -458,6 +463,7 @@ export default {
       let parames = {
         ...this.formSF,
       }
+      parames.accountId = this.user.id
       this.$http.addMusicForm( parames ).then(({data}) => {
         if (data.code == 0){
           this.$myMsg.notify({content: '新建成功！', type: 'success'});
@@ -678,7 +684,11 @@ export default {
     },
     
     //播放
-    toPlay: (val) => util.toPlay(val),
+    toPlay(val) {
+      if(this.cancelBubbleFlag){
+        util.toPlay(val)
+      }
+    },
 
     //清空参数
     clearParame(){
@@ -726,6 +736,7 @@ export default {
       this.diaUploadMusic = false;
       this.diaEditData = false;
       this.diaMsg = false;
+      this.cancelBubbleFlag = true;
     },
   },
 }

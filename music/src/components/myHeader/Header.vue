@@ -122,9 +122,11 @@ export default {
       util.removeStorage('token');
       util.removeStorage('menuList');
       util.removeStorage('musicFormList');
-      util.removeSession('playList');
+      //util.removeSession('playList');
       this.$store.state.user = '';
-      this.$store.state.playList = [];
+      //this.$store.state.playList = [];
+      //document.getElementById('cMusic').pause();
+      //document.getElementById('cMusic').src = ''
       this.user = "";
       this.$myMsg.notify({content: "退出成功",type: 'success'});
       
@@ -133,7 +135,12 @@ export default {
             { name: '榜单', code: 'rank', id: 8849,  class: ''},
             { name: '歌手', code: 'singer', id: 8851, class: ''},
       ]
-      this.$router.push({name: 'home'})
+      if(this.$route.name == 'home'){ //如果在首页退出则刷新页面， 其他页面退出则跳到首页
+        this.$router.go(0)
+      }else{
+        this.$router.push({name: 'home'})
+      }
+      
       util.saveStorage("menuList", this.menuList);
     },
 

@@ -54,7 +54,6 @@ let myLogin = {
                 router.push({name:'user'});
               } 
               this.getMusicFormList();
-              
             }
             else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
           })
@@ -73,7 +72,8 @@ let myLogin = {
           .then(({data}) => {
             if (data.code == 0){
              this.$myMsg.notify({content: '注册成功！', type: 'success'});
-             this.activeName = 0;//回到注册
+             //this.activeName = 0;//回到注册
+             this.btnClick(3)
             }
             else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
           })

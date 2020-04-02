@@ -67,8 +67,7 @@
 }
 .index-banner .wrap .slides .slide img{
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
   display: block;
   width: 1100px;
   height: auto;
