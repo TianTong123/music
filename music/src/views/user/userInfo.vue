@@ -173,7 +173,7 @@
           <span class="line-label">分类：</span>
           <select style="width: 220px; height: 30px; border: 1px solid #242424; border-radius: 4px; outline: none"
             v-model="formEditSinger.singerType">
-            <option value="华语">华语</option>
+            <option value="国语">国语</option>
             <option value="粤语">粤语</option>
             <option value="外语">外语</option>
           </select>
