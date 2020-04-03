@@ -9,7 +9,7 @@
     <div class="content" v-loading="loading" @mouseover="hiddenControl()">
       <router-view ></router-view>
     </div>
-    <Footer></Footer>
+    <Footer v-show="false"></Footer>
     <!-- 空气墙 -->
     <div class="control-bar"  @mouseover="showControl" ></div>
     <playerControl 
