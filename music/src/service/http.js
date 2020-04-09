@@ -44,46 +44,42 @@ export const http = ({
     response => {
       //关闭遮罩
       myLoading.close();
-      store.state.loading = false;
-
-      //登录失效的时候重定向为登录页面
-      if(response.data.code == 2){
-        myMsg.confirm({
-          type: 'error',
-          content: '用户数据失效！请登录后重试！',
-          callback: ()=>{
-            util.removeStorage('user');
-            util.removeStorage('token');
-            util.removeStorage('menuList');
-            util.removeStorage('musicFormList');
-            store.state.user = '';
-            // this.menuList = [
-            //       { name: '首页', code: 'home', id: 8848, class: 'active_menu'},
-            //       { name: '榜单', code: 'rank', id: 8849,  class: ''},
-            //       { name: '歌手', code: 'singer', id: 8851, class: ''},
-            // ]
-            // util.saveStorage("menuList", menuList);
-            router.push({name: 'home'})
-          }
-        })
-        reject(response);
-      }
-      if(response.data.code == 3){
-        myMsg.confirm({
-          type: 'error',
-          content: response.data.msg,
-        })
-        reject(response);
-      }else {
-        return response
+      store.state.loading = false;  
+      if(response != null){
+        //登录失效的时候重定向为登录页面
+        if(response.data.code == 2){
+          myMsg.confirm({
+            type: 'error',
+            content: '用户数据失效！请登录后重试！',
+            callback: ()=>{
+              util.removeStorage('user');
+              util.removeStorage('token');
+              util.removeStorage('menuList');
+              util.removeStorage('musicFormList');
+              store.state.user = '';
+              router.push({name: 'home'})
+            }
+          })
+          reject(response);
+        }
+        if(response.data.code == 3){
+          myMsg.confirm({
+            type: 'error',
+            content: response.data.msg,
+          })
+          reject(response);
+        }else {
+          return response
+        }
       }
     },
     //接口错误状态处理
     error => {
+      //关闭遮罩
+      myLoading.close();
+      store.state.loading = false;
+      if(error.response == null ){return}
       if(error.response.status != null || error.response.status != ""){
-        //关闭遮罩
-        myLoading.close();
-        store.state.loading = false;
         let message = "";
         switch (error.response.status) {
           case 400:

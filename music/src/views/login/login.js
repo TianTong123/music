@@ -34,6 +34,9 @@ let myLogin = {
       methods:{
         //登录
         login(){
+          if(this.accountFormat(this.formData.account) || this.pwdFormat(this.formData.password)){
+            return
+          }
           let parames = {
             ...this.formData
           }
@@ -57,13 +60,13 @@ let myLogin = {
             }
             else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
           })
-          .catch(err => {
-             this.$myMsg.notify({content: err.message,type: 'error'})
-          })
         },
 
         //注册
         register(){
+          if(this.accountFormat(this.formData.account) || this.pwdFormat(this.formData.password)){
+            return
+          }
           let parames = {
             ...this.formData,
             type: this.type||"0"
@@ -77,9 +80,6 @@ let myLogin = {
             }
             else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
           })
-          .catch(err => {
-            this.$myMsg.notify({content: err.message,type: 'error'})
-          })
         },
 
         //获取歌单
@@ -87,12 +87,39 @@ let myLogin = {
           let parames = {
             accountId: util.getStorage('user').id,
           }
-          this.$http.getMusicFormList( parames ).then(({data}) => {
+          this.$http.getMusicFormList( parames )
+          .then(({data}) => {
             if (data.code == 0){
               util.saveStorage("musicFormList", data.data);
             }
             else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
           })
+        },
+        
+        //输入验证
+        inputFormat(val, tip){
+          let rs = false;
+          if(val == null || val == ''){
+            this.$myMsg.notify({content: tip+"不能为空",type: 'error'});
+            rs = true;
+          }  
+          var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+          var reg1 = /[\uFF00-\uFFEF]/
+          if (reg.test(val) || reg1.test(val)){
+            this.$myMsg.notify({content: tip+"不能有中文或者中文符号",type: 'error'});
+            rs = true;
+          }
+          return rs
+        },
+        
+        //账号验证
+        accountFormat(val){
+          return this.inputFormat(val, '账号');
+        },
+
+        //密码验证
+        pwdFormat(val){
+          return this.inputFormat(val, '密码');
         },
 
         btnClick(flag){
@@ -116,6 +143,7 @@ let myLogin = {
           }
           
         },
+
         close(){
           this.show = false;
         },

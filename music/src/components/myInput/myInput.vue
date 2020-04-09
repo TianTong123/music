@@ -1,7 +1,14 @@
 <template>
   <div :class="{'my-input':type != 'checkbox', 'my-checkbox':type == 'checkbox'}">
     <i v-if="icon" :class="icon"></i>
-    <input :type="type" @input="$emit('input', $event.target.value)" :value="value" @change="valChange" :placeholder="placeholder" v-if="type != 'checkbox'">
+    <input 
+      :type="type" 
+      @input="$emit('input', $event.target.value)" 
+      :value="value" 
+      @change="valChange"  
+      @blur="$emit('blur', $event.target.value)" 
+      :placeholder="placeholder" 
+      v-if="type != 'checkbox'">
     <div class="my-checkbox-wrap" v-if="type == 'checkbox'">
       <input :type="type"  @input="$emit('input', $event.target.checked?label:null)" :value="label" >
     </div>
@@ -29,12 +36,12 @@ export default {
     },
     value: {
       default: '',
-      type: String
     },
   },
   methods:{
     valChange({target}){
-      this.inputValue = target
+      this.inputValue = target;
+      this.$emit('change', target.value)
     }
   }
 }
