@@ -80,7 +80,7 @@ let myMsg = {
   /**
    * 通知框
    * @content 提示内容;
-   * @type 提示框类型，parameter： success，error，prompt
+   * @type 提示框类型，parameter： success，error，warning
    * @time 显示时长
    */
   notify: ({

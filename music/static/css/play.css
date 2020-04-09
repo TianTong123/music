@@ -2,24 +2,22 @@
  * @Author: TianTong 
  * @Date: 2020-01-07 17:23:43 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-04-02 16:11:11
+ * @Last Modified time: 2020-04-09 09:47:17
  */
 .player img{
   width: 100%;
   height: 100%;
 }
 .player{
-  position: relative;
-  margin-top: -70px;
-  height: 100%;
   overflow: hidden;
 }
 .player .bg{
   position: absolute;
   top: -10%;
   left: -10%;
-  width: 120%;
   height: 100%;
+  right: -10%;
+  bottom: 100px;
   filter: blur(50px);
 }
 .player .wrap{

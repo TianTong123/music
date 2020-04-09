@@ -8,8 +8,11 @@
     <!-- 内容显示 -->
     <div class="content" v-loading="loading" @mouseover="hiddenControl()">
       <router-view ></router-view>
+      <Footer></Footer>
     </div>
-    <Footer v-show="false"></Footer>
+      
+
+    
     <!-- 空气墙 -->
     <div class="control-bar"  @mouseover="showControl" ></div>
     <playerControl 
@@ -70,29 +73,26 @@ export default {
 <style scoped>
 /* 绝对定位法上中下三栏式布局(暂时不用) */
 .index {
+  position: relative;
   width: 100%;
   height: 100%;
 }
 .head{
-  position: absolute;
-  top :0;
+  position: relative;
   z-index: 99999;
   width: 100%;
   height: 70px;
+  /* position: absolute;
+  top :0; */
 }
 .index .content{
-  margin-top: 70px;
-  margin-bottom: -70px;
-  width: 100%;
-  height: 100%;
-  background-color: #eee;
-  /* position: absolute;
-  top: 70px;
-  bottom: 60px; */
   
-  /* overflow-y: auto; */
-  /* overflow-x: hidden; */
- 
+  width: 100%;
+  height: auto;
+  /* overflow-y: auto;
+  overflow-x: hidden; */
+  /* margin-top: 70px;
+  margin-bottom: -70px; */
 }
 .index .foot{
   /* position: absolute;

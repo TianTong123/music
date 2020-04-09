@@ -24,8 +24,8 @@
           <span>{{e.accountName}}</span>
         </div>
         <div class="pagination">
-          <div class="prev p-btn"></div>
-          <div class="next p-btn"></div>
+          <div class="prev p-btn" @click="currentPrev"></div>
+          <div class="next p-btn" @click="currentNext"></div>
         </div>
       </div>
     </div>
@@ -43,20 +43,19 @@ export default {
         {name:'外语', class: '', list:[{name:'外语男歌手', class:'activeTitleContent', param:''},{name:'外语女歌手', class:'', param:''}]},
       ],
       //歌手列表
-      singer:[
-        {name: '刘德华', headimg:'../../../static/images/ldh.jpg'},
-      ],
+      singer:[],
       pageInfo:{
         pageSize: 12,
         current: 0,
       },
+      total: 0,
       search:{
         type: '国语',
         sex: 1,
       }
     }
   },
-  mounted(){
+  beforeMount(){
     this.getSingerList();
   },
   methods:{
@@ -68,6 +67,7 @@ export default {
       this.$http.getSingerList( parames ).then(({data}) => {
         if (data.code == 0){
           this.singer = data.data.records;
+          this.total = data.data.total;
         }
         else{this.$myMsg.notify({content: data.msg, type: 'error'})}  
       })
@@ -96,19 +96,39 @@ export default {
       this.getSingerList();
     },
 
+    //翻页,上一页
+    currentPrev(){
+      let current = this.pageInfo.current;
+      if(current - 1 < 0){
+        this.$myMsg.notify({content: '当前已是第一页，不能再上了！', type: 'warning'});
+        return
+      }
+      this.pageInfo.current = current - 1;
+      thie.getSingerList();
+    },
+
+    //翻页，下一页
+    currentNext(){
+      let current = this.pageInfo.current;
+      if(current + 1 > this.total / this.pageInfo.pageSize){
+        this.$myMsg.notify({content: '当前已是最后一页，不能再下了！', type: 'warning'});
+        return
+      }
+      this.pageInfo.current = current + 1;
+      this.getSingerList();
+    },
+
     //设置宽度
     setContentWidth(){
       this.$refs['singer'].style.width = 1571 + "px";
     },
+
     //跳转信息页
     goSingerInfo(id){
       this.$router.push({
         path: `info/${id}`
       })
     }
-  },
-  mounted(){
-    //this.setContentWidth();
   },
 }
 </script>

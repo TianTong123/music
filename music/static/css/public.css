@@ -161,6 +161,7 @@ html, body, input, ul, li{
 html, body{
   height: 100%;
   overflow-x: hidden;
+  background-color: #eee;
 }
 #app {
   width: 100%;
