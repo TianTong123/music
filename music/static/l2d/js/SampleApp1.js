@@ -48,17 +48,9 @@ function changeSize(){ //先删除元素，再创建，这样的强制刷新实�
     if(thisRef.sizeIndex > 5){
       thisRef.sizeIndex = 1
     }
-    thisRef.sizeIndex ++
-    thisRef.canvas.parentNode.removeChild(thisRef.canvas);
-    var canvas1 = document.createElement("canvas");   
-    canvas1.id = 'glcanvas';
-    canvas1.className = 'myCanvans';
-    document.getElementById('my-l2d-tip').style.bottom = 30+thisRef.sizeIndex * 128 + 'px';
-    canvas1.width = thisRef.sizeIndex * 128;
-    canvas1.height = thisRef.sizeIndex * 128;
-    thisRef.bg.appendChild(canvas1)
-    thisRef.initL2dCanvas("glcanvas", "myl2d")
-    thisRef.init(thisRef.sizeIndex);
+    thisRef.sizeIndex ++;
+    rebornCanvas(thisRef.sizeIndex * 128, thisRef.sizeIndex * 128);
+    talkControl();
 }
 
 //全屏模式
@@ -75,20 +67,50 @@ function fullScreenModel(){
         // IE11
         element.msRequestFullscreen();
     }
-    thisRef.canvas.parentNode.removeChild(thisRef.canvas);
+    rebornCanvas(window.screen.height, window.screen.height, true);
+    bgControl(window.screen.width, window.screen.height);
+    btnControl(true)
+}
+
+//伟大的 document 哟！将统领世界的 canvas 重生吧！canvas ~ reborn！
+function rebornCanvas(width, height, isCenter=false){
+    //涅槃
+    thisRef.canvas.parentNode.removeChild(thisRef.canvas); 
+    //重生
     var canvas1 = document.createElement("canvas");   
     canvas1.id = 'glcanvas'
-    canvas1.className = 'myCanvans canvas-center'
-    canvas1.width = window.screen.height;
-    canvas1.height = window.screen.height;
-    thisRef.bg.appendChild(canvas1)
+    canvas1.className = isCenter?'myCanvans canvas-center':'myCanvans';
+    canvas1.setAttribute('crossOrigin', 'anonymous');
+    canvas1.width = width;
+    canvas1.height = height;
+    //大爷我回来啦
+    thisRef.bg.appendChild(canvas1);
+    thisRef.initL2dCanvas("glcanvas", "myl2d");
+    thisRef.init(thisRef.sizeIndex);
+}
+
+//背景处理
+function bgControl(width, height){
     thisRef.bg.style.zIndex = 999999;
     var l2dbg = document.getElementById('myl2dbg')
     l2dbg.style.display = 'block';
-    l2dbg.style.width = window.screen.width + 'px';//背景处理
-    l2dbg.style.height = window.screen.height + 'px';//背景处理
-    thisRef.initL2dCanvas("glcanvas", "myl2d")
-    thisRef.init(thisRef.sizeIndex);
+    l2dbg.style.width = width + 'px';//背景处理
+    l2dbg.style.height = height + 'px';//背景处理
+}
+
+//按钮隐藏处理
+function btnControl(isFull=false){
+   document.getElementById('bigBtn').style.display = isFull?'none':'block';
+   document.getElementById('fullBtn').style.display = isFull?'none':'block';
+   document.getElementById('closeBtn').style.display = isFull?'block':'none';
+}
+
+//对话框处理
+function talkControl(isFull = false){
+    let talkTip = document.getElementById('my-l2d-tip');
+    console.log(thisRef.sizeIndex * 128 + 34)
+    talkTip.style.bottom = thisRef.sizeIndex * 128 + 34 +'px';
+    talkTip.style.left = thisRef.sizeIndex==2?0:thisRef.sizeIndex * 20 +'px';
 }
 
 //退出全屏
@@ -104,6 +126,7 @@ function exitFullScreenModel(){
     thisRef.bg.style.zIndex = 1;
     document.getElementById('myl2dbg').style.display = 'none'
     changeSize();
+    btnControl()
 }
 
 function initL2dCanvas(canvasId, bgId)
@@ -112,19 +135,18 @@ function initL2dCanvas(canvasId, bgId)
     this.bg = document.getElementById(bgId);//鼠标生效范围
     
     if(this.canvas.addEventListener) {
-        this.bg.addEventListener("mousewheel", mouseEvent, false);
+        this.canvas.addEventListener("mousewheel", mouseEvent, false);
         this.bg.addEventListener("click", mouseEvent, false);
 
-        this.bg.addEventListener("mousedown", mouseEvent, false);
-        this.bg.addEventListener("mousemove", mouseEvent, false);
+        this.canvas.addEventListener("mousedown", mouseEvent, false);
+        this.canvas.addEventListener("mousemove", mouseEvent, false);
 
-        this.bg.addEventListener("mouseup", mouseEvent, false);
-        this.bg.addEventListener("mouseout", mouseEvent, false);
-        this.bg.addEventListener("contextmenu", mouseEvent, false);
+        this.canvas.addEventListener("mouseup", mouseEvent, false);
+        this.canvas.addEventListener("mouseout", mouseEvent, false);
 
-        this.bg.addEventListener("touchstart", touchEvent, false);
-        this.bg.addEventListener("touchend", touchEvent, false);
-        this.bg.addEventListener("touchmove", touchEvent, false);
+        this.canvas.addEventListener("touchstart", touchEvent, false);
+        this.canvas.addEventListener("touchend", touchEvent, false);
+        this.canvas.addEventListener("touchmove", touchEvent, false);
         
     }
     
@@ -330,15 +352,16 @@ function followPointer(event)
     if (LAppDefine.DEBUG_MOUSE_LOG){
         //l2dLog("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
     }
-        
+    thisRef.lastMouseX = sx;
+    thisRef.lastMouseY = sy;
 
-    //if (thisRef.drag)//这个是拖拽验证
-   // {
-        thisRef.lastMouseX = sx;
-        thisRef.lastMouseY = sy;
-
-        thisRef.dragMgr.setPoint(vx, vy); 
-   // }
+    thisRef.dragMgr.setPoint(vx, vy); 
+    //移动live2d
+    // if (thisRef.drag){
+    //   thisRef.canvas.style.left = event.clientX
+    //   thisRef.canvas.style.top = event.clientY
+    //   console.left               
+    // }
 }
 
 		
@@ -361,17 +384,17 @@ function mouseEvent(e)
     
     if (e.type == "mousewheel") {
         
-        if (e.clientX > thisRef.canvas.offsetLeft && 
-            e.clientX < thisRef.canvas.clientWidth + thisRef.canvas.offsetLeft && //判断x在窗体内
-            e.clientY > thisRef.canvas.offsetTop &&
-            e.clientY < thisRef.canvas.clientHeight + thisRef.canvas.offsetTop) //判断y在窗体内
-        {
+        // if (e.clientX > thisRef.canvas.offsetLeft && 
+        //     e.clientX < thisRef.canvas.clientWidth + thisRef.canvas.offsetLeft && //判断x在窗体内
+        //     e.clientY > thisRef.canvas.offsetTop &&
+        //     e.clientY < thisRef.canvas.clientHeight + thisRef.canvas.offsetTop) //判断y在窗体内
+        // {
             //执行缩放
             if (e.wheelDelta > 0) 
                 modelScaling(1.1); 
             else 
                 modelScaling(0.9); 
-        }
+        //}
         
     } else if (e.type == "mousedown") {
         
@@ -394,17 +417,7 @@ function mouseEvent(e)
         
         lookFront();
         
-    } else if (e.type == "contextmenu") {
-        if (e.clientX > thisRef.canvas.offsetLeft && 
-            e.clientX < thisRef.canvas.clientWidth + thisRef.canvas.offsetLeft && //判断x在窗体内
-            e.clientY > thisRef.canvas.offsetTop &&
-            e.clientY < thisRef.canvas.clientHeight + thisRef.canvas.offsetTop) //判断y在窗体内
-        {
-            changeModel();
-        }
-        
     }
-
 }
 
 

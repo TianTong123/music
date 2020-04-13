@@ -28,7 +28,7 @@ function PlatformManager()
 // import haruA from '../assets/live2d/haru/haru_01.model.json'
 // import haruB from '../assets/live2d/haru/haru_02.model.json'
 // import shizhiku from '../assets/live2d/shizuku/shizuku.model.json'
-//JSON.parse()
+// 请求文件，转io
 PlatformManager.prototype.loadBytes       = function(path/*String*/, callback)
 {
 
@@ -77,22 +77,22 @@ PlatformManager.prototype.loadLive2DModel = function(path/*String*/, callback)
 }
 
 //============================================================
-//    PlatformManager # loadTexture()
+//    PlatformManager # loadTexture()加载图片
 //============================================================
 PlatformManager.prototype.loadTexture     = function(model/*ALive2DModel*/, no/*int*/, path/*String*/, callback)
 { 
     // load textures
 
-    //var tempLength = path.length;
-    //path = 'static/'+path.substring(36, tempLength)
+    var tempLength = path.length;
+    path = 'static/'+path.substring(44, tempLength)
     //console.log(path)
-
     var loadedImage = new Image();
     loadedImage.src = path;
-    loadedImage.crossOrigin = '';
+    //loadedImage.crossOrigin = '';//解决图片跨域
+    loadedImage.setAttribute("crossOrigin",'anonymous');
     var thisRef = this;
     loadedImage.onload = function() {
-                
+        
         // create texture
         var canvas = document.getElementById("glcanvas");
         var gl = getWebGLContext(canvas, {premultipliedAlpha : true});
@@ -111,13 +111,14 @@ PlatformManager.prototype.loadTexture     = function(model/*ALive2DModel*/, no/*
         
         model.setTexture(no, texture);
         
-        // テクスチャオブジェクトを解放(添加纹理)
+        // テクスチャオブジェクトを解放（添加纹理）
         texture = null;
         
         if (typeof callback == "function") callback();
     };
     
     loadedImage.onerror = function() { 
+        console.log("加载失败!!!!!!!!!!!!")
         console.error("Failed to load image : " + path); 
     }
 }

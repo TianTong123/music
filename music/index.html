@@ -12,12 +12,18 @@
   </head>
   <body>
     <div class="my-l2d" id="myl2d">
-      <button style="position: absolute; z-index: 99; bottom: 380px; left: 20px; width: 100px;" onclick="changeSize()">变大</button>
-      <button style="position: absolute; z-index: 99; bottom: 340px; left: 20px;  width: 100px" onclick="fullScreenModel()">全屏模式</button>
-      <button style="position: absolute; z-index: 99; bottom: 300px; left: 20px;  width: 100px" onclick="exitFullScreenModel()">退出全屏</button>
-      <canvas class="myCanvans" id="glcanvas" width="256" height="256"></canvas>
+      <div class="my-l2d-menu">
+        <div class="my-l2d-menu-wrap">
+          <div id="bigBtn" onclick="changeSize()">人物变大</div>
+          <div id="switchBtn" onclick="changeModel()">切换人物</div>
+          <div id="fullBtn" onclick="fullScreenModel()">全屏模式</div>
+          <div id="closeBtn" onclick="exitFullScreenModel()">退出全屏</div>
+        </div>
+      </div>
+      <canvas crossorigin="anonymous" class="myCanvans" id="glcanvas" width="256" height="256"></canvas>
+      <div class="l2dloading" id="l2dloading"><span id="l2dloadingTip">50% 加载中</span></div>
       <div class="myl2d-bg myCanvans" id="myl2dbg"></div>
-      <p id="my-l2d-tip">右键切换人物，鼠标滚轮控制镜头拉伸，全屏模式后请不要点击变大（全屏后，鼠标坐标算法有毒，点不中人）</p>
+      <p id="my-l2d-tip"></p>
     </div>
     <div id="app"></div>
     

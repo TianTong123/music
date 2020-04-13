@@ -36,6 +36,8 @@ function L2DBaseModel()
     this.expressions = {};
     
     this.isTexLoaded = false;
+    this.l2dloading = true;
+    this.loadList = [];
 }
 
 var texCounter = 0;
@@ -192,7 +194,21 @@ L2DBaseModel.prototype.loadModelData   = function(path/*String*/, callback)
     });
 }
 
+//百分比计算
+function computedLoading(len){
+    let valList = [];
+    let temp = 10 * (len / 1)
+    for(let i = 0; i < len; i++){
+        valList.unshift(temp * i)
+    }
+    return valList;
+}
 
+function showLoading( str, isShow = true ){
+    let loading = document.getElementById('l2dloading')
+    document.getElementById('l2dloadingTip').innerHTML = str
+    loading.style.display = isShow?'block':'none'
+}
 //============================================================
 //    L2DBaseModel # loadTexture()
 //============================================================
@@ -201,13 +217,20 @@ L2DBaseModel.prototype.loadTexture     = function(no/*int*/, path/*String*/, cal
     texCounter++;
  
     var pm = Live2DFramework.getPlatformManager(); //IPlatformManager
-    
-    if( this.debugMode ) pm.log("Load Texture : " + path);
-    
+    this.l2dloading = true;
+    //if( this.debugMode ) pm.log("Load Texture : " + path);
     var thisRef = this;
     pm.loadTexture(this.live2DModel , no , path, function(){
+        if(thisRef.l2dloading){
+            thisRef.loadList = computedLoading(texCounter);
+            thisRef.l2dloading = false;
+        }
         texCounter--;
-        if(texCounter == 0) thisRef.isTexLoaded = true;
+        showLoading(thisRef.loadList[texCounter]+'% 加载中！')
+        if(texCounter == 0){
+            thisRef.isTexLoaded = true;
+            showLoading('', false)
+        } 
         if (typeof callback == "function") callback();
     });
     
@@ -220,7 +243,7 @@ L2DBaseModel.prototype.loadMotion      = function(name/*String*/, path /*String*
 {    
     var pm = Live2DFramework.getPlatformManager(); //IPlatformManager
     
-    if(this.debugMode) pm.log("Load Motion : " + path);
+    //if(this.debugMode) pm.log("Load Motion : " + path);
     
     var motion = null; //Live2DMotion
     
@@ -1586,3 +1609,4 @@ Live2DFramework.setPlatformManager = function( platformManager /*IPlatformManage
 {
     Live2DFramework.platformManager = platformManager;
 }
+

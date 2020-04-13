@@ -21,13 +21,13 @@ LAppModel.prototype.load = function(gl, modelSettingPath, callback)
     this.setUpdating(true);
     this.setInitialized(false);
 
-    this.modelHomeDir = 'http://39.107.123.212:8848/tiantong/l2d/'+modelSettingPath.substring(0, modelSettingPath.lastIndexOf("/") + 1); 
+    this.modelHomeDir = 'http://39.107.123.212:8848/tiantong/uploads/l2d/'+modelSettingPath.substring(0, modelSettingPath.lastIndexOf("/") + 1); 
 
     this.modelSetting = new ModelSettingJson();
     
     var thisRef = this;
 
-    this.modelSetting.loadModelSetting('http://39.107.123.212:8848/tiantong/l2d/'+modelSettingPath, function(){
+    this.modelSetting.loadModelSetting('http://39.107.123.212:8848/tiantong/uploads/l2d/'+modelSettingPath, function(){
         
         var path = thisRef.modelHomeDir + thisRef.modelSetting.getModelFile();
         thisRef.loadModelData(path, function(model){
@@ -160,6 +160,7 @@ LAppModel.prototype.load = function(gl, modelSettingPath, callback)
                     }
                 });
             }
+
         });
     });
 };
@@ -363,6 +364,18 @@ LAppModel.prototype.startMotion = function(name, no, priority)
     }
 }
 
+//说话气泡
+function talk(tip){
+    let talkTip = document.getElementById('my-l2d-tip');
+    talkTip.style.display = 'block';
+    talkTip.innerHTML = tip;
+    let timer = ''
+    timer = setTimeout(() => {
+        console.log("!!!")
+        talkTip.style.display = 'none';
+        //window.clearTimeout(timer)
+    }, 2000);
+}
 
 LAppModel.prototype.setFadeInFadeOut = function(name, no, priority, motion)
 {
@@ -388,8 +401,9 @@ LAppModel.prototype.setFadeInFadeOut = function(name, no, priority, motion)
         snd.src = this.modelHomeDir + soundName;
         
         if (LAppDefine.DEBUG_LOG){
+            talk(tip)
             //console.log("Start sound : " + soundName);
-            document.getElementById('my-l2d-tip').innerHTML = tip
+            //document.getElementById('my-l2d-tip').innerHTML = tip
         } 
             
         
