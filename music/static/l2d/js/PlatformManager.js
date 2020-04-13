@@ -31,9 +31,7 @@ function PlatformManager()
 //JSON.parse()
 PlatformManager.prototype.loadBytes       = function(path/*String*/, callback)
 {
-    //console.log(path)
-    //file.value = 'D:/毕设/music/music/'+path
-    //console.log(JSON.parse('D:/毕设/music/music/'+path))
+
     var request = new XMLHttpRequest();
 	request.open("GET", path, true);
 	request.responseType = "arraybuffer";
@@ -85,13 +83,13 @@ PlatformManager.prototype.loadTexture     = function(model/*ALive2DModel*/, no/*
 { 
     // load textures
 
-    var tempLength = path.length;
-    path = 'static/'+path.substring(36, tempLength)
-    console.log(path)
+    //var tempLength = path.length;
+    //path = 'static/'+path.substring(36, tempLength)
+    //console.log(path)
 
     var loadedImage = new Image();
     loadedImage.src = path;
-    
+    loadedImage.crossOrigin = '';
     var thisRef = this;
     loadedImage.onload = function() {
                 
