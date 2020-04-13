@@ -5,16 +5,36 @@
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>TianTong♂ Music</title>
-    <script src="static/L2Dwidget.min.js"></script>
-    <script src="static/L2Dwidget.0.min.js"></script>
-   
+    <!-- <script src="static/L2Dwidget.min.js"></script>
+    <script src="static/L2Dwidget.0.min.js"></script> -->
+    <link rel="stylesheet" href="static/l2d/assets/css/l2dcanvas.css">
     <link rel="shortcut icon" type="image/x-icon" href="./static/images/logo.ico" rel="external nofollow"/>
   </head>
   <body>
-    <!-- <script>
-      document.getElementsByTagName('body')[0].style.width = window.innerWidth + 'px';
-    </script> -->
+    <div class="my-l2d" id="myl2d">
+      <button style="position: absolute; z-index: 99; bottom: 380px; left: 20px; width: 100px;" onclick="changeSize()">变大</button>
+      <button style="position: absolute; z-index: 99; bottom: 340px; left: 20px;  width: 100px" onclick="fullScreenModel()">全屏模式</button>
+      <button style="position: absolute; z-index: 99; bottom: 300px; left: 20px;  width: 100px" onclick="exitFullScreenModel()">退出全屏</button>
+      <canvas class="myCanvans" id="glcanvas" width="256" height="256"></canvas>
+      <div class="myl2d-bg myCanvans" id="myl2dbg"></div>
+      <p id="my-l2d-tip">右键切换人物，鼠标滚轮控制镜头拉伸，全屏模式后请不要点击变大（全屏后，鼠标坐标算法有毒，点不中人）</p>
+    </div>
     <div id="app"></div>
+    
+    <!-- Live2D Library -->
+    <script src="./static/l2d/js/live2d.min.js"></script>
+        
+    <!-- Live2D Framework -->
+    <script src="./static/l2d/js/Live2DFramework.js"></script>
+    
+    <!-- User's Script -->
+    <script src="./static/l2d/js/MatrixStack.js"></script>
+    <script src="./static/l2d/js/ModelSettingJson.js"></script>
+    <script src="./static/l2d/js/PlatformManager.js"></script>
+    <script src="./static/l2d/js/LAppDefine.js"></script>
+    <script src="./static/l2d/js/LAppModel.js"></script>
+    <script src="./static/l2d/js/LAppLive2DManager.js"></script>
+    <script src="./static/l2d/js/SampleApp1.js"></script>
     <!-- built files will be auto injected -->
   </body>
 </html>

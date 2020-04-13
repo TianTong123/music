@@ -13,7 +13,6 @@ import message from "@/components/myMsg/index";//引入消息组价
 import login from "@/views/login/login"
 import global from './store/global.js' ; //全局变量
 
-
 Vue.config.productionTip = false
 Vue.prototype.$global = global;
 Vue.prototype.$http = api;
