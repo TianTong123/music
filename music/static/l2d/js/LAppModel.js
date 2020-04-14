@@ -449,6 +449,8 @@ LAppModel.prototype.draw = function(gl)
 
 LAppModel.prototype.hitTest = function(id, testX, testY)
 {
+    if(this.modelSetting == null)
+        return false
     var len = this.modelSetting.getHitAreaNum();
     for (var i = 0; i < len; i++)
     {        

@@ -33,41 +33,64 @@ LAppLive2DManager.prototype.changeModel = function(gl)
     {
         
         this.reloadFlg = false;
-        var no = parseInt(this.count % 3);
+        var no = parseInt(this.count % 9);
 
         var thisRef = this;
         switch (no)
         {
-            case 0: 
-                this.releaseModel(1, gl);
-                this.releaseModel(0, gl);
-                this.createModel();
-                this.models[0].load(gl, LAppDefine.MODEL_HARU);
-                break;
-            case 1: 
-                this.releaseModel(0, gl);
-                this.createModel();
-                this.models[0].load(gl, LAppDefine.MODEL_SHIZUKU);
-                break;
-            //case 2: 
-            //    this.releaseModel(0, gl);
-            //    this.createModel();
-            //    this.models[0].load(gl, LAppDefine.MODEL_WANKO);            
-            //    break;
-            case 2: 
-                this.releaseModel(0, gl);
-                
-                // 一体目のモデル
-                this.createModel();
-                this.models[0].load(gl, LAppDefine.MODEL_HARU_A, function() {
-                    // 二体目のモデル
-                    thisRef.createModel();
-                    thisRef.models[1].load(gl, LAppDefine.MODEL_HARU_B);
-                });
-                
-                break;
-            default:
-                break;
+        case 0: 
+            this.releaseModel(0, gl);
+            this.createModel();
+            this.models[0].load(gl, LAppDefine.MODEL_HARU);
+            break;
+        case 1: 
+            this.releaseModel(0, gl);
+            this.createModel();
+            this.models[0].load(gl, LAppDefine.MODEL_SHIZUKU);
+            break;
+        case 2: 
+            this.releaseModel(0, gl);
+            this.createModel();
+            this.models[0].load(gl, LAppDefine.MODEL_MIKU);            
+            break;
+        case 3: 
+            this.releaseModel(0, gl);
+            
+            // 一体目のモデル
+            this.createModel();
+            this.models[0].load(gl, LAppDefine.MODEL_HARU_A, function() {
+                // 二体目のモデル
+                thisRef.createModel();
+                thisRef.models[1].load(gl, LAppDefine.MODEL_HARU_B);
+            });
+            break;
+        case 4: 
+            this.releaseModel(0, gl);
+            this.createModel();
+            this.models[0].load(gl, LAppDefine.MODEL_Z16); 
+            break; 
+        case 5: 
+            this.releaseModel(0, gl);
+            this.createModel();
+            this.models[0].load(gl, LAppDefine.MODEL_HARUTO);            
+            break;
+        case 6: 
+            this.releaseModel(0, gl);
+            this.createModel();
+            this.models[0].load(gl, LAppDefine.MODEL_KOHARU);            
+            break;
+        case 7: 
+            this.releaseModel(0, gl);
+            this.createModel();
+            this.models[0].load(gl, LAppDefine.MODEL_CHITOSE);              
+            break;
+        case 8: 
+            this.releaseModel(0, gl);
+            this.createModel();
+            this.models[0].load(gl, LAppDefine.MODEL_WANKO);              
+            break;
+        default:
+            break;
         }
     }
 };

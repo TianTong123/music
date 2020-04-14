@@ -36,7 +36,12 @@ var LAppDefine = {
     MODEL_HARU_A : "assets/live2d/haru/haru_01.model.json",
     MODEL_HARU_B : "assets/live2d/haru/haru_02.model.json",
     MODEL_SHIZUKU : "assets/live2d/shizuku/shizuku.model.json",
-    
+    MODEL_MIKU : "assets/live2d/miku/miku.model.json",
+    MODEL_KOHARU : "assets/live2d/live2d-widget-model-koharu/assets/koharu.model.json",
+    MODEL_HARUTO : "assets/live2d/live2d-widget-model-haruto/assets/haruto.model.json",
+    MODEL_CHITOSE : "assets/live2d/live2d-widget-model-chitose/assets/chitose.model.json",
+    MODEL_Z16 : "assets/live2d/live2d-widget-model-z16/assets/z16.model.json",
+    MODEL_WANKO : "assets/live2d/wanko/wanko.model.json",
     
     MOTION_GROUP_IDLE : "idle", 
     MOTION_GROUP_TAP_BODY : "tap_body", 

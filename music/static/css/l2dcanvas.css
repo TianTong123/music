@@ -60,7 +60,6 @@ body, html{
 
 .my-l2d .l2dloading{
   position: absolute;
-  display: none;
   top: -256px;
   left: 0px;
   width: 256px;

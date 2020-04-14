@@ -38,6 +38,8 @@ function sampleApp1()
     
     this.sizeIndex = 2;
     
+    this.isFull = false;//是否全屏
+
     initL2dCanvas("glcanvas", "myl2d");
     
     init();
@@ -67,9 +69,11 @@ function fullScreenModel(){
         // IE11
         element.msRequestFullscreen();
     }
+    thisRef.isFull = true;
     rebornCanvas(window.screen.height, window.screen.height, true);
     bgControl(window.screen.width, window.screen.height);
-    btnControl(true)
+    btnControl(true);
+    talkControl();
 }
 
 //伟大的 document 哟！将统领世界的 canvas 重生吧！canvas ~ reborn！
@@ -106,11 +110,13 @@ function btnControl(isFull=false){
 }
 
 //对话框处理
-function talkControl(isFull = false){
+function talkControl(){
     let talkTip = document.getElementById('my-l2d-tip');
-    console.log(thisRef.sizeIndex * 128 + 34)
-    talkTip.style.bottom = thisRef.sizeIndex * 128 + 34 +'px';
-    talkTip.style.left = thisRef.sizeIndex==2?0:thisRef.sizeIndex * 20 +'px';
+    talkTip.style.zIndex = 999999;
+    talkTip.style.bottom = this.isFull?window.screen.height *0.8 + 'px' 
+                            :thisRef.sizeIndex * 128 + 34 +'px';
+    talkTip.style.left = this.isFull?thisRef.canvas.getBoundingClientRect().left * 1.1 + 'px'
+                            :thisRef.sizeIndex==2?0:thisRef.sizeIndex * 20 +'px';
 }
 
 //退出全屏
@@ -122,11 +128,13 @@ function exitFullScreenModel(){
     } else if(document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
     }
+    thisRef.isFull = false;
     thisRef.sizeIndex --
     thisRef.bg.style.zIndex = 1;
     document.getElementById('myl2dbg').style.display = 'none'
     changeSize();
-    btnControl()
+    btnControl();
+    talkControl();
 }
 
 function initL2dCanvas(canvasId, bgId)
@@ -136,7 +144,7 @@ function initL2dCanvas(canvasId, bgId)
     
     if(this.canvas.addEventListener) {
         this.canvas.addEventListener("mousewheel", mouseEvent, false);
-        this.bg.addEventListener("click", mouseEvent, false);
+        this.canvas.addEventListener("click", mouseEvent, false);
 
         this.canvas.addEventListener("mousedown", mouseEvent, false);
         this.canvas.addEventListener("mousemove", mouseEvent, false);
@@ -187,7 +195,7 @@ function init()
     this.viewMatrix.setMinScale(LAppDefine.VIEW_MIN_SCALE);
 
     this.projMatrix = new L2DMatrix44();
-    this.projMatrix.multScale(1, (width / height));
+    this.projMatrix.multScale(0.7, (width / height)*0.7);
 
     
     this.deviceToScreen = new L2DMatrix44();
@@ -320,13 +328,13 @@ function modelScaling(scale)
 function modelTurnHead(event)
 {
     thisRef.drag = true;
-    event = window.event
-    //var rect = event.target.getBoundingClientRect();
     
-    var sx = transformScreenX(event.clientX - thisRef.canvas.offsetLeft);
-    var sy = transformScreenY(event.clientY - thisRef.canvas.offsetTop);
-    var vx = transformViewX(event.clientX - thisRef.canvas.offsetLeft);
-    var vy = transformViewY(event.clientY - thisRef.canvas.offsetTop);
+    let left = thisRef.canvas.getBoundingClientRect().left
+    let top = thisRef.isFull?0:thisRef.canvas.offsetTop;
+    var sx = transformScreenX(event.clientX - left);
+    var sy = transformScreenY(event.clientY - top);
+    var vx = transformViewX(event.clientX - left);
+    var vy = transformViewY(event.clientY - top);
     if (LAppDefine.DEBUG_MOUSE_LOG){
         //l2dLog("onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
     }
@@ -344,11 +352,12 @@ function modelTurnHead(event)
 //鼠标跟随
 function followPointer(event)
 {    
-    event = window.event;
-    var sx = transformScreenX(event.clientX - thisRef.canvas.offsetLeft);
-    var sy = transformScreenY(event.clientY - thisRef.canvas.offsetTop);
-    var vx = transformViewX(event.clientX - thisRef.canvas.offsetLeft);
-    var vy = transformViewY(event.clientY - thisRef.canvas.offsetTop);
+    let left = thisRef.canvas.getBoundingClientRect().left
+    let top = thisRef.isFull?0:thisRef.canvas.offsetTop;
+    var sx = transformScreenX(event.clientX - left);
+    var sy = transformScreenY(event.clientY - top);
+    var vx = transformViewX(event.clientX - left);
+    var vy = transformViewY(event.clientY - top);
     if (LAppDefine.DEBUG_MOUSE_LOG){
         //l2dLog("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
     }
@@ -502,7 +511,7 @@ function l2dLog(msg) {
     //var myconsole = document.getElementById("myconsole");
     //myconsole.innerHTML = myconsole.innerHTML + "<br>" + msg;
     
-    console.log(msg);
+    //console.log(msg);
 }
 
 
