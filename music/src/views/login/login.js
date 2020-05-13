@@ -51,7 +51,10 @@ let myLogin = {
               this.show = false;
               this.$myMsg.notify({content: "登录成功",type: 'success'});
               //模拟菜单管理
-              let menuList = data.data.menuList;     
+              let menuList = data.data.menuList;    
+              //需要删除
+              //menuList.push({id: 50, name: "拓展", state: 1, code: "game"})
+              //需要删除结束 
               util.saveStorage("menuList", menuList);
               if(data.data.type == 1){ //歌手就跳转用户页
                 router.push({name:'user'});

@@ -73,8 +73,8 @@
 	      </div>
 	      <!-- 进度条 -->
 	      <div class="progress-bar noselect" ref="mProgressBar" @click="progressClick">
-	      	<div class="m-progress" ref="mProgress">
-	      		<div class="m-p-icon" ref="mProgressIcon"  @mouseup="dragFlag = false" @mousedown="dragFlag = true" ></div>
+	      	<div class="m-progress" :style="'width:' + progressValue + 'px'">
+	      		<div class="m-p-icon"  @mouseup="dragFlag = false" @mousedown="dragFlag = true" ></div>
 	      	</div>	
 	      	<span class="noselect">{{`${playTime} / ${totalDuration}`}}</span>	
 	      </div>
@@ -107,12 +107,10 @@ export default {
       /* 音乐播放器控制参数 */
       music: '',//音频文件
       nowPlayTime: "",//当前播放毫秒数(按下播放就开始以毫秒的速度自增1，暂停就停止)
-      mProgress: '',//进度条（会动的那条）
-      mProgressIcon: '',//进度条头上的那个点
+      progressValue: '',//进度条数值
       mProgressBar: '',//进度条背景
       totalDuration: "00/00",//进度条右下角播放时间
       playTime: "00:00",//当前播放时长
-      progressWidth: 0,//当前播放的进度条长度
       /* 音乐播放器控制参数 end */
     }
   },
@@ -247,28 +245,6 @@ export default {
         this.isPlay = 0;
         return;
       }
-
-      //启动时间监听钩子
-      this.music.ontimeupdate = () =>{
-        //时间处理
-        let mLength = this.music.currentTime;
-        this.nowPlayTime =  parseInt( mLength  * 1000);
-        this.playTime = util.timeFormat(mLength);
-
-        //进度条处理
-        /*进度条百分比计算*/
-				var long = mLength * 650 / this.music.duration;//得到进度条长度，650是进度条总长度
-				this.mProgress.style.width = long + "px";
-				this.mProgressIcon.style.left = long + "px";
-
-
-        //结束处理
-				if( this.music.ended ){//归零
-          this.music.currentTime = 0;
-          this.nowPlayTime = 0;
-          this.changeMusic(false);
-        }
-      }
     },
 
     //进度条点击
@@ -276,8 +252,8 @@ export default {
       let e = event ? event : window.event;
       let value = e.clientX - this.mProgressBar.offsetLeft;
       this.music.currentTime = parseInt(value * this.music.duration / 650);
-			this.mProgress.style.width = value + "px";
-      this.mProgressIcon.style.left = value + "px";
+      this.progressValue = value;
+
       //歌词位置刷新
       this.lyricScoll();
     },
@@ -294,8 +270,7 @@ export default {
         }else{
           if( value >=0 && value <= 650){
           this.music.currentTime = parseInt(value * this.music.duration / 650);
-			      this.mProgress.style.width = value + "px";
-            this.mProgressIcon.style.left = value + "px";
+            this.progressValue = value;
           }else if(value < 0){
             this.music.currentTime = 0;
           }else{
@@ -336,8 +311,8 @@ export default {
         if(this.lyric[i] == null){ //判空
           break
         }
-        if(this.lyric[i].TimeMs >= this.nowPlayTime){
-          this.lyricIndex = i;
+        if(this.lyric[i].TimeMs >= this.nowPlayTime && this.nowPlayTime < this.lyric[i+1].TimeMs){
+          this.lyricIndex = i - 1;
           break;
         }
       }
@@ -349,7 +324,7 @@ export default {
       }
 
       //this.scollTop = - tempHeight + 150;//150是初始高度.有过渡动画
-      this.$refs.lyricWrap.scrollTop =  tempHeight - 150;//没过渡动画的
+      this.$refs.lyricWrap.scrollTop =  tempHeight - 200;//没过渡动画的
     },
 
     //音量点击
@@ -372,53 +347,45 @@ export default {
 
     //初始化参数
     initParames(){
+      console.log('必定执行')
       //赋值
-      //this.music = document.getElementById('music'); //this.$refs.music;
       this.music = document.getElementById('cMusic')
-      this.mProgress = this.$refs.mProgress;
-      this.mProgressIcon = this.$refs.mProgressIcon;
       this.mProgressBar = this.$refs.mProgressBar;
       this.music.volume = 0.5;
       this.nowPlayTime = 0;
 
-      this.mProgress.style.width = 0 + "px";
-      this.mProgressIcon.style.left = 0 + "px";
+      this.progressValue = 0;
       
       if(this.music.src == ''){
         this.music.src = this.$global.musicUrl+this.musicInfo.profileUrl
       }
+      //时间处理
+      let mLength = this.music.currentTime;
+      this.nowPlayTime =  parseInt( mLength  * 1000);
+      this.playTime = util.timeFormat(mLength);
 
-      if( this.music.paused ){
-         //时间处理
-          let mLength = this.music.currentTime;
-          this.nowPlayTime =  parseInt( mLength  * 1000);
-          this.playTime = util.timeFormat(mLength);
+      /*进度条百分比计算*/
+      let value = mLength * 650 / this.music.duration;//得到进度条长度，650是进度条总长度
+      this.progressValue = value
 
+      //启动时间监听钩子
+      this.music.ontimeupdate = () =>{
+        //时间处理
+        let mLength = this.music.currentTime;
+        this.nowPlayTime =  parseInt( mLength  * 1000);
+        this.playTime = util.timeFormat(mLength);
+
+        //进度条处理
         /*进度条百分比计算*/
-          let longer = mLength * 650 / this.music.duration;//得到进度条长度，650是进度条总长度
-			  	this.mProgress.style.width = longer + "px";
-			  	this.mProgressIcon.style.left = longer + "px";
-			}else{
-        //启动时间监听钩子
-        this.music.ontimeupdate = () =>{
-          //时间处理
-          let mLength = this.music.currentTime;
-          this.nowPlayTime =  parseInt( mLength  * 1000);
-          this.playTime = util.timeFormat(mLength);
-
-          //进度条处理
-          /*进度条百分比计算*/
-			  	var long = mLength * 650 / this.music.duration;//得到进度条长度，650是进度条总长度
-			  	this.mProgress.style.width = long + "px";
-			  	this.mProgressIcon.style.left = long + "px";
+        var long = mLength * 650 / this.music.duration;//得到进度条长度，650是进度条总长度
+        this.progressValue = long
 
 
-          //结束处理
-			  	if( this.music.ended ){//归零
-            this.music.currentTime = 0;
-            this.nowPlayTime = 0;
-            this.changeMusic(false);
-          }
+        //结束处理
+        if( this.music.ended ){//归零
+          this.music.currentTime = 0;
+          this.nowPlayTime = 0;
+          this.changeMusic(false);
         }
       }
 
@@ -437,11 +404,6 @@ export default {
       //每一行的高度为40，高亮位置放在100，所以把第一条歌词放在100 -40
       let lHeight = 100-firsIndex*40;
       this.$refs.lyricWrap.scrollTop  = -lHeight;//下面注释的，是为了适配所有情况要用的(暂时不写，没时间啊)
-      // if( lHeight >= 0 ){//当前面很长很长时，要做什么
-      //   this.lyricTop = lHeight;
-      // }else{
-      //   this.lyricTop = lHeight;
-      // }
     },
 
     //选中播放列表的音乐
@@ -483,7 +445,7 @@ export default {
     //时间格式
     timeFormat: (val) => util.timeFormat(val),
 
-    //固定字数
+    //一行固定字数
     fontFormat(val){   
       if(val.length < 18){
         return val

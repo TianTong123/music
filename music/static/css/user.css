@@ -267,6 +267,22 @@
   line-height: 26px;
   border-radius: 4px;
 }
+.select-btn{
+  position: relative;
+  padding: 1px 10px;
+  width: 198px;
+  height: 24px;
+  line-height: 26px;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #242424;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 /* line-style 结束 */
 
 .user .user-wrap .footer .info-btn {

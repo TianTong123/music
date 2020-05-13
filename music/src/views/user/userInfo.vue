@@ -15,7 +15,7 @@
           <div class="data-bar" v-show="userType==1">账号状态：<span>{{stateTip}}</span></div>
           <div class="info-btn my-btn" @click="openDiaEditData">修改资料</div>
           <div class="info-btn my-btn" @click="diaEditPw = true">修改密码</div>
-          <div class="info-btn my-btn" @click="getMsg()">我的消息</div>
+          <div class="info-btn my-btn" @click="getMsg()" v-show="false">我的消息</div>
           <div class="info-btn my-btn" v-if="userState == -1 || userState == 2" @click="applyAuth">申请认证</div>
           <div class="info-btn my-btn" v-if="userType == 1 && userState == 1" @click="diaUploadMusic = true">上传音乐</div>
         </div>
@@ -121,24 +121,42 @@
         <div class="line-style">
           <span class="line-label">封面：</span>
           <div class="file-wrap">
-            <my-upload
+            <div class="select-btn" @click="diaMusicImg = true">选择封面</div>
+            <my-img-tailoring
+              :show="diaMusicImg"
+              :url="$global.imgUploadUrl"
+              :imgWidth="300"
+              :imgHeight="300"
+              @close="diaMusicImg=false"
+              :onSuccess="successMusicSongImg">
+            </my-img-tailoring>
+            <!-- <my-upload
               :url="$global.imgUploadUrl"
               label="选择封面"
               :beforeUpload="beforeUploadImg"
               :onSuccess="successMusicSongImg"
-              ></my-upload>
+              ></my-upload> -->
             <div class="preview-img-wrap">
               <img v-if="formUploadMusic.songImg != ''" :src="`${$global.imgUrl+formUploadMusic.songImg}`" alt="">
             </div>
           </div>
           <span class="line-label">海报：</span>
           <div class="file-wrap">
-            <my-upload
+            <div class="select-btn" @click="diaMusicPoster = true">选择封面</div>
+            <my-img-tailoring
+              :show="diaMusicPoster"
+              :url="$global.imgUploadUrl"
+              :imgWidth="356"
+              :imgHeight="196"
+              @close="diaMusicPoster=false"
+              :onSuccess="successMusicPoster">
+            </my-img-tailoring>
+            <!-- <my-upload
               :url="$global.imgUploadUrl"
               label="选择海报"
               :beforeUpload="beforeUploadImg"
               :onSuccess="successMusicPoster"
-              ></my-upload>
+              ></my-upload> -->
             <div class="preview-img-wrap">
               <img v-if="formUploadMusic.posterUrl != ''" :src="`${$global.imgUrl+formUploadMusic.posterUrl}`" alt="">
             </div>
@@ -181,12 +199,15 @@
         <div class="line-style">
           <span class="line-label">头像：</span>
           <div class="file-wrap">
-            <my-upload
+            <div class="select-btn" @click="diaHeadimg = true">选择头像</div>
+            <my-img-tailoring
+              :show="diaHeadimg"
               :url="$global.imgUploadUrl"
-              label="选择头像"
-              :beforeUpload="beforeUploadImg"
-              :onSuccess="successUserImg"
-              ></my-upload>
+              :imgWidth="300"
+              :imgHeight="300"
+              @close="diaHeadimg=false"
+              :onSuccess="successUserImg">
+            </my-img-tailoring>
             <div class="preview-img-wrap">
               <img v-if="formEditUser.photoUrl != ''" :src="`${$global.imgUrl+formEditUser.photoUrl}`" alt="">
             </div>
@@ -197,7 +218,7 @@
           <div class="info-btn my-btn" @click="closeDia">取消</div>
         </div>
       </my-Dialog>
-
+      
       <!-- 消息弹框 -->
       <my-Dialog title="我的消息" :visible="diaMsg" @closeDia="closeDia">
         <div class="msg-wrap">
@@ -218,10 +239,17 @@
 
 <script>
 import util from '@/util/utils';
+import myImgTailoring from '@/components/myImgTailoring/myImgTailoring.vue'
 export default {
+  components:{
+    myImgTailoring
+  },
   data(){
     return{
       //弹框
+      diaHeadimg: false, //选择头像
+      diaMusicPoster: false, //音乐海报
+      diaMusicImg: false, //音乐图片
       diaEditPw: false,//修改密码弹框
       diaCreateSF: false,//创建歌单按钮
       diaUploadMusic:false, //上传音乐

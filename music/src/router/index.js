@@ -60,6 +60,11 @@ export default new Router({
           name: 'player',
           component: () => import("@/views/player/player"),
         },
+        {//拓展页面
+          path: 'game',
+          name: 'game',
+          component: () => import("@/views/game/game"),
+        },
         {//用户页面
           path: 'user',
           name: 'user',

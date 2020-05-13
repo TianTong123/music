@@ -2,7 +2,7 @@
  * @Author: TianTong 
  * @Date: 2020-01-07 17:23:43 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-04-09 09:47:17
+ * @Last Modified time: 2020-05-13 09:17:52
  */
 .player img{
   width: 100%;
@@ -327,7 +327,7 @@
 }
 /* 红色进度条 */
 .player .progress-bar .m-progress{
-  position: absolute;
+  position: relative;
   width: 0;
   height: 5px;
   background: #d81e06;
@@ -336,13 +336,18 @@
 }
 /* 进度条图标 */
 .player .progress-bar .m-p-icon{
+  float: right;
   width: 16px;
   height: 16px;
-  position: absolute;
-  left: 0px;
-  top: -6px;
+  margin: -6px -4px 0 0;
   border-radius: 8px;
   background: #fff;
+}
+.player .progress-bar .m-p-icon:hover{
+  width: 18px;
+  height: 18px;
+  margin: -7px -5px 0 0;
+  border-radius: 9px;
 }
 /* 歌单按钮 */
 .player .music-list-btn{
