@@ -118,6 +118,10 @@ export default{
 
       //放大缩小
       var scrollFunc = (e) => {
+        //判空
+        if(this.$refs.myImgTailoringCanvas == null){
+          return
+        }
         if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
           if (e.wheelDelta > 0) { //当滑轮向上滚动时
               this.zoom ++;
