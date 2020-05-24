@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <div class="wrap">
-      <div class="content">本网站仅仅作为毕设使用，绝不用在商业用途！大部分图片、音乐素材均来源于网上，如有侵权请联系我，觉都不睡都帮你弄好！ 邮箱：497291309@qq.com</div>
+      <div class="content">v2.0稳定版，更改播放逻辑，修复一些奇奇怪怪的bug，感谢水小幕的大力支持</div>
     </div>
     <div class="line"></div>
   </div>
