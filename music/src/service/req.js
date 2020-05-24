@@ -24,7 +24,7 @@ const req = ({
   isHalfLoading = true,
 }) => {
   let options = {
-    url: apienv.server.baseUrl + url,//拼接地址
+    url: apienv.dev.baseUrl + url,//拼接地址
     method,
     params,
     timeout,

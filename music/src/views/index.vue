@@ -11,10 +11,9 @@
       <Footer></Footer>
     </div>
       
-
-    
     <!-- 空气墙 -->
     <div class="control-bar"  @mouseover="showControl" ></div>
+    
     <playerControl 
       :style="`bottom:${top}px`" 
       @mouseover="showControl" 

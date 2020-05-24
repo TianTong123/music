@@ -92,7 +92,7 @@ const api = {
   //删除作品
   deleteMyWorks: data => req({
     baseUrl: baseUrl,
-    method: "delete",
+    method: "post",
     url: "music/batchRemoveMusic",
     params: data
   }),

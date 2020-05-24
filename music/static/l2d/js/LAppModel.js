@@ -21,14 +21,14 @@ LAppModel.prototype.load = function(gl, modelSettingPath, callback)
     this.setUpdating(true);
     this.setInitialized(false);
 
-    this.modelHomeDir = 'http://39.107.123.212:8848/tiantong/uploads/l2d/'+modelSettingPath.substring(0, modelSettingPath.lastIndexOf("/") + 1); 
-
+    //this.modelHomeDir = 'http://39.107.123.212:8848/tiantong/uploads/l2d/'+modelSettingPath.substring(0, modelSettingPath.lastIndexOf("/") + 1); 
+    this.modelHomeDir = 'http://loaclhost:8848/tiantong/l2dFile/uploads/l2d/'+modelSettingPath.substring(0, modelSettingPath.lastIndexOf("/") + 1); 
     this.modelSetting = new ModelSettingJson();
     
     var thisRef = this;
 
-    this.modelSetting.loadModelSetting('http://39.107.123.212:8848/tiantong/uploads/l2d/'+modelSettingPath, function(){
-        
+    //this.modelSetting.loadModelSetting('http://39.107.123.212:8848/tiantong/uploads/l2d/'+modelSettingPath, function(){
+      this.modelSetting.loadModelSetting('http://localhost:8848/tiantong/l2dFile/uploads/l2d/'+modelSettingPath, function(){ 
         var path = thisRef.modelHomeDir + thisRef.modelSetting.getModelFile();
         thisRef.loadModelData(path, function(model){
             

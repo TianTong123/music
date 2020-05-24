@@ -128,6 +128,7 @@ export default {
       if( music.paused ){
         this.isPlay = -1
         music.oncanplay = this.isPlay = 1;
+        music.volume = 0.5;
         music.play();//播放音乐
 			}else{
         music.pause();
@@ -143,6 +144,7 @@ export default {
       this.$emit('show', true);
       this.$refs['cMusic'].src = this.$global.musicUrl+val.profileUrl;
       this.isPlay = -1
+      this.$refs['cMusic'].volume = 0.5;
       this.$refs['cMusic'].oncanplay = () =>{
         this.$refs['cMusic'].play();
         this.isPlay = 1;
